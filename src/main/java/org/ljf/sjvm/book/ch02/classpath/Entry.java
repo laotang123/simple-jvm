@@ -1,5 +1,9 @@
 package org.ljf.sjvm.book.ch02.classpath;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author: ljf
  * @date: 2021/1/19 13:52
@@ -10,6 +14,7 @@ package org.ljf.sjvm.book.ch02.classpath;
 public interface Entry {
     /**
      * 读取class文件
+     *
      * @param className：文件名字
      * @return 字节数组
      */

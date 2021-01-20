@@ -1,5 +1,9 @@
 package org.ljf.sjvm.book.ch02.classpath;
 
+import org.ljf.sjvm.book.util.IOUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 
 /**
@@ -10,37 +14,34 @@ import java.io.*;
  * @version: $ 1.0
  */
 public class DirEntry implements Entry {
-    private String absolutePath;
+    private static final Logger logger = LoggerFactory.getLogger(DirEntry.class);
+    private final String absolutePath;
 
-    public DirEntry(String classPath) throws ClassPathTypeMathException {
-        if (new File(classPath).isAbsolute()) {
-            this.absolutePath = classPath;
-        } else throw new ClassPathTypeMathException(classPath + " is not absolute path");
-
+    public DirEntry(String contextPath) {
+        this.absolutePath = IOUtil.abs(contextPath);
     }
 
     @Override
     public byte[] readClass(String className) {
-        String fileName = absolutePath.concat(File.separator + className);
+        String classPath = IOUtil.getClassPath(className);
         FileInputStream fis = null;
         byte[] result = null;
         try {
-            File file = new File(fileName);
-            result = new byte[(int) file.length()];
-            fis = new FileInputStream(file);
-            fis.read(result);
-        } catch (IOException e) {
-            e.printStackTrace();
+            fis = new FileInputStream(this.absolutePath.concat(File.separator + classPath));
+            result = IOUtil.readFromInputStream(fis);
+        } catch (FileNotFoundException e) {
+            logger.warn(e.getMessage());
         } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            IOUtil.close(fis);
         }
 
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "DirEntry{" +
+                "absolutePath='" + absolutePath + '\'' +
+                '}';
     }
 }

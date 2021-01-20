@@ -14,30 +14,30 @@ public class EntryFactory {
     /**
      * 工厂方法创建实例entry
      *
-     * @param classPath：class文件路径
+     * @param contextPath：class文件路径
      * @return ：具体的实现类实例
      */
-    public static Entry newEntry(String classPath) {
-        if (classPath.contains(File.separator)) {
-            return new CompositeEntry(classPath);
+    public static Entry newEntry(String contextPath) {
+        if (contextPath.contains(File.pathSeparator)) {
+            return new CompositeEntry(contextPath);
         }
 
-        if (classPath.charAt(classPath.length() - 1) == '*') {
-            return new WildcardEntry(classPath);
+        //防止异常数据，增强程序健壮性
+        int length = contextPath.length();
+        if (length >= 2) {
+            if (contextPath.charAt(length - 1) == '*') {
+                return new WildcardEntry(contextPath);
+            }
+
+
+        }
+        if (length > 4) {
+            String suffix = contextPath.substring(length - 4);
+            if (suffix.equals(".zip") || suffix.equals(".ZIP") || suffix.equals(".jar") || suffix.equals(".JAR")) {
+                return new ClassZipEntry(contextPath);
+            }
         }
 
-        String suffix = classPath.substring(classPath.length() - 4);
-        if (suffix.equals(".zip") || suffix.equals(".ZIP") || suffix.equals(".jar") || suffix.equals(".JAR")) {
-            return new ZipEntry(classPath);
-        }
-
-        Entry entry = null;
-        try {
-            entry = new DirEntry(classPath);
-        } catch (ClassPathTypeMathException e) {
-            e.printStackTrace();
-        }
-
-        return entry;
+        return new DirEntry(contextPath);
     }
 }
