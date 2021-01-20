@@ -1,5 +1,8 @@
 package org.ljf.sjvm.book.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 
 /**
@@ -10,6 +13,8 @@ import java.io.*;
  * @version: $ 1.0
  */
 public class IOUtil {
+    private static final Logger logger = LoggerFactory.getLogger(IOUtil.class);
+
     public static String abs(String path) {
         if (new File(path).isAbsolute()) {
             return path;
@@ -43,13 +48,23 @@ public class IOUtil {
         return outputStream.toByteArray();
     }
 
-    public static void close(Closeable closeable){
-        if (closeable!=null){
+    public static void close(Closeable closeable) {
+        if (closeable != null) {
             try {
                 closeable.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static String getSuffix(File file) {
+        String fileName = file.getName();
+        logger.info("file name: " + fileName + "call getSuffix method");
+        return fileName.substring(fileName.lastIndexOf('.') + 1);
+    }
+
+    public static String getSuffix(String fileName) {
+        return fileName.substring(fileName.lastIndexOf('.') + 1);
     }
 }
