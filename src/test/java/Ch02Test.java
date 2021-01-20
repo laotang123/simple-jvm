@@ -44,11 +44,13 @@ public class Ch02Test {
 
     @Test
     public void testWildcardEntry() {
-        String contextPath = "target/classes/org/ljf/sjvm/book/ch02/*";
+//        String contextPath = "target/classes/org/ljf/sjvm/book/ch02/*";
+        String contextPath = "target/*";
 
         Entry entry = EntryFactory.newEntry(contextPath);
-        System.out.println(entry);
-        String className = "Cmd";
+//        System.out.println(entry);
+//        String className = "Cmd";
+        String className = "org.ljf.sjvm.book.ch01.Main";
         byte[] result = entry.readClass(className);
         System.out.println(Arrays.toString(result));
 
