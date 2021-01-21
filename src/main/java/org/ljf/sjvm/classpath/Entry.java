@@ -1,8 +1,5 @@
-package org.ljf.sjvm.book.ch02.classpath;
+package org.ljf.sjvm.classpath;
 
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author: ljf
@@ -15,10 +12,10 @@ public interface Entry {
     /**
      * 读取class文件
      *
-     * @param className：文件名字
+     * @param classPath：class文件路径
      * @return 字节数组
      */
-    byte[] readClass(String className);
+    byte[] readClass(String classPath);
 
     /**
      * 重写object的toString方法

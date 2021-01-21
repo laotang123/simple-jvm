@@ -1,4 +1,4 @@
-package org.ljf.sjvm.book.util;
+package org.ljf.sjvm.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +14,7 @@ import java.io.*;
  */
 public class IOUtil {
     private static final Logger logger = LoggerFactory.getLogger(IOUtil.class);
+    public static final String CURRENT_PATH = "./";
 
     public static String abs(String path) {
         if (new File(path).isAbsolute()) {
@@ -60,7 +61,7 @@ public class IOUtil {
 
     public static String getSuffix(File file) {
         String fileName = file.getName();
-        logger.info("file name: " + fileName + "call getSuffix method");
+        logger.info("file name: " + fileName + " call getSuffix method");
         return fileName.substring(fileName.lastIndexOf('.') + 1);
     }
 

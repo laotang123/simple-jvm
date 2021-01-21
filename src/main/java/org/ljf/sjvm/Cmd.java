@@ -1,7 +1,4 @@
-package org.ljf.sjvm.book.ch02;
-
-import com.beust.jcommander.JCommander;
-import com.beust.jcommander.Parameter;
+package org.ljf.sjvm;
 
 import java.util.Arrays;
 
@@ -52,22 +49,33 @@ public class Cmd {
     public static Cmd parserCmd(String[] args) {
         Cmd cmd = new Cmd();
         int length = args.length;
-        String arg = args[0];
-        int offset = 0;
-        if (length == 1) {
-            if (arg.equals("-help") || arg.equals("-?")) {
-                cmd.helpFlag = true;
-            }
-            if (arg.equals("-version")) {
-                cmd.versionFlag = true;
-            }
-            //至少包括-cp classpath className
-        } else if ((arg.equals("-cp") || arg.equals("-classpath")) && length >= 3) {
-            cmd.cpOption = args[++offset];
-            cmd.className = args[++offset];
-            if (++offset < length) {
-                cmd.args = new String[length - offset];
-                System.arraycopy(args, offset, cmd.args, 0, length - offset);
+        if (length > 0) {
+            String arg = args[0];
+            int offset = 0;
+            if (length == 1) {
+                if (arg.equals("-help") || arg.equals("-?")) {
+                    cmd.helpFlag = true;
+                }
+
+                if (arg.equals("-version")) {
+                    cmd.versionFlag = true;
+                }
+                //至少包括-cp classpath className
+            } else if ((arg.equals("-cp") || arg.equals("-classpath")) && length >= 3) {
+                cmd.cpOption = args[++offset];
+                cmd.className = args[++offset];
+                if (++offset < length) {
+                    cmd.args = new String[length - offset];
+                    System.arraycopy(args, offset, cmd.args, 0, length - offset);
+                }
+                //支持-Xjre
+            } else if ((arg.equals("-Xjre")) && length >= 3) {
+                cmd.XjreOption = args[++offset];
+                cmd.className = args[++offset];
+            } else {
+                System.out.println("Not Support args: " + Arrays.toString(args));
+                printUsage();
+                System.exit(1);
             }
         } else {
             System.out.println("Not Support args: " + Arrays.toString(args));
@@ -90,10 +98,9 @@ public class Cmd {
                 "helpFlag=" + helpFlag +
                 ", versionFlag=" + versionFlag +
                 ", cpOption='" + cpOption + '\'' +
+                ", XjreOption='" + XjreOption + '\'' +
                 ", className='" + className + '\'' +
                 ", args=" + Arrays.toString(args) +
                 '}';
     }
-
-
 }

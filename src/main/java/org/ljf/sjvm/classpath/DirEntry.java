@@ -1,6 +1,6 @@
-package org.ljf.sjvm.book.ch02.classpath;
+package org.ljf.sjvm.classpath;
 
-import org.ljf.sjvm.book.util.IOUtil;
+import org.ljf.sjvm.util.IOUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,8 +22,8 @@ public class DirEntry implements Entry {
     }
 
     @Override
-    public byte[] readClass(String className) {
-        String classPath = IOUtil.getClassPath(className);
+    public byte[] readClass(String classPath) {
+//        String classPath = IOUtil.getClassPath(className);
         FileInputStream fis = null;
         byte[] result = null;
         try {

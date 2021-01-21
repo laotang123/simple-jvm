@@ -1,10 +1,9 @@
-package org.ljf.sjvm.book.ch02.classpath;
+package org.ljf.sjvm.classpath;
 
-import org.ljf.sjvm.book.util.IOUtil;
+import org.ljf.sjvm.util.IOUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -28,16 +27,16 @@ public class ClassZipEntry implements Entry {
      * 1.打开zip报错，
      * 2.打开zip成功，遍历zip文件，访问到对应文件名的class文件
      *
-     * @param className：文件名字
+     * @param classPath：文件名字
      * @return ：字节数组
      */
     @Override
-    public byte[] readClass(String className) {
+    public byte[] readClass(String classPath) {
         ZipFile zf = null;
         byte[] result = null;
         InputStream inputStream = null;
         try {
-            String classPath = IOUtil.getClassPath(className);
+//            String classPath = IOUtil.getClassPath(className);
             zf = new ZipFile(this.absolutePath);
             Enumeration<? extends ZipEntry> entries = zf.entries();
             while (entries.hasMoreElements()) {

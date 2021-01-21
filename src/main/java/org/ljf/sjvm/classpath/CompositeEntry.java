@@ -1,6 +1,4 @@
-package org.ljf.sjvm.book.ch02.classpath;
-
-import org.ljf.sjvm.book.util.IOUtil;
+package org.ljf.sjvm.classpath;
 
 import java.io.File;
 import java.util.Arrays;
@@ -27,14 +25,14 @@ public class CompositeEntry implements Entry {
     /**
      * 从多个entry中读取单个class文件流
      *
-     * @param className：文件名字
+     * @param classPath：文件名字
      * @return ：字节数组
      */
     @Override
-    public byte[] readClass(String className) {
+    public byte[] readClass(String classPath) {
         byte[] result = null;
         for (Entry entry : entries) {
-            result = entry.readClass(className);
+            result = entry.readClass(classPath);
             if (result != null) {
                 break;
             }

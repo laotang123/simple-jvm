@@ -1,4 +1,4 @@
-package org.ljf.sjvm.book.ch02.classpath;
+package org.ljf.sjvm.classpath;
 
 /**
  * @author: ljf

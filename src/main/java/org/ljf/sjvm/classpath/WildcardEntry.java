@@ -1,11 +1,10 @@
-package org.ljf.sjvm.book.ch02.classpath;
+package org.ljf.sjvm.classpath;
 
-import org.ljf.sjvm.book.util.IOUtil;
+import org.ljf.sjvm.util.IOUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.Arrays;
 
 /**
  * @author: ljf
@@ -41,10 +40,11 @@ public class WildcardEntry implements Entry {
                     if (!hasParentPath && suffix.equals(CLASS)) {//class文件只添加一次当前工作路径
                         stringBuilder.append(file.getParent()).append(File.pathSeparator);
                         hasParentPath = true;
+                        logger.info("wildcard entry add class file: " + file.getPath());
                     } else if (suffix.equalsIgnoreCase(JAR)) {//jar文件添加全路径
                         stringBuilder.append(file.getPath()).append(File.pathSeparator);
+                        logger.info("wildcard entry add jar file: " + file.getPath());
                     }
-                    logger.info("wildcard entry add file: " + file.getPath());
                 }
             }
         }
@@ -60,8 +60,8 @@ public class WildcardEntry implements Entry {
     }
 
     @Override
-    public byte[] readClass(String className) {
-        return compositeEntry.readClass(className);
+    public byte[] readClass(String classPath) {
+        return compositeEntry.readClass(classPath);
     }
 
     @Override
