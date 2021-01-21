@@ -1,9 +1,9 @@
 import org.junit.Test;
-import org.ljf.sjvm.book.ch02.classpath.Entry;
-import org.ljf.sjvm.book.ch02.classpath.EntryFactory;
-import org.ljf.sjvm.book.util.IOUtil;
+import org.ljf.sjvm.Main;
+import org.ljf.sjvm.classpath.ClassPathContainer;
+import org.ljf.sjvm.classpath.Entry;
+import org.ljf.sjvm.classpath.EntryFactory;
 
-import java.io.File;
 import java.util.Arrays;
 
 /**
@@ -57,10 +57,18 @@ public class Ch02Test {
     }
 
     @Test
-    public void test01(){
-        String contextPath = "target/classes/org/ljf/sjvm/book/ch02/Main.class";
-        String absPath = IOUtil.abs(contextPath);
-        File file = new File(absPath);
-        System.out.println(file.getParent());
+    public void TestClassPath(){
+        String jreOption = "";
+        String cpOption = "target/class";
+        ClassPathContainer classPath = ClassPathContainer.parse(jreOption, cpOption);
+        System.out.println(classPath);
+    }
+
+    @Test
+    public void testMain(){
+//        String[] args = new String[]{"-Xjre","C:\\Program Files\\Java\\jdk1.8.0_151\\jre","java.lang.Object"};
+//        String[] args = new String[]{"-cp","target/classes","org.ljf.sjvm.book.ch01.Main"};
+        String[] args = new String[]{"-cp","target/SimpleJVM-1.0-SNAPSHOT-jar-with-dependencies.jar","org.ljf.sjvm.book.ch01.Cmd"};
+        Main.main(args);
     }
 }
