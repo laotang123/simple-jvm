@@ -71,4 +71,6 @@ public class Ch02Test {
         String[] args = new String[]{"-cp","target/SimpleJVM-1.0-SNAPSHOT-jar-with-dependencies.jar","org.ljf.sjvm.book.ch01.Cmd"};
         Main.main(args);
     }
+
+
 }

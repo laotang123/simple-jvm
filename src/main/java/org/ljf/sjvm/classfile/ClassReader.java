@@ -65,4 +65,9 @@ public class ClassReader {
     public BigInteger readUint64() {
         throw new NotImplementedException();
     }
+
+    public ConstantPool readConstantPool() {
+//        new ConstantInfo();
+        return null;
+    }
 }

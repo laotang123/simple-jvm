@@ -1,5 +1,7 @@
 package org.ljf.sjvm.util;
 
+import java.math.BigInteger;
+
 /**
  * @author: ljf
  * @date: 2021/1/22 7:13
@@ -8,6 +10,10 @@ package org.ljf.sjvm.util;
  * @version: $ 1.0
  */
 public class ByteUtils {
+//    public static BigInteger getUint64() {
+//        return new BigInteger(1, new byte[]{0b0, 0b0, 0b0, 0b0, 0b0, 0b0, 0b0, 0b0});
+//    }
+
     //u1
     public static short byte2Uint8(byte b) {
         return (short) (b & 0xff);
@@ -20,7 +26,7 @@ public class ByteUtils {
 
     //u4，TODO：uint32应该用long表示？
     public static long byte2Uint32(byte[] bytes, int start) {
-        return bytes2Int(bytes, 0, 4);
+        return bytes2Long(bytes, 0, 4);
     }
 
     //u4，TODO：uint64需要自定义类？
