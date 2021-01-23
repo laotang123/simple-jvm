@@ -1,9 +1,9 @@
 package org.ljf.sjvm.classfile;
 
+import org.ljf.sjvm.classfile.constantpool.ConstantPool;
 import org.ljf.sjvm.util.ByteUtils;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /**
@@ -62,12 +62,30 @@ public class ClassReader {
         return value;
     }
 
+    public int readInt32() {
+        int value = ByteUtils.byte2int32(this.data, offset);
+        offset += 4;
+        return value;
+    }
+
+    public long readInt64() {
+        long value = ByteUtils.byte2int64(this.data, offset);
+        offset += 8;
+        return value;
+    }
+
+    public float readFloat() {
+        int i = readInt32();
+        return Float.intBitsToFloat(i);
+    }
+
+    public double readDouble() {
+        long l = readInt64();
+        return Double.longBitsToDouble(l);
+    }
+
     public BigInteger readUint64() {
         throw new NotImplementedException();
     }
 
-    public ConstantPool readConstantPool() {
-//        new ConstantInfo();
-        return null;
-    }
 }

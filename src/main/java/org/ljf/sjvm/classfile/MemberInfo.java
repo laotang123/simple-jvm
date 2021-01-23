@@ -2,8 +2,8 @@ package org.ljf.sjvm.classfile;
 
 /**
  * @author: ljf
- * @date: 2021/1/22 8:11
- * @description: 表示字段或方法的信息
+ * @date: 2021/1/23 13:19
+ * @description:
  * @modified By:
  * @version: $ 1.0
  */

@@ -1,6 +1,6 @@
 package org.ljf.sjvm.classfile;
 
-import java.util.IllegalFormatException;
+import org.ljf.sjvm.classfile.constantpool.ConstantPool;
 
 /**
  * @author: ljf
@@ -59,7 +59,12 @@ public class ClassFile {
     private void read(ClassReader reader) {
         this.readAndCheckMagic(reader);
         this.readAndCheckVersion(reader);
-        this.constantPool = reader.readConstantPool();
+        this.constantPool = readConstantPool(reader);
+
+    }
+
+    private ConstantPool readConstantPool(ClassReader reader) {
+        return new ConstantPool(reader);
     }
 
     private boolean rightVersion(int majorVersion, int minorVersion) {
