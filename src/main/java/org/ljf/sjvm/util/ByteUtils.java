@@ -1,6 +1,8 @@
 package org.ljf.sjvm.util;
 
-import java.math.BigInteger;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
 
 /**
  * @author: ljf
@@ -29,9 +31,19 @@ public class ByteUtils {
         return bytes2Long(bytes, 0, 4);
     }
 
-    //u4，TODO：uint64需要自定义类？
+    //u8，TODO：uint64需要自定义类？
     public static int byte2Uint64(byte[] bytes, int start) {
         return bytes2Int(bytes, 0, 8);
+    }
+
+    //有符号int32
+    public static int byte2int32(byte[] bytes, int start) {
+        return bytes2Int(bytes, 0, 4);
+    }
+
+    //有符号64位 long
+    public static long byte2int64(byte[] bytes, int start) {
+        return bytes2Long(bytes, 0, 8);
     }
 
     public static int bytes2Int(byte[] b, int start, int len) {
@@ -79,5 +91,29 @@ public class ByteUtils {
         System.arraycopy(replaceBytes, 0, newBytes, offset, replaceBytes.length);
         System.arraycopy(originalBytes, offset + len, newBytes, offset + replaceBytes.length, originalBytes.length - offset - len);
         return newBytes;
+    }
+
+
+    /**
+     * 字符串在class文件中是MUTF8编码的
+     * MUTF-8编码方式和UTF-8大致相同，但并不兼容。 差别有两点：
+     * 一是null字符（代码点U+0000）会被编码成2字节： 0xC0、0x80；
+     * 二是补充字符（Supplementary Characters，代码点大于 U+FFFF的Unicode字符）是按UTF-16拆分为代理对（Surrogate Pair） 分别编码的。
+     * 参考链接：
+     * http://stackoverflow.com/questions/15440584/why-does-java-use- modified-utf-8-instead-of-utf-8。
+     * http://www.oracle.com/technetwork/articles/javase/supplementary- 142654.html。
+     * @param bytes：带编码字节数组
+     * @return ：编码后字符串
+     */
+    public static String decodeMUTF8(byte[] bytes) {
+        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        DataInputStream dataInputStream = new DataInputStream(bais);
+        String result = null;
+        try {
+            result = dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
