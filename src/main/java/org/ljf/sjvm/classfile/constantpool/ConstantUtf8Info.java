@@ -34,6 +34,7 @@ public class ConstantUtf8Info implements ConstantInfo {
         this.length = reader.readUint16();
         byte[] bytes = reader.readBytes(length);
         str = ByteUtils.decodeMUTF8(bytes);
+        logger.info("end of ConstantUtf8Info offset: " + reader.getOffset() + " length: " + length + " value: " + str);
         if (str == null) {
             logger.error("read utf8 info error");
         }

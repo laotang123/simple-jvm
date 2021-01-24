@@ -1,6 +1,8 @@
 package org.ljf.sjvm.classfile;
 
 import org.ljf.sjvm.classfile.constantpool.ConstantPool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author: ljf
@@ -28,6 +30,7 @@ import org.ljf.sjvm.classfile.constantpool.ConstantPool;
  * @version: $ 1.0
  */
 public class ClassFile {
+    private static final Logger logger = LoggerFactory.getLogger(ClassFile.class);
     //long magic //uint32 u4
     int minorVersion;//uint16 u2
     int majorVersion; //uint16 u2
@@ -47,10 +50,11 @@ public class ClassFile {
      * @param classData：class数组
      * @return ：classFile实例
      */
-    public ClassFile parse(byte[] classData) {
+    public static ClassFile parse(byte[] classData) {
         ClassReader classReader = new ClassReader(classData);
-        this.read(classReader);
-        return this;
+        ClassFile classFile = new ClassFile();
+        classFile.read(classReader);
+        return classFile;
     }
 
     /**
@@ -60,6 +64,7 @@ public class ClassFile {
         this.readAndCheckMagic(reader);
         this.readAndCheckVersion(reader);
         this.constantPool = readConstantPool(reader);
+        logger.info("end of constant pool offset: " + reader.getOffset());
 
     }
 
@@ -80,6 +85,7 @@ public class ClassFile {
         this.minorVersion = reader.readUint16();
         this.majorVersion = reader.readUint16();
 
+        logger.info("minor version: " + minorVersion + " major version: " + majorVersion);
         if (!rightVersion(majorVersion, minorVersion)) {
             throw new IllegalArgumentException("java.lang.UnsupportedClassVersionError: majorVersion="
                     + majorVersion + "minorVersion=" + minorVersion);
@@ -88,7 +94,7 @@ public class ClassFile {
     }
 
     private void readAndCheckMagic(ClassReader reader) {
-        long magic = reader.readUint32();
+        long magic = reader.readInt32();
         if (magic != 0xCAFEBABE) {
             throw new IllegalArgumentException("java.lang.ClassFormatError: magic!");
         }

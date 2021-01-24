@@ -3,6 +3,8 @@ package org.ljf.sjvm.util;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.UTFDataFormatException;
+import java.nio.ByteBuffer;
 
 /**
  * @author: ljf
@@ -26,7 +28,7 @@ public class ByteUtils {
         return bytes2Int(bytes, start, 2);
     }
 
-    //u4，TODO：uint32应该用long表示？
+    //u4，TODO：uint32应该用long表示？, magic处理为uint32有问题！。。
     public static long byte2Uint32(byte[] bytes, int start) {
         return bytes2Long(bytes, 0, 4);
     }
@@ -36,9 +38,17 @@ public class ByteUtils {
         return bytes2Int(bytes, 0, 8);
     }
 
-    //有符号int32
+    static private int makeInt(byte b3, byte b2, byte b1, byte b0) {
+        return (((b3) << 24) |
+                ((b2 & 0xff) << 16) |
+                ((b1 & 0xff) << 8) |
+                ((b0 & 0xff)));
+    }
+
+    //有符号int32，大端排序
     public static int byte2int32(byte[] bytes, int start) {
-        return bytes2Int(bytes, 0, 4);
+
+        return makeInt(bytes[start], bytes[start + 1], bytes[start + 2], bytes[start + 3]);
     }
 
     //有符号64位 long
@@ -93,6 +103,22 @@ public class ByteUtils {
         return newBytes;
     }
 
+    private static final char[] HEX_CHAR = {'0', '1', '2', '3', '4', '5',
+            '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+
+    /**
+     * 一个字节为8位，4位表示16进制。故一个字节可以表示两个16进制的数
+     */
+    public static String bytes2Hex(byte[] bytes) {
+        char[] buf = new char[bytes.length * 2];
+        int index = 0;
+        for (byte b : bytes) { // 利用位运算进行转换，可以看作方法一的变种
+            buf[index++] = HEX_CHAR[b >>> 4 & 0xf];
+            buf[index++] = HEX_CHAR[b & 0xf];
+        }
+
+        return new String(buf);
+    }
 
     /**
      * 字符串在class文件中是MUTF8编码的
@@ -102,18 +128,92 @@ public class ByteUtils {
      * 参考链接：
      * http://stackoverflow.com/questions/15440584/why-does-java-use- modified-utf-8-instead-of-utf-8。
      * http://www.oracle.com/technetwork/articles/javase/supplementary- 142654.html。
+     *
      * @param bytes：带编码字节数组
      * @return ：编码后字符串
      */
     public static String decodeMUTF8(byte[] bytes) {
-        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-        DataInputStream dataInputStream = new DataInputStream(bais);
         String result = null;
         try {
-            result = dataInputStream.readUTF();
+            result = decodeMUTF8V2(bytes);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return result;
+    }
+
+    private static String decodeMUTF8V2(byte[] bytes) throws IOException {
+        int utflen = bytes.length;
+        byte[] bytearr = bytes;
+        char[] chararr = new char[utflen];
+
+//        bytearr = new byte[utflen];
+//        bytearr = bytes;
+//        chararr = new char[utflen];
+
+
+        int c, char2, char3;
+        int count = 0;
+        int chararr_count = 0;
+
+        while (count < utflen) {
+            c = (int) bytearr[count] & 0xff;
+            if (c > 127) break;
+            count++;
+            chararr[chararr_count++] = (char) c;
+        }
+
+        while (count < utflen) {
+            c = (int) bytearr[count] & 0xff;
+            switch (c >> 4) {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                    /* 0xxxxxxx*/
+                    count++;
+                    chararr[chararr_count++] = (char) c;
+                    break;
+                case 12:
+                case 13:
+                    /* 110x xxxx   10xx xxxx*/
+                    count += 2;
+                    if (count > utflen)
+                        throw new UTFDataFormatException(
+                                "malformed input: partial character at end");
+                    char2 = (int) bytearr[count - 1];
+                    if ((char2 & 0xC0) != 0x80)
+                        throw new UTFDataFormatException(
+                                "malformed input around byte " + count);
+                    chararr[chararr_count++] = (char) (((c & 0x1F) << 6) |
+                            (char2 & 0x3F));
+                    break;
+                case 14:
+                    /* 1110 xxxx  10xx xxxx  10xx xxxx */
+                    count += 3;
+                    if (count > utflen)
+                        throw new UTFDataFormatException(
+                                "malformed input: partial character at end");
+                    char2 = (int) bytearr[count - 2];
+                    char3 = (int) bytearr[count - 1];
+                    if (((char2 & 0xC0) != 0x80) || ((char3 & 0xC0) != 0x80))
+                        throw new UTFDataFormatException(
+                                "malformed input around byte " + (count - 1));
+                    chararr[chararr_count++] = (char) (((c & 0x0F) << 12) |
+                            ((char2 & 0x3F) << 6) |
+                            ((char3 & 0x3F) << 0));
+                    break;
+                default:
+                    /* 10xx xxxx,  1111 xxxx */
+                    throw new UTFDataFormatException(
+                            "malformed input around byte " + count);
+            }
+        }
+        // The number of chars produced may be less than utflen
+        return new String(chararr, 0, chararr_count);
     }
 }

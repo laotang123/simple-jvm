@@ -1,6 +1,8 @@
 package org.ljf.sjvm.classfile.constantpool;
 
 import org.ljf.sjvm.classfile.ClassReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author: ljf
@@ -14,6 +16,7 @@ import org.ljf.sjvm.classfile.ClassReader;
  * @version: $ 1.0
  */
 public class ConstantInvokeDynamicInfo implements ConstantInfo {
+    private static final Logger logger = LoggerFactory.getLogger(ConstantInvokeDynamicInfo.class);
     private int bootstrapMethodAttrIndex;
     private int nameAndTypeIndex;
 
@@ -22,6 +25,9 @@ public class ConstantInvokeDynamicInfo implements ConstantInfo {
     public void readInfo(ClassReader reader) {
         this.bootstrapMethodAttrIndex = reader.readUint16();
         this.nameAndTypeIndex = reader.readUint16();
+        logger.info("end of ConstantInvokeDynamicInfo offset: " + reader.getOffset() +
+                " bootstrapMethodAttrIndex: " + bootstrapMethodAttrIndex
+                + " nameAndTypeIndex" + nameAndTypeIndex);
     }
 
     public int getBootstrapMethodAttrIndex() {

@@ -1,6 +1,8 @@
 package org.ljf.sjvm.classfile.constantpool;
 
 import org.ljf.sjvm.classfile.ClassReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author: ljf
@@ -10,6 +12,8 @@ import org.ljf.sjvm.classfile.ClassReader;
  * @version: $ 1.0
  */
 public final class ConstantPool {
+    private static final Logger logger = LoggerFactory.getLogger(ConstantPool.class);
+
     private final int constantPoolCount;
     private final ConstantInfo[] constantInfos;
 
@@ -17,11 +21,18 @@ public final class ConstantPool {
         return constantPoolCount;
     }
 
+    //just for test
+    public ConstantPool() {
+        this.constantPoolCount = 1;
+        this.constantInfos = new ConstantInfo[1];
+    }
+
     public ConstantPool(ClassReader reader) {
         constantPoolCount = reader.readUint16();
         constantInfos = new ConstantInfo[constantPoolCount];
         //常量池索引是从1 到constantPoolCount-1
         for (int i = 1; i < constantPoolCount; i++) {
+            logger.info("index of constantInfos: " + i);
             constantInfos[i] = ConstantInfo.readConstantInfo(reader, this);
 
             //double和long常量占两个常量位；

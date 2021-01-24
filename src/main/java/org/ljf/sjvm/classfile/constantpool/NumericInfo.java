@@ -1,6 +1,8 @@
 package org.ljf.sjvm.classfile.constantpool;
 
 import org.ljf.sjvm.classfile.ClassReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author: ljf
@@ -28,12 +30,15 @@ import org.ljf.sjvm.classfile.ClassReader;
  * @version: $ 1.0
  */
 public abstract class NumericInfo implements ConstantInfo {
+    private static final Logger logger = LoggerFactory.getLogger(MemberRefInfo.class);
+
     static class ConstantIntegerInfo extends NumericInfo {
         private int value;
 
         @Override
         public void readInfo(ClassReader reader) {
             this.value = reader.readInt32();
+            logger.info("end of ConstantIntegerInfo offset: " + reader.getOffset() + " value: " + value);
         }
 
         public int getValue() {
@@ -47,6 +52,7 @@ public abstract class NumericInfo implements ConstantInfo {
         @Override
         public void readInfo(ClassReader reader) {
             this.value = reader.readInt64();
+            logger.info("end of ConstantLongInfo offset: " + reader.getOffset() + " value: " + value);
         }
 
         public long getValue() {
@@ -60,6 +66,8 @@ public abstract class NumericInfo implements ConstantInfo {
         @Override
         public void readInfo(ClassReader reader) {
             this.value = reader.readFloat();
+            logger.info("end of ConstantFloatInfo offset: " + reader.getOffset() + " value: " + value);
+
         }
 
         public float getValue() {
@@ -73,6 +81,8 @@ public abstract class NumericInfo implements ConstantInfo {
         @Override
         public void readInfo(ClassReader reader) {
             this.value = reader.readDouble();
+            logger.info("end of ConstantDoubleInfo offset: " + reader.getOffset() + " value: " + value);
+
         }
 
         public double getValue() {

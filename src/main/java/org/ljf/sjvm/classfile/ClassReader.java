@@ -17,6 +17,10 @@ public class ClassReader {
     private final byte[] data;
     private int offset;
 
+    public int getOffset() {
+        return offset;
+    }
+
     public ClassReader(byte[] data) {
         this.data = data;
         this.offset = 0;

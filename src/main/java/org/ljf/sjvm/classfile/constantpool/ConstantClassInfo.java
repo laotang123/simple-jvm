@@ -1,6 +1,8 @@
 package org.ljf.sjvm.classfile.constantpool;
 
 import org.ljf.sjvm.classfile.ClassReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author: ljf
@@ -13,6 +15,8 @@ import org.ljf.sjvm.classfile.ClassReader;
  * @version: $ 1.0
  */
 public final class ConstantClassInfo implements ConstantInfo {
+    private static final Logger logger = LoggerFactory.getLogger(ConstantClassInfo.class);
+
     private int nameIndex;
     private final ConstantPool constantPool;
 
@@ -31,5 +35,6 @@ public final class ConstantClassInfo implements ConstantInfo {
     @Override
     public void readInfo(ClassReader reader) {
         this.nameIndex = reader.readUint16();
+        logger.info("end of ConstantClassInfo offset: " + reader.getOffset() + " nameIndex: " + nameIndex);
     }
 }

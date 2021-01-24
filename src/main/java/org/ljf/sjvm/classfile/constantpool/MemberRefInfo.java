@@ -1,6 +1,8 @@
 package org.ljf.sjvm.classfile.constantpool;
 
 import org.ljf.sjvm.classfile.ClassReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author: ljf
@@ -24,6 +26,8 @@ import org.ljf.sjvm.classfile.ClassReader;
  * @version: $ 1.0
  */
 public abstract class MemberRefInfo implements ConstantInfo {
+    private static final Logger logger = LoggerFactory.getLogger(MemberRefInfo.class);
+
     protected int classIndex;
     protected int nameAndTypeIndex;
     protected ConstantPool constantPool;
@@ -36,7 +40,7 @@ public abstract class MemberRefInfo implements ConstantInfo {
         return this.constantPool.getNameAndType(nameAndTypeIndex);
     }
 
-    static class ConstantMethodRefInfo extends MemberRefInfo {
+    public static class ConstantMethodRefInfo extends MemberRefInfo {
 
         public ConstantMethodRefInfo(ConstantPool constantPool) {
             this.constantPool = constantPool;
@@ -46,6 +50,17 @@ public abstract class MemberRefInfo implements ConstantInfo {
         public void readInfo(ClassReader reader) {
             this.classIndex = reader.readUint16();
             this.nameAndTypeIndex = reader.readUint16();
+            logger.info("end of ConstantMethodRefInfo offset: " + reader.getOffset() + " classIndex: " + classIndex
+                    + " nameAndTypeIndex: " + nameAndTypeIndex);
+        }
+
+        @Override
+        public String toString() {
+            return "ConstantMethodRefInfo{" +
+                    "classIndex=" + classIndex +
+                    ", nameAndTypeIndex=" + nameAndTypeIndex +
+                    ", constantPool=" + constantPool +
+                    '}';
         }
     }
 
@@ -59,6 +74,8 @@ public abstract class MemberRefInfo implements ConstantInfo {
         public void readInfo(ClassReader reader) {
             this.classIndex = reader.readUint16();
             this.nameAndTypeIndex = reader.readUint16();
+            logger.info("end of ConstantFieldRefInfo offset: " + reader.getOffset() + " classIndex: " + classIndex
+                    + " nameAndTypeIndex: " + nameAndTypeIndex);
         }
     }
 
@@ -73,6 +90,9 @@ public abstract class MemberRefInfo implements ConstantInfo {
         public void readInfo(ClassReader reader) {
             this.classIndex = reader.readUint16();
             this.nameAndTypeIndex = reader.readUint16();
+            logger.info("end of ConstantInterfaceMethodRefInfo offset: " + reader.getOffset()
+                    + " classIndex: " + classIndex
+                    + " nameAndTypeIndex: " + nameAndTypeIndex);
         }
     }
 
