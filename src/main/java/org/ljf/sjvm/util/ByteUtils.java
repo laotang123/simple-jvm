@@ -38,23 +38,68 @@ public class ByteUtils {
         return bytes2Int(bytes, 0, 8);
     }
 
-    static private int makeInt(byte b3, byte b2, byte b1, byte b0) {
+    static private int makeIntB(byte b3, byte b2, byte b1, byte b0) {
         return (((b3) << 24) |
                 ((b2 & 0xff) << 16) |
                 ((b1 & 0xff) << 8) |
                 ((b0 & 0xff)));
     }
 
+    static private int makeIntL(byte b3, byte b2, byte b1, byte b0) {
+        return (((b0) << 24) |
+                ((b1 & 0xff) << 16) |
+                ((b2 & 0xff) << 8) |
+                ((b3 & 0xff)));
+    }
+
+    static private long makeLongB(byte b7, byte b6, byte b5, byte b4,
+                                  byte b3, byte b2, byte b1, byte b0) {
+        return ((((long) b7) << 56) |
+                (((long) b6 & 0xff) << 48) |
+                (((long) b5 & 0xff) << 40) |
+                (((long) b4 & 0xff) << 32) |
+                (((long) b3 & 0xff) << 24) |
+                (((long) b2 & 0xff) << 16) |
+                (((long) b1 & 0xff) << 8) |
+                (((long) b0 & 0xff)));
+    }
+
+    static private long makeLongL(byte b7, byte b6, byte b5, byte b4,
+                                  byte b3, byte b2, byte b1, byte b0) {
+        return ((((long) b0) << 56) |
+                (((long) b1 & 0xff) << 48) |
+                (((long) b2 & 0xff) << 40) |
+                (((long) b3 & 0xff) << 32) |
+                (((long) b4 & 0xff) << 24) |
+                (((long) b5 & 0xff) << 16) |
+                (((long) b6 & 0xff) << 8) |
+                (((long) b7 & 0xff)));
+    }
+
     //有符号int32，大端排序
-    public static int byte2int32(byte[] bytes, int start) {
+    public static int byte2int32(byte[] bytes, int a) {
 
-        return makeInt(bytes[start], bytes[start + 1], bytes[start + 2], bytes[start + 3]);
+        return makeIntB(bytes[a], bytes[a + 1], bytes[a + 2], bytes[a + 3]);
     }
 
-    //有符号64位 long
-    public static long byte2int64(byte[] bytes, int start) {
-        return bytes2Long(bytes, 0, 8);
+    public static int byte2int32(byte[] bytes, int a, boolean bigEndian) {
+        return bigEndian ? makeIntB(bytes[a], bytes[a + 1], bytes[a + 2], bytes[a + 3]) :
+                makeIntL(bytes[a], bytes[a + 1], bytes[a + 2], bytes[a + 3]);
     }
+
+    //有符号64位 long TODO:仿照bytes2Int方法，减少代码量
+    public static long byte2int64(byte[] bytes, int a) {
+        return makeLongB(bytes[a], bytes[a + 1], bytes[a + 2], bytes[a + 3], bytes[a + 4],
+                bytes[a + 5], bytes[a + 6], bytes[a + 7]);
+    }
+
+    public static long byte2int64(byte[] bytes, int a, boolean bigEndian) {
+        return bigEndian ? makeLongB(bytes[a], bytes[a + 1], bytes[a + 2], bytes[a + 3], bytes[a + 4],
+                bytes[a + 5], bytes[a + 6], bytes[a + 7]) :
+                makeLongL(bytes[a], bytes[a + 1], bytes[a + 2], bytes[a + 3], bytes[a + 4],
+                        bytes[a + 5], bytes[a + 6], bytes[a + 7]);
+    }
+
 
     public static int bytes2Int(byte[] b, int start, int len) {
         int sum = 0;
