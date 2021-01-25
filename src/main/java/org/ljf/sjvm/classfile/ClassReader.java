@@ -1,6 +1,8 @@
 package org.ljf.sjvm.classfile;
 
 import org.ljf.sjvm.util.ByteUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.math.BigInteger;
@@ -13,6 +15,7 @@ import java.math.BigInteger;
  * @version: $ 1.0
  */
 public class ClassReader {
+    private static final Logger logger = LoggerFactory.getLogger(ClassReader.class);
     private final byte[] data;
     private int offset;
 
@@ -39,6 +42,13 @@ public class ClassReader {
 
     //FIXME: 这里超出Int.MaxValue会出现问题，class文件中为uint32
     public byte[] readBytes(long num) {
+        int intNum = (int) num;
+        int diff = (int) (num - intNum);//uit32-int 差值不会大于int.MaxValue
+        if (diff > 0) {
+            offset += diff;//多余数据跳过
+            logger.warn("cast uint32 to int has error, diff: " + diff);
+        }
+
         return readBytes((int) num);
     }
 
