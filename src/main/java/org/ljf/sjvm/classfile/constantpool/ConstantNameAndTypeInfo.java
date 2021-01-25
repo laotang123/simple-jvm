@@ -34,6 +34,6 @@ public class ConstantNameAndTypeInfo implements ConstantInfo {
         this.nameIndex = reader.readUint16();
         this.descriptorIndex = reader.readUint16();
         logger.info("end of ConstantNameAndTypeInfo offset: " + reader.getOffset() +
-                " nameIndex: " + nameIndex + " descriptorIndex" + descriptorIndex);
+                " nameIndex: " + nameIndex + " descriptorIndex " + descriptorIndex);
     }
 }
