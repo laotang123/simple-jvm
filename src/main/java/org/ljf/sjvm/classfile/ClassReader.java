@@ -1,6 +1,5 @@
 package org.ljf.sjvm.classfile;
 
-import org.ljf.sjvm.classfile.constantpool.ConstantPool;
 import org.ljf.sjvm.util.ByteUtils;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -36,6 +35,11 @@ public class ClassReader {
         System.arraycopy(this.data, offset, values, 0, num);
         offset += num;
         return values;
+    }
+
+    //FIXME: 这里超出Int.MaxValue会出现问题，class文件中为uint32
+    public byte[] readBytes(long num) {
+        return readBytes((int) num);
     }
 
     //u1
