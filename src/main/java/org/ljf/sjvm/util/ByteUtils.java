@@ -28,9 +28,10 @@ public class ByteUtils {
         return bytes2Int(bytes, start, 2);
     }
 
-    //u4，TODO：uint32应该用long表示？, magic处理为uint32有问题！。。
+    //u4，参考实现 Integer.toUnsignedLong
     public static long byte2Uint32(byte[] bytes, int start) {
-        return bytes2Long(bytes, 0, 4);
+//        return bytes2Long(bytes, 0, 4);
+        return  ((long) byte2int32(bytes,start))& 0xffffffffL;
     }
 
     //u8，TODO：uint64需要自定义类？

@@ -64,6 +64,13 @@ public class ClassFile {
         this.readAndCheckMagic(reader);
         this.readAndCheckVersion(reader);
         this.constantPool = readConstantPool(reader);
+        this.accessFlags = reader.readUint16();
+        this.thisClass = reader.readUint16();
+        this.superClass = reader.readUint16();
+        this.interfaces = reader.readUint16s();
+        this.fields = MemberInfo.readMembers(reader,this.constantPool);
+        this.methods = MemberInfo.readMembers(reader,this.constantPool);
+        this.attributes = AttributeInfo.readAttributes(reader,this.constantPool);
         logger.info("end of constant pool offset: " + reader.getOffset());
 
     }
