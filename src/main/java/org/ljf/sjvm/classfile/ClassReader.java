@@ -80,6 +80,12 @@ public class ClassReader {
         return value;
     }
 
+    //类型强转可能会丢失数据，Integer.maxValue到uint32.maxValue之间的数据
+    @Deprecated
+    public int readUint32ToInt() {
+        return (int) readUint32();
+    }
+
     public int readInt32() {
         int value = ByteUtils.byte2int32(this.data, offset);
         offset += 4;

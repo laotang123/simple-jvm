@@ -1,5 +1,6 @@
-package org.ljf.sjvm.classfile;
+package org.ljf.sjvm.classfile.attributes;
 
+import org.ljf.sjvm.classfile.ClassReader;
 import org.ljf.sjvm.classfile.constantpool.ConstantPool;
 
 /**
@@ -38,26 +39,26 @@ public interface AttributeInfo {
     }
 
     static AttributeInfo newAttributeInfo(String attrName, long attrLen, ConstantPool constantPool) {
-       switch (attrName){
-           case "Code":
-               return new CodeAttribute(constantPool);
-           case "ConstantValue":
-               return new ConstantValueAttribute();
-           case "Deprecated":
-               return new DeprecateAttribute();
-           case "Exceptions":
-               return new ExceptionsAttribute();
-           case "LineNumberTable":
-               return new LineNumberTableAttribute();
-           case "LocalVariableTable":
-               return new LocalVariableTableAttribute();
-           case "SourceFile":
-               return new SourceFileAttribute(constantPool);
-           case "Synthetic":
-               return new SyntheticAttribute();
-           default:
-               return new UnparsedAttribute(attrName,attrLen);
-       }
+        switch (attrName) {
+            case "Code":
+                return new CodeAttribute(constantPool);
+            case "ConstantValue":
+                return new ConstantValueAttribute();
+            case "Deprecated":
+                return new DeprecateAttribute();
+            case "Exceptions":
+                return new ExceptionsAttribute();
+            case "LineNumberTable":
+                return new LineNumberTableAttribute();
+            case "LocalVariableTable":
+                return new LocalVariableTableAttribute();
+            case "SourceFile":
+                return new SourceFileAttribute(constantPool);
+            case "Synthetic":
+                return new SyntheticAttribute();
+            default:
+                return new UnparsedAttribute(attrName, attrLen);
+        }
     }
 
 

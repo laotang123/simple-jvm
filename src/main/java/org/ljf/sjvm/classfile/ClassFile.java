@@ -1,6 +1,8 @@
 package org.ljf.sjvm.classfile;
 
+import org.ljf.sjvm.classfile.attributes.AttributeInfo;
 import org.ljf.sjvm.classfile.constantpool.ConstantPool;
+import org.ljf.sjvm.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,10 +70,10 @@ public class ClassFile {
         this.thisClass = reader.readUint16();
         this.superClass = reader.readUint16();
         this.interfaces = reader.readUint16s();
-        this.fields = MemberInfo.readMembers(reader,this.constantPool);
-        this.methods = MemberInfo.readMembers(reader,this.constantPool);
-        this.attributes = AttributeInfo.readAttributes(reader,this.constantPool);
-        logger.info("end of constant pool offset: " + reader.getOffset());
+        this.fields = MemberInfo.readMembers(reader, this.constantPool);
+        this.methods = MemberInfo.readMembers(reader, this.constantPool);
+        this.attributes = AttributeInfo.readAttributes(reader, this.constantPool);
+        logger.info("end of attributes offset: " + reader.getOffset());
 
     }
 
@@ -81,10 +83,10 @@ public class ClassFile {
 
     private boolean rightVersion(int majorVersion, int minorVersion) {
         //TODO:魔数修改为有意义常量
-        if (majorVersion == 45) {
+        if (majorVersion == Constants.JDK1_OR_JDK1_1) {
             return true;
         } else {
-            return majorVersion >= 46 && majorVersion <= 52 && minorVersion == 0;
+            return majorVersion >= Constants.JDK1_2 && majorVersion <= Constants.JDK8 && minorVersion == Constants.ZERO;
         }
     }
 

@@ -1,5 +1,6 @@
 package org.ljf.sjvm.classfile;
 
+import org.ljf.sjvm.classfile.attributes.AttributeInfo;
 import org.ljf.sjvm.classfile.constantpool.ConstantPool;
 
 /**

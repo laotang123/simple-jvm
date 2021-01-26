@@ -1,4 +1,6 @@
-package org.ljf.sjvm.classfile;
+package org.ljf.sjvm.classfile.attributes;
+
+import org.ljf.sjvm.classfile.ClassReader;
 
 /**
  * @author: ljf
