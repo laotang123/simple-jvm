@@ -1,6 +1,7 @@
 package org.ljf.sjvm.classpath;
 
 import org.apache.commons.lang3.StringUtils;
+import org.ljf.sjvm.util.IOUtil;
 import org.ljf.sjvm.util.PathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,7 +75,10 @@ public class ClassPathContainer {
      */
     private static String getJreDir(String jreOption) throws PathException {
         if (!StringUtils.isEmpty(jreOption) && new File(jreOption).exists()) {
-            return jreOption;
+            if (jreOption.endsWith("jre")) {
+                return jreOption;
+            }
+            return PathUtil.get(jreOption,"jre");
         } else if (new File("./jre").exists()) {
             return "./jre";
         } else if (!System.getenv("JAVA_HOME").isEmpty()) {

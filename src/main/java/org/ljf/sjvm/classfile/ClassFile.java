@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * @modified By:
  * @version: $ 1.0
  */
-public class ClassFile {
+public final class ClassFile {
     private static final Logger logger = LoggerFactory.getLogger(ClassFile.class);
     //long magic //uint32 u4
     int minorVersion;//uint16 u2
@@ -107,5 +107,65 @@ public class ClassFile {
         if (magic != 0xCAFEBABE) {
             throw new IllegalArgumentException("java.lang.ClassFormatError: magic!");
         }
+    }
+
+    public String getClassName() {
+        return this.constantPool.getClassName(this.thisClass);
+    }
+
+    public String getSuperClassName() {
+        if (this.superClass > 0) {
+            return this.constantPool.getClassName(this.superClass);
+        }
+        return "";
+    }
+
+    public String[] getInterfaceNames() {
+        int len = this.interfaces.length;
+        String[] interfaceNames = new String[len];
+        for (int i = 0; i < len; i++) {
+            interfaceNames[i] = this.constantPool.getClassName(this.interfaces[i]);
+        }
+        return interfaceNames;
+    }
+
+    public int getMinorVersion() {
+        return minorVersion;
+    }
+
+    public int getMajorVersion() {
+        return majorVersion;
+    }
+
+    public ConstantPool getConstantPool() {
+        return constantPool;
+    }
+
+    public int getAccessFlags() {
+        return accessFlags;
+    }
+
+    public int getThisClass() {
+        return thisClass;
+    }
+
+    public int getSuperClass() {
+        return superClass;
+    }
+
+    public int[] getInterfaces() {
+        return interfaces;
+    }
+
+    public MemberInfo[] getFields() {
+        return fields;
+    }
+
+    public MemberInfo[] getMethods() {
+        return methods;
+    }
+
+    public AttributeInfo[] getAttributes() {
+        return attributes;
     }
 }
