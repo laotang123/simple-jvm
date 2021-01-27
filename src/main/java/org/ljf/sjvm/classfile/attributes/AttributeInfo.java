@@ -52,10 +52,20 @@ public interface AttributeInfo {
                 return new LineNumberTableAttribute();
             case "LocalVariableTable":
                 return new LocalVariableTableAttribute();
+            case "LocalVariableTypeTable":
+                return new LocalVariableTypeTableAttribute();
             case "SourceFile":
                 return new SourceFileAttribute(constantPool);
             case "Synthetic":
                 return new SyntheticAttribute();
+            case "InnerClasses":
+                return new InnerClassAttribute();
+            case "Signature":
+                return new SignatureAttribute(constantPool);
+            case "BootstrapMethods":
+                return new BootstrapMethodsAttribute();
+            case "EnclosingMethod":
+                return new EnclosingMethod(constantPool);
             default:
                 return new UnparsedAttribute(attrName, attrLen);
         }

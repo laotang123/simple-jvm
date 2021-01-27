@@ -36,7 +36,7 @@ public abstract class MemberRefInfo implements ConstantInfo {
         return this.constantPool.getClassName(classIndex);
     }
 
-    public ConstantNameAndTypeInfo NameAndDescriptor() {
+    public String NameAndDescriptor() {
         return this.constantPool.getNameAndType(nameAndTypeIndex);
     }
 

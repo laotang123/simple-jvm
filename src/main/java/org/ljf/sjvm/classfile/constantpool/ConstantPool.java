@@ -65,9 +65,13 @@ public final class ConstantPool {
         throw new IllegalArgumentException("invalid constant pool index!");
     }
 
-    public ConstantNameAndTypeInfo getNameAndType(int index) {
-        return (ConstantNameAndTypeInfo) this.getConstantInfo(index);
+    public String getNameAndType(int index) {
+        ConstantNameAndTypeInfo constantInfo = (ConstantNameAndTypeInfo) this.getConstantInfo(index);
+        String name = this.getUtf8(constantInfo.getNameIndex());
+        String descriptor = this.getUtf8(constantInfo.getDescriptorIndex());
+        return name + descriptor;
     }
+
 
     /**
      * 先从常量池表中查出ConstantClassInfo信息，再拿nameIndex查出className

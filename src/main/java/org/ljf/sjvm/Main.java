@@ -2,6 +2,7 @@ package org.ljf.sjvm;
 
 import org.ljf.sjvm.classfile.ClassFile;
 import org.ljf.sjvm.classfile.MemberInfo;
+import org.ljf.sjvm.classfile.attributes.AttributeInfo;
 import org.ljf.sjvm.classpath.ClassPathContainer;
 import org.ljf.sjvm.util.IOUtil;
 
@@ -80,6 +81,10 @@ public class Main {
             System.out.println(method.getName());
         }
 
-        System.out.println(""+classFile.getAttributes().length);
+        AttributeInfo[] attributes = classFile.getAttributes();
+        System.out.println("attributes count: "+attributes.length);
+        for (AttributeInfo attribute : attributes) {
+            System.out.println(attribute.getClass().getName());
+        }
     }
 }
