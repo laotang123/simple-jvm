@@ -34,5 +34,9 @@ public class OperandStackTest {
         System.out.println(operandStack.popDouble() == Double.MAX_VALUE);
         operandStack.pushDouble(Double.MIN_VALUE);
         System.out.println(operandStack.popDouble() == Double.MIN_VALUE);
+
+        //ref
+        operandStack.pushRef(null);
+        System.out.println(operandStack.popRef() == null);
     }
 }
