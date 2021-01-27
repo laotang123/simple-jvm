@@ -1,0 +1,13 @@
+package org.ljf.sjvm.rtda;
+
+/**
+ * @author: ljf
+ * @date: 2021/1/27 13:28
+ * @description:
+ * @modified By：
+ * @version: $ 1.0
+ */
+public class Slot {
+    int num;
+    Object ref;
+}
