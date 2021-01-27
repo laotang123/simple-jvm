@@ -39,8 +39,6 @@ public class Main {
 
         try {
             if (container != null) {//JAVA 类库没有装载进来，parse会构建失败返回null
-//                byte[] result = container.readClass(classPath);
-//                System.out.println(Arrays.toString(result));
                 ClassFile classFile = loadClass(classPath, container);
                 printClassInfo(classFile);
             }
@@ -66,7 +64,7 @@ public class Main {
 
     private static void printClassInfo(ClassFile classFile) {
         System.out.println("version: " + classFile.getMajorVersion() + "." + classFile.getMinorVersion());
-        System.out.println("constants count: " + classFile.getConstantPool());
+        System.out.println("constants count: " + classFile.getConstantPool().getConstantPoolCount());
         System.out.println("acc flags: " + classFile.getAccessFlags());
         System.out.println("this class: " + classFile.getClassName());
         System.out.println("super class: " + classFile.getSuperClassName());
@@ -77,8 +75,11 @@ public class Main {
             System.out.println(field.getName());
         }
         MemberInfo[] methods = classFile.getMethods();
+        System.out.println("methods count: " + methods.length);
         for (MemberInfo method : methods) {
             System.out.println(method.getName());
         }
+
+        System.out.println(""+classFile.getAttributes().length);
     }
 }
