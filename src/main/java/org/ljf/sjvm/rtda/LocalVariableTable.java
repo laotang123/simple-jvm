@@ -8,7 +8,7 @@ package org.ljf.sjvm.rtda;
  * @version: $ 1.0
  */
 public class LocalVariableTable {
-    private Slot[] slots;
+    private final Slot[] slots;
 
     //maxLocals: uint
     public LocalVariableTable(int maxLocals) {
@@ -16,6 +16,9 @@ public class LocalVariableTable {
             throw new IllegalStateException("maxLocals must be non-negative，but get: " + maxLocals);
         }
         slots = new Slot[maxLocals];
+        for (int i = 0; i < maxLocals; i++) {
+            slots[i] = new Slot();
+        }
     }
 
     public void setInt(int index, int value) {
@@ -42,25 +45,25 @@ public class LocalVariableTable {
 
     public long getLong(int index) {
         long low = Integer.toUnsignedLong(slots[index].num);
-        long high = Integer.toUnsignedLong(slots[index].num);
+        long high = Integer.toUnsignedLong(slots[index + 1].num);
 
         return high << 32 | low;
     }
 
-    public void setDouble(int index, double value){
+    public void setDouble(int index, double value) {
         long bits = Double.doubleToLongBits(value);
-        this.setLong(index,bits);
+        this.setLong(index, bits);
     }
 
-    public double getDouble(int index){
+    public double getDouble(int index) {
         return Double.longBitsToDouble(getLong(index));
     }
 
-    public void setRef(int index,Object ref){
+    public void setRef(int index, Object ref) {
         slots[index].ref = ref;
     }
 
-    public Object getRef(int index){
+    public Object getRef(int index) {
         return slots[index].ref;
     }
 }
