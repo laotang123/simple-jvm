@@ -11,7 +11,7 @@ import org.omg.CORBA.PUBLIC_MEMBER;
  */
 public class OperandStack {
     private int size;
-    private Slot[] slots;
+    private final Slot[] slots;
 
     public OperandStack(int maxStack) {
         if (maxStack < 0) {
