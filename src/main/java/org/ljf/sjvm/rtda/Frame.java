@@ -28,4 +28,52 @@ public class Frame {
     public OperandStack getOperandStack() {
         return operandStack;
     }
+
+    public void pushRef(Object ref) {
+        this.operandStack.pushRef(ref);
+    }
+
+    public Object popRef() {
+        return operandStack.popRef();
+    }
+
+    public void pushDouble(double value) {
+        this.operandStack.pushDouble(value);
+    }
+
+    public double popDouble() {
+        return operandStack.popDouble();
+    }
+
+    public void pushInt(int value) {
+        this.operandStack.pushInt(value);
+    }
+
+    public int popInt() {
+        return operandStack.popInt();
+    }
+
+    public void pushFloat(float value) {
+        this.operandStack.pushFloat(value);
+    }
+
+    public float popFloat() {
+        return operandStack.popFloat();
+    }
+
+    public void pushLong(long value) {
+        this.operandStack.pushLong(value);
+    }
+
+    public long popLong() {
+        return operandStack.popLong();
+    }
+
+    public void setRef(int index, Object ref) {
+        this.localVariableTable.setRef(index, ref);
+    }
+
+    public void setDouble(int index, double value) {
+        this.localVariableTable.setDouble(index, value);
+    }
 }
