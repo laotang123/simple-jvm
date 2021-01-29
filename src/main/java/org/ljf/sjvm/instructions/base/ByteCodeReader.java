@@ -16,36 +16,50 @@ public class ByteCodeReader {
         this.pc = pc;
     }
 
-
-
-    public short readUint8() {
-        byte b = this.code[pc];
-        this.pc++;
-        return (short) (((short) b) & 0xff);
+    public void reset(byte[] code) {
+        reset(code, 0);
     }
 
-    public short readInt8() {
+    public byte readByte() {
         byte b = this.code[pc];
         this.pc++;
         return b;
     }
 
-    //待实现 TODO
-    public int readUint16() {
-        short byte1 = readUint8();
-        short byte2 = readUint8();
-        return (byte1 << 8) | byte2;
+    public int getPc() {
+        return pc;
     }
 
-//    public int readInt16(){
-//        short byte1 = readUint8();
-//        short byte2 = readUint8();
-//        return (short) ((byte1 << 8) | byte2);
-//    }
+    public void setPc(int pc) {
+        this.pc = pc;
+    }
 
-    public short readInt16(){
+    public short readUint8() {
+        return (short) (readByte() & 0xff);
+    }
+
+    public short readInt8() {
+        return readByte();
+    }
+
+    public int readUint16() {
+        //&0xff消除负号
+        return ((readByte() & 0xff) << 8) |
+                ((readByte() & 0xff));
+    }
+
+
+    public short readInt16() {
         short byte1 = readUint8();
         short byte2 = readUint8();
         return (short) ((byte1 << 8) | byte2);
+    }
+
+    //大端排序
+    public int readInt32() {
+        return (((readByte()) << 24) |
+                ((readByte() & 0xff) << 16) |
+                ((readByte() & 0xff) << 8) |
+                ((readByte() & 0xff)));
     }
 }

@@ -10,8 +10,8 @@ import org.ljf.sjvm.rtda.Frame;
  * @modified By：
  * @version: $ 1.0
  */
-public class Index8Instruction implements Instruction{
-    private short index;
+public abstract class Index8Instruction implements Instruction{
+    protected short index;
 
 
     @Override
@@ -19,8 +19,4 @@ public class Index8Instruction implements Instruction{
         this.index = reader.readUint8();
     }
 
-    @Override
-    public void execute(Frame frame) {
-
-    }
 }
