@@ -37,9 +37,15 @@ public class ByteCodeReader {
         return (byte1 << 8) | byte2;
     }
 
-    public int readInt16(){
+//    public int readInt16(){
+//        short byte1 = readUint8();
+//        short byte2 = readUint8();
+//        return (short) ((byte1 << 8) | byte2);
+//    }
+
+    public short readInt16(){
         short byte1 = readUint8();
         short byte2 = readUint8();
-        return (byte1 << 8) | byte2;
+        return (short) ((byte1 << 8) | byte2);
     }
 }
