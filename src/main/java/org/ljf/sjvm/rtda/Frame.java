@@ -88,4 +88,12 @@ public class Frame {
     public void setInt(int index, int value) {
         this.localVariableTable.setInt(index, value);
     }
+
+    public Slot popSLot() {
+        return this.operandStack.popSlot();
+    }
+
+    public void pushSlot(Slot slot) {
+        this.operandStack.pushSlot(slot);
+    }
 }

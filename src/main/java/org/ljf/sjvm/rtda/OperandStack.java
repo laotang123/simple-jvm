@@ -23,6 +23,15 @@ public class OperandStack {
         }
     }
 
+    public void pushSlot(Slot slot) {
+        this.slots[this.size] = slot;
+        this.size++;
+    }
+
+    public Slot popSlot() {
+        this.size--;
+        return this.slots[size];
+    }
 
     public void pushInt(int value) {
         this.slots[size].num = value;
