@@ -76,4 +76,16 @@ public class Frame {
     public void setDouble(int index, double value) {
         this.localVariableTable.setDouble(index, value);
     }
+
+    public void setFloat(int index, float value) {
+        this.localVariableTable.setFloat(index, value);
+    }
+
+    public void setLong(int index, long value) {
+        this.localVariableTable.setLong(index, value);
+    }
+
+    public void setInt(int index, int value) {
+        this.localVariableTable.setInt(index, value);
+    }
 }
