@@ -96,4 +96,22 @@ public class Frame {
     public void pushSlot(Slot slot) {
         this.operandStack.pushSlot(slot);
     }
+
+    public int getInt(int index) {
+        return this.localVariableTable.getInt(index);
+    }
+
+    public long getLong(int index) {
+        return this.localVariableTable.getLong(index);
+    }
+
+
+    public float getFloat(int index) {
+        return this.localVariableTable.getLong(index);
+    }
+
+    public double getDouble(int index) {
+        return this.localVariableTable.getDouble(index);
+    }
+
 }
