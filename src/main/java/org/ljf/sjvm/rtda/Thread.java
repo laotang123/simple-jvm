@@ -11,9 +11,14 @@ public class Thread {
     private int pc;
     private final Stack stack;
 
-    public Thread(){
+    public Thread() {
+        this(1024);
+    }
+
+    public Thread(int maxSize) {
         this.stack = new Stack(1024);
     }
+
     public int getPc() {
         return pc;
     }
@@ -22,15 +27,20 @@ public class Thread {
         this.pc = pc;
     }
 
-    public void pushFrame(Frame frame){
+
+    public void pushFrame(Frame frame) {
         this.stack.push(frame);
     }
 
-    public Frame popFrame(){
-       return this.stack.pop();
+    public Frame popFrame() {
+        return this.stack.pop();
     }
 
-    public Frame currentFrame(){
+    public Frame currentFrame() {
         return this.stack.top();
+    }
+
+    public Frame newFrame(int maxLocals, int maxStack) {
+        return new Frame(this, maxLocals, maxStack);
     }
 }

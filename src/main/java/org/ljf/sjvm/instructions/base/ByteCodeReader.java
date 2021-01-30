@@ -11,6 +11,18 @@ public class ByteCodeReader {
     private byte[] code;//存储字节码
     private int pc;//记录读取到了那个字节
 
+    public ByteCodeReader(byte[] code) {
+        this.code = code;
+        this.pc = 0;
+    }
+
+    public ByteCodeReader() {
+    }
+
+    public void setCode(byte[] code) {
+        this.code = code;
+    }
+
     public void reset(byte[] code, int pc) {
         this.code = code;
         this.pc = pc;
@@ -75,5 +87,9 @@ public class ByteCodeReader {
             values[i] = readInt32();
         }
         return values;
+    }
+
+    public boolean isEmpty() {
+        return pc == code.length;
     }
 }

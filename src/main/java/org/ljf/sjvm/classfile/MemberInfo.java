@@ -1,6 +1,7 @@
 package org.ljf.sjvm.classfile;
 
 import org.ljf.sjvm.classfile.attributes.AttributeInfo;
+import org.ljf.sjvm.classfile.attributes.CodeAttribute;
 import org.ljf.sjvm.classfile.constantpool.ConstantPool;
 
 /**
@@ -78,5 +79,12 @@ public final class MemberInfo {
         return constantPool.getUtf8(this.descriptorIndex);
     }
 
-
+    public CodeAttribute getCodeAttribute() {
+        for (AttributeInfo attribute : this.attributes) {
+            if (attribute instanceof CodeAttribute) {
+                return (CodeAttribute) attribute;
+            }
+        }
+        return null;
+    }
 }

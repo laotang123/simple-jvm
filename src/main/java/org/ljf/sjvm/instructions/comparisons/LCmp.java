@@ -10,7 +10,7 @@ import org.ljf.sjvm.rtda.Frame;
  * @modified By:
  * @version: $ 1.0
  */
-public class ICmp extends NoOperandInstruction {
+public class LCmp extends NoOperandInstruction {
     @Override
     public void execute(Frame frame) {
         long v2 = frame.popLong();
