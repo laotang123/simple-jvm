@@ -9,17 +9,12 @@ import org.ljf.sjvm.rtda.Frame;
  * @modified By：
  * @version: $ 1.0
  */
-public class BranchInstruction implements Instruction{
+public abstract class BranchInstruction implements Instruction{
     private int offset;
 
 
     @Override
     public void fetchOperands(ByteCodeReader reader) {
         this.offset = reader.readInt16();
-    }
-
-    @Override
-    public void execute(Frame frame) {
-
     }
 }
