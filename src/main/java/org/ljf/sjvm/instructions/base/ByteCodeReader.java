@@ -62,4 +62,18 @@ public class ByteCodeReader {
                 ((readByte() & 0xff) << 8) |
                 ((readByte() & 0xff)));
     }
+
+    public void skipPadding() {
+        while (this.pc % 4 != 0) {
+            this.readByte();
+        }
+    }
+
+    public int[] readInt32s(int jumpOffsetsCount) {
+        int[] values = new int[jumpOffsetsCount];
+        for (int i = 0; i < values.length; i++) {
+            values[i] = readInt32();
+        }
+        return values;
+    }
 }
