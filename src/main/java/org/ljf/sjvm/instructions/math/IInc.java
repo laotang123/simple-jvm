@@ -15,6 +15,14 @@ public class IInc implements Instruction {
     private int index;
     private int constValue;
 
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public void setConstValue(int constValue) {
+        this.constValue = constValue;
+    }
+
     @Override
     public void fetchOperands(ByteCodeReader reader) {
         this.index = reader.readUint8();
