@@ -10,7 +10,7 @@ import org.ljf.sjvm.rtda.Frame;
  * @version: $ 1.0
  */
 public abstract class BranchInstruction implements Instruction{
-    private int offset;
+    protected int offset;
 
 
     @Override

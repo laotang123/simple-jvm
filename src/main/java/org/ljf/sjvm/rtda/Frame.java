@@ -15,10 +15,25 @@ public class Frame {
     Frame lower;
     LocalVariableTable localVariableTable;
     OperandStack operandStack;
+    Thread thread;
+    int nextPc;//指向下一条指令
 
-    public Frame(int maxLocals, int maxStack) {
+    public Thread getThread() {
+        return thread;
+    }
+
+    public int getNextPc() {
+        return nextPc;
+    }
+
+    public void setNextPc(int nextPc) {
+        this.nextPc = nextPc;
+    }
+
+    public Frame(Thread thread, int maxLocals, int maxStack) {
         this.localVariableTable = new LocalVariableTable(maxLocals);
         this.operandStack = new OperandStack(maxStack);
+        this.thread = thread;
     }
 
     public LocalVariableTable getLocalVariableTable() {
