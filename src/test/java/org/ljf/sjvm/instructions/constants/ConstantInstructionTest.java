@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.ljf.sjvm.instructions.base.ByteCodeReader;
 import org.ljf.sjvm.rtda.Frame;
+import org.ljf.sjvm.rtda.Thread;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +17,8 @@ import static org.junit.Assert.*;
  */
 public class ConstantInstructionTest {
     private static final ByteCodeReader reader = new ByteCodeReader();
-    private static final Frame frame = new Frame(1024, 1024);
+    private static final Thread thread = new Thread();
+    private static final Frame frame = thread.newFrame(1024, 1024);
 
     @Before
     public void before() {

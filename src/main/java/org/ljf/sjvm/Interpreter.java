@@ -3,6 +3,7 @@ package org.ljf.sjvm;
 import org.ljf.sjvm.classfile.MemberInfo;
 import org.ljf.sjvm.classfile.attributes.CodeAttribute;
 import org.ljf.sjvm.classfile.constantpool.MemberRefInfo;
+import org.ljf.sjvm.exceptions.UnsupportedException;
 import org.ljf.sjvm.instructions.InstructionFactory;
 import org.ljf.sjvm.instructions.base.ByteCodeReader;
 import org.ljf.sjvm.instructions.base.Instruction;
@@ -54,17 +55,26 @@ public class Interpreter {
         Frame frame = thread.popFrame();
         ByteCodeReader reader = new ByteCodeReader(byteCode);
 
-        while (!reader.isEmpty()) {
+        while (true) {
             int pc = frame.getNextPc();
             thread.setPc(pc);
             //指令解码
+            reader.reset(pc);
             short opCode = reader.readUint8();
-            Instruction inst = InstructionFactory.newInstruction(opCode);
-            inst.fetchOperands(reader);
-            frame.setNextPc(reader.getPc());
-            //指令执行
-            System.out.printf("pc: %2d inst: %s \n", pc, inst);
-            inst.execute(frame);
+            Instruction inst;
+            try {
+                inst = InstructionFactory.newInstruction(opCode);
+                inst.fetchOperands(reader);
+                frame.setNextPc(reader.getPc());
+                //指令执行
+                System.out.printf("pc: %2d inst: %s \n", pc, inst);
+                inst.execute(frame);
+            } catch (UnsupportedException e) {
+                System.out.printf("%2d, localVariableTable: %s \n", pc, frame.getLocalVariableTable());
+                e.printStackTrace();
+                break;
+            }
+
         }
 
     }

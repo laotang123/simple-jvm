@@ -1,5 +1,7 @@
 package org.ljf.sjvm.rtda;
 
+import java.util.Arrays;
+
 /**
  * @author: ljf
  * @date: 2021/1/27 13:04
@@ -65,5 +67,12 @@ public class LocalVariableTable {
 
     public Object getRef(int index) {
         return slots[index].ref;
+    }
+
+    @Override
+    public String toString() {
+        return "LocalVariableTable{" +
+                "slots=" + Arrays.toString(slots) +
+                '}';
     }
 }

@@ -32,6 +32,10 @@ public class ByteCodeReader {
         reset(code, 0);
     }
 
+    public void reset(int pc) {
+        this.pc = pc;
+    }
+
     public byte readByte() {
         byte b = this.code[pc];
         this.pc++;

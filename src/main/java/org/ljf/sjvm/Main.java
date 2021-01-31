@@ -41,9 +41,11 @@ public class Main {
         try {
             if (container != null) {//JAVA 类库没有装载进来，parse会构建失败返回null
                 ClassFile classFile = loadClass(classPath, container);
+                MemberInfo mainMethod = getMainMethod(classFile);
+                Interpreter.interpret(mainMethod);
                 printClassInfo(classFile);
             }
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | NoSuchMethodException e) {
             e.printStackTrace();
         }
 
@@ -60,6 +62,22 @@ public class Main {
     private static ClassFile loadClass(String className, ClassPathContainer container) throws ClassNotFoundException {
         byte[] classData = container.readClass(className);
         return ClassFile.parse(classData);
+    }
+
+    /**
+     * 获取class file中的主方法
+     *
+     * @param classFile：class file对象
+     * @return ：main method
+     */
+    private static MemberInfo getMainMethod(ClassFile classFile) throws NoSuchMethodException {
+        MemberInfo[] methods = classFile.getMethods();
+        for (MemberInfo method : methods) {
+            if (method.getName().equals("main") && method.getDescriptor().equals("([Ljava/lang/String;)V")) {
+                return method;
+            }
+        }
+        throw new NoSuchMethodException("main method not found in class: " + classFile.getClassName());
     }
 
 
@@ -82,7 +100,7 @@ public class Main {
         }
 
         AttributeInfo[] attributes = classFile.getAttributes();
-        System.out.println("attributes count: "+attributes.length);
+        System.out.println("attributes count: " + attributes.length);
         for (AttributeInfo attribute : attributes) {
             System.out.println(attribute.getClass().getName());
         }

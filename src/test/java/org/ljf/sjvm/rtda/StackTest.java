@@ -10,9 +10,10 @@ package org.ljf.sjvm.rtda;
 public class StackTest {
     public static void main(String[] args) {
         Stack stack = new Stack(1024);
-        Frame f1 = new Frame(1,1);
-        Frame f2 = new Frame(1,1);
-        Frame f3 = new Frame(1,1);
+        Thread t = new Thread();
+        Frame f1 = new Frame(t, 1, 1);
+        Frame f2 = new Frame(t, 1, 1);
+        Frame f3 = new Frame(t, 1, 1);
 
         stack.push(f1);
         stack.push(f2);

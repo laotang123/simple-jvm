@@ -1,11 +1,17 @@
 package org.ljf.sjvm.instructions;
 
+import org.ljf.sjvm.exceptions.UnsupportedException;
 import org.ljf.sjvm.instructions.base.Instruction;
 import org.ljf.sjvm.instructions.comparisons.*;
 import org.ljf.sjvm.instructions.constants.*;
-import org.ljf.sjvm.instructions.control.*;
+import org.ljf.sjvm.instructions.control.Goto;
+import org.ljf.sjvm.instructions.control.LookupSwitch;
+import org.ljf.sjvm.instructions.control.TableSwitch;
 import org.ljf.sjvm.instructions.conversions.*;
-import org.ljf.sjvm.instructions.extend.*;
+import org.ljf.sjvm.instructions.extend.GotoW;
+import org.ljf.sjvm.instructions.extend.IfNonNull;
+import org.ljf.sjvm.instructions.extend.IfNull;
+import org.ljf.sjvm.instructions.extend.Wide;
 import org.ljf.sjvm.instructions.loads.*;
 import org.ljf.sjvm.instructions.math.*;
 import org.ljf.sjvm.instructions.stack.*;
@@ -179,7 +185,7 @@ public class InstructionFactory {
 
     //map结构，单例
     //TODO: 根据opCode的最终使用，考虑改为byte类型
-    public static Instruction newInstruction(short opCode) {
+    public static Instruction newInstruction(short opCode) throws UnsupportedException {
         switch (opCode) {
             case 0x00:
                 return instructionMap.get("nop");
@@ -373,6 +379,8 @@ public class InstructionFactory {
                 return instructionMap.get("dup2X2");
             case 0x5f:
                 return instructionMap.get("swap");
+            case 0x60:
+                return instructionMap.get("iAdd");
             case 0x61:
                 return instructionMap.get("lAdd");
             case 0x62:
@@ -586,7 +594,7 @@ public class InstructionFactory {
             // case 0xff: impdep2
 
             default:
-                throw new IllegalArgumentException("Unsupported opcode: " + Integer.toHexString(opCode));
+                throw new UnsupportedException("Unsupported opcode: 0x" + Integer.toHexString(opCode));
         }
     }
 }
