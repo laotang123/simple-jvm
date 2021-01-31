@@ -1,10 +1,11 @@
 package org.ljf.sjvm.instructions;
 
-import com.sun.org.apache.bcel.internal.generic.LOR;
 import org.ljf.sjvm.instructions.base.Instruction;
 import org.ljf.sjvm.instructions.comparisons.*;
 import org.ljf.sjvm.instructions.constants.*;
+import org.ljf.sjvm.instructions.control.*;
 import org.ljf.sjvm.instructions.conversions.*;
+import org.ljf.sjvm.instructions.extend.*;
 import org.ljf.sjvm.instructions.loads.*;
 import org.ljf.sjvm.instructions.math.*;
 import org.ljf.sjvm.instructions.stack.*;
@@ -354,6 +355,236 @@ public class InstructionFactory {
             // 	return castore
             // case 0x56:
             // 	return sastore
+            case 0x57:
+                return instructionMap.get("pop");
+            case 0x58:
+                return instructionMap.get("pop2");
+            case 0x59:
+                return instructionMap.get("dup");
+            case 0x5a:
+                return instructionMap.get("dupX1");
+            case 0x5b:
+                return instructionMap.get("dupX2");
+            case 0x5c:
+                return instructionMap.get("dup2");
+            case 0x5d:
+                return instructionMap.get("dup2X1");
+            case 0x5e:
+                return instructionMap.get("dup2X2");
+            case 0x5f:
+                return instructionMap.get("swap");
+            case 0x61:
+                return instructionMap.get("lAdd");
+            case 0x62:
+                return instructionMap.get("fAdd");
+            case 0x63:
+                return instructionMap.get("dAdd");
+            case 0x64:
+                return instructionMap.get("iSub");
+            case 0x65:
+                return instructionMap.get("lSub");
+            case 0x66:
+                return instructionMap.get("fSub");
+            case 0x67:
+                return instructionMap.get("dSub");
+            case 0x68:
+                return instructionMap.get("iMul");
+            case 0x69:
+                return instructionMap.get("lMul");
+            case 0x6a:
+                return instructionMap.get("fMul");
+            case 0x6b:
+                return instructionMap.get("dMul");
+            case 0x6c:
+                return instructionMap.get("iDiv");
+            case 0x6d:
+                return instructionMap.get("lDiv");
+            case 0x6e:
+                return instructionMap.get("fDiv");
+            case 0x6f:
+                return instructionMap.get("dDiv");
+            case 0x70:
+                return instructionMap.get("iRem");
+            case 0x71:
+                return instructionMap.get("lRem");
+            case 0x72:
+                return instructionMap.get("fRem");
+            case 0x73:
+                return instructionMap.get("dRem");
+            case 0x74:
+                return instructionMap.get("iNeg");
+            case 0x75:
+                return instructionMap.get("lNeg");
+            case 0x76:
+                return instructionMap.get("fNeg");
+            case 0x77:
+                return instructionMap.get("dNeg");
+            case 0x78:
+                return instructionMap.get("iShl");
+            case 0x79:
+                return instructionMap.get("lShl");
+            case 0x7a:
+                return instructionMap.get("iShr");
+            case 0x7b:
+                return instructionMap.get("lShr");
+            case 0x7c:
+                return instructionMap.get("iuShr");
+            case 0x7d:
+                return instructionMap.get("luShr");
+            case 0x7e:
+                return instructionMap.get("iAnd");
+            case 0x7f:
+                return instructionMap.get("lAnd");
+            case 0x80:
+                return instructionMap.get("iOr");
+            case 0x81:
+                return instructionMap.get("lOr");
+            case 0x82:
+                return instructionMap.get("iXor");
+            case 0x83:
+                return instructionMap.get("lXor");
+            case 0x84:
+                return new IInc();
+            case 0x85:
+                return instructionMap.get("i2l");
+            case 0x86:
+                return instructionMap.get("i2f");
+            case 0x87:
+                return instructionMap.get("i2d");
+            case 0x88:
+                return instructionMap.get("l2i");
+            case 0x89:
+                return instructionMap.get("l2f");
+            case 0x8a:
+                return instructionMap.get("l2d");
+            case 0x8b:
+                return instructionMap.get("f2i");
+            case 0x8c:
+                return instructionMap.get("f2l");
+            case 0x8d:
+                return instructionMap.get("f2d");
+            case 0x8e:
+                return instructionMap.get("d2i");
+            case 0x8f:
+                return instructionMap.get("d2l");
+            case 0x90:
+                return instructionMap.get("d2f");
+            case 0x91:
+                return instructionMap.get("i2b");
+            case 0x92:
+                return instructionMap.get("i2c");
+            case 0x93:
+                return instructionMap.get("i2s");
+            case 0x94:
+                return instructionMap.get("lCmp");
+            case 0x95:
+                return instructionMap.get("fCmpL");
+            case 0x96:
+                return instructionMap.get("fCmpG");
+            case 0x97:
+                return instructionMap.get("dCmpL");
+            case 0x98:
+                return instructionMap.get("dCmpG");
+            case 0x99:
+                return new IfEq();
+            case 0x9a:
+                return new IfNe();
+            case 0x9c:
+                return new IfGe();
+            case 0x9d:
+                return new IfGt();
+            case 0x9e:
+                return new IfLe();
+            case 0x9f:
+                return new IfICmpEq();
+            case 0xa0:
+                return new IfICmpNe();
+            case 0xa1:
+                return new IfICmpLt();
+            case 0xa2:
+                return new IfICmpGe();
+            case 0xa3:
+                return new IfICmpGt();
+            case 0xa4:
+                return new IfICmpLe();
+            case 0xa5:
+                return new IfACmpEq();
+            case 0xa6:
+                return new IfACmpNe();
+            case 0xa7:
+                return new Goto();
+            // case 0xa8:
+            // 	return &JSR{}
+            // case 0xa9:
+            // 	return &RET{}
+            case 0xaa:
+                return new TableSwitch();
+            case 0xab:
+                return new LookupSwitch();
+            // case 0xac:
+            // 	return ireturn
+            // case 0xad:
+            // 	return lreturn
+            // case 0xae:
+            // 	return freturn
+            // case 0xaf:
+            // 	return dreturn
+            // case 0xb0:
+            // 	return areturn
+            // case 0xb1:
+            // 	return _return
+            //	case 0xb2:
+            //		return &GET_STATIC{}
+            // case 0xb3:
+            // 	return &PUT_STATIC{}
+            // case 0xb4:
+            // 	return &GET_FIELD{}
+            // case 0xb5:
+            // 	return &PUT_FIELD{}
+            //	case 0xb6:
+            //		return &INVOKE_VIRTUAL{}
+            // case 0xb7:
+            // 	return &INVOKE_SPECIAL{}
+            // case 0xb8:
+            // 	return &INVOKE_STATIC{}
+            // case 0xb9:
+            // 	return &INVOKE_INTERFACE{}
+            // case 0xba:
+            // 	return &INVOKE_DYNAMIC{}
+            // case 0xbb:
+            // 	return &NEW{}
+            // case 0xbc:
+            // 	return &NEW_ARRAY{}
+            // case 0xbd:
+            // 	return &ANEW_ARRAY{}
+            // case 0xbe:
+            // 	return arraylength
+            // case 0xbf:
+            // 	return athrow
+            // case 0xc0:
+            // 	return &CHECK_CAST{}
+            // case 0xc1:
+            // 	return &INSTANCE_OF{}
+            // case 0xc2:
+            // 	return monitorenter
+            // case 0xc3:
+            // 	return monitorexit
+            case 0xc4:
+                return new Wide();
+            // case 0xc5:
+            // 	return &MULTI_ANEW_ARRAY{}
+            case 0xc6:
+                return new IfNull();
+            case 0xc7:
+                return new IfNonNull();
+            case 0xc8:
+                return new GotoW();
+            // case 0xc9:
+            // 	return &JSR_W{}
+            // case 0xca: breakpoint
+            // case 0xfe: impdep1
+            // case 0xff: impdep2
+
             default:
                 throw new IllegalArgumentException("Unsupported opcode: " + Integer.toHexString(opCode));
         }
