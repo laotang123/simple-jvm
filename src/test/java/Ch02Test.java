@@ -1,6 +1,6 @@
 import org.junit.Test;
 import org.ljf.sjvm.Main;
-import org.ljf.sjvm.classpath.ClassPathContainer;
+import org.ljf.sjvm.classpath.ClassPath;
 import org.ljf.sjvm.classpath.Entry;
 import org.ljf.sjvm.classpath.EntryFactory;
 
@@ -60,7 +60,7 @@ public class Ch02Test {
     public void TestClassPath(){
         String jreOption = "";
         String cpOption = "target/class";
-        ClassPathContainer classPath = ClassPathContainer.parse(jreOption, cpOption);
+        ClassPath classPath = ClassPath.parse(jreOption, cpOption);
         System.out.println(classPath);
     }
 

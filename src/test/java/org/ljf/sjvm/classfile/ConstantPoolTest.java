@@ -2,8 +2,8 @@ package org.ljf.sjvm.classfile;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.ljf.sjvm.classfile.constantpool.ConstantMemberRefInfo;
 import org.ljf.sjvm.classfile.constantpool.ConstantPool;
-import org.ljf.sjvm.classfile.constantpool.MemberRefInfo;
 import org.ljf.sjvm.classpath.Entry;
 import org.ljf.sjvm.classpath.EntryFactory;
 import org.ljf.sjvm.util.ByteUtils;
@@ -54,7 +54,7 @@ public class ConstantPoolTest {
     public void MethodRefTest() {
         System.out.println(Arrays.toString(classData));
         ConstantPool constantPool = new ConstantPool();
-        MemberRefInfo.ConstantMethodRefInfo methodRefInfo = new MemberRefInfo.ConstantMethodRefInfo(constantPool);
+        ConstantMemberRefInfo.ConstantMethodRefInfo methodRefInfo = new ConstantMemberRefInfo.ConstantMethodRefInfo(constantPool);
         short tag = reader.readUint8();
         System.out.println("tag: " + tag);
         methodRefInfo.readInfo(reader);

@@ -49,11 +49,11 @@ public interface ConstantInfo {
             case CONSTANT_Class:
                 return new ConstantClassInfo(constantPool);
             case CONSTANT_Fieldref:
-                return new MemberRefInfo.ConstantFieldRefInfo(constantPool);
+                return new ConstantMemberRefInfo.ConstantFieldRefInfo(constantPool);
             case CONSTANT_Methodref:
-                return new MemberRefInfo.ConstantMethodRefInfo(constantPool);
+                return new ConstantMemberRefInfo.ConstantMethodRefInfo(constantPool);
             case CONSTANT_InterfaceMethodref:
-                return new MemberRefInfo.ConstantInterfaceMethodRefInfo(constantPool);
+                return new ConstantMemberRefInfo.ConstantInterfaceMethodRefInfo(constantPool);
             case CONSTANT_String:
                 return new ConstantStringInfo(constantPool);
             case CONSTANT_Integer:

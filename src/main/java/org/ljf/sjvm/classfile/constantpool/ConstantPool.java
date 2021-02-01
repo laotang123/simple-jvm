@@ -17,6 +17,10 @@ public final class ConstantPool {
     private final int constantPoolCount;
     private final ConstantInfo[] constantInfos;
 
+    public ConstantInfo[] getConstantInfos() {
+        return constantInfos;
+    }
+
     public int getConstantPoolCount() {
         return constantPoolCount;
     }
@@ -65,11 +69,11 @@ public final class ConstantPool {
         throw new IllegalArgumentException("invalid constant pool index!");
     }
 
-    public String getNameAndType(int index) {
+    public String[] getNameAndType(int index) {
         ConstantNameAndTypeInfo constantInfo = (ConstantNameAndTypeInfo) this.getConstantInfo(index);
         String name = this.getUtf8(constantInfo.getNameIndex());
         String descriptor = this.getUtf8(constantInfo.getDescriptorIndex());
-        return name + descriptor;
+        return new String[]{name , descriptor};
     }
 
 

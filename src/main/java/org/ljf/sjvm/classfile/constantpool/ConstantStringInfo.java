@@ -36,4 +36,8 @@ public final class ConstantStringInfo implements ConstantInfo {
     public String toString() {
         return this.constantPool.getUtf8(this.stringIndex);
     }
+
+    public String getValue(){
+        return this.constantPool.getUtf8(this.stringIndex);
+    }
 }

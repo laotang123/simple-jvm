@@ -3,6 +3,8 @@ package org.ljf.sjvm.classfile.attributes;
 import org.ljf.sjvm.classfile.ClassReader;
 import org.ljf.sjvm.classfile.constantpool.ConstantPool;
 
+import java.util.Arrays;
+
 /**
  * @author: ljf
  * @date: 2021/1/27 10:20
@@ -36,7 +38,7 @@ public class EnclosingMethod implements AttributeInfo {
 
     public String getMethodNameAndDescriptor() {
         if (this.methodIndex > 0) {
-            return this.constantPool.getNameAndType(methodIndex);
+            return Arrays.toString(this.constantPool.getNameAndType(methodIndex));
         }
         return "\t;\t";
 

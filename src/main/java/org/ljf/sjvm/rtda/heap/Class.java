@@ -20,9 +20,9 @@ public class Class {
     private ClassLoader loader;
     private Class superClass;
     private Class[] interfaces;
-    private int instanceSlotCount;
-    private int staticSlotCount;
-    private Slots staticVars;
+    private int instanceSlotCount;//实例变量空间大小
+    private int staticSlotCount;//类变量空间大小
+    private Slots staticVars;//静态变量
 
 
     public Class(ClassFile classFile) {

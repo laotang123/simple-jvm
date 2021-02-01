@@ -3,7 +3,7 @@ package org.ljf.sjvm;
 import org.ljf.sjvm.classfile.ClassFile;
 import org.ljf.sjvm.classfile.MemberInfo;
 import org.ljf.sjvm.classfile.attributes.AttributeInfo;
-import org.ljf.sjvm.classpath.ClassPathContainer;
+import org.ljf.sjvm.classpath.ClassPath;
 import org.ljf.sjvm.util.IOUtil;
 
 import java.util.Arrays;
@@ -34,7 +34,7 @@ public class Main {
     }
 
     private static void startJVM(Cmd cmd) {
-        ClassPathContainer container = ClassPathContainer.parse(cmd.getXjreOption(), cmd.getCpOptions());
+        ClassPath container = ClassPath.parse(cmd.getXjreOption(), cmd.getCpOptions());
         System.out.println("classpath:" + container + " class:" + cmd.getClassName() + " args:" + Arrays.toString(cmd.getArgs()));
         String classPath = IOUtil.getClassPath(cmd.getClassName());
 
@@ -59,7 +59,7 @@ public class Main {
      * @param container：类容器
      * @return ：ClassFile结构的实例
      */
-    private static ClassFile loadClass(String className, ClassPathContainer container) throws ClassNotFoundException {
+    private static ClassFile loadClass(String className, ClassPath container) throws ClassNotFoundException {
         byte[] classData = container.readClass(className);
         return ClassFile.parse(classData);
     }

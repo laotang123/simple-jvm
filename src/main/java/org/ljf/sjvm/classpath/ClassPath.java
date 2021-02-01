@@ -1,7 +1,6 @@
 package org.ljf.sjvm.classpath;
 
 import org.apache.commons.lang3.StringUtils;
-import org.ljf.sjvm.util.IOUtil;
 import org.ljf.sjvm.util.PathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +15,8 @@ import java.io.File;
  * @modified By:
  * @version: $ 1.0
  */
-public class ClassPathContainer {
-    private static final Logger logger = LoggerFactory.getLogger(ClassPathContainer.class);
+public class ClassPath {
+    private static final Logger logger = LoggerFactory.getLogger(ClassPath.class);
     private Entry bootClassPath;
     private Entry extClassPath;
     private Entry userClassPath;
@@ -29,8 +28,8 @@ public class ClassPathContainer {
      * @param cpOption：class path
      * @return ：ClassPath实例
      */
-    public static ClassPathContainer parse(String jreOption, String cpOption) {
-        ClassPathContainer classPath = new ClassPathContainer();
+    public static ClassPath parse(String jreOption, String cpOption) {
+        ClassPath classPath = new ClassPath();
         try {
             parseBootAndExtClassPath(jreOption, classPath);
         } catch (PathException e) {
@@ -46,14 +45,14 @@ public class ClassPathContainer {
      *
      * @param cpOption：class path
      */
-    private static void parseUserClassPath(String cpOption, ClassPathContainer classPath) {
+    private static void parseUserClassPath(String cpOption, ClassPath classPath) {
         if (StringUtils.isEmpty(cpOption)) {
             cpOption = "";
         }
         classPath.userClassPath = EntryFactory.newEntry(cpOption);
     }
 
-    private static void parseBootAndExtClassPath(String jreOption, ClassPathContainer classPath) throws PathException {
+    private static void parseBootAndExtClassPath(String jreOption, ClassPath classPath) throws PathException {
         String jreDir = getJreDir(jreOption);
 
         // jre/lib/*
