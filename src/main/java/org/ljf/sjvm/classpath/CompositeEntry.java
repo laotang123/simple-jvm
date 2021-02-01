@@ -1,5 +1,8 @@
 package org.ljf.sjvm.classpath;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.util.Arrays;
 
@@ -11,6 +14,7 @@ import java.util.Arrays;
  * @version: $ 1.0
  */
 public class CompositeEntry implements Entry {
+    private static final Logger logger = LoggerFactory.getLogger(CompositeEntry.class);
     private final Entry[] entries;
 
     public CompositeEntry(String contextPathList) {
@@ -37,6 +41,7 @@ public class CompositeEntry implements Entry {
                 break;
             }
         }
+        logger.info("loaded " + classPath + " from " + this);
         return result;
     }
 

@@ -34,7 +34,7 @@ public class DirEntry implements Entry {
         } finally {
             IOUtil.close(fis);
         }
-
+        logger.info("loaded " + classPath + " from " + this);
         return result;
     }
 

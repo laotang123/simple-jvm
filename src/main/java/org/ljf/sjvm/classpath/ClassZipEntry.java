@@ -1,6 +1,8 @@
 package org.ljf.sjvm.classpath;
 
 import org.ljf.sjvm.util.IOUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +18,7 @@ import java.util.zip.ZipFile;
  * @version: $ 1.0
  */
 public class ClassZipEntry implements Entry {
+    private static final Logger logger = LoggerFactory.getLogger(ClassZipEntry.class);
     private final String absolutePath;
 
     public ClassZipEntry(String classPath) {
@@ -54,6 +57,7 @@ public class ClassZipEntry implements Entry {
             IOUtil.close(inputStream);
             IOUtil.close(zf);
         }
+        logger.info("loaded " + classPath + " from " + this);
 
         return result;
     }

@@ -61,6 +61,7 @@ public class WildcardEntry implements Entry {
 
     @Override
     public byte[] readClass(String classPath) {
+        logger.info("loaded " + classPath + " from " + this);
         return compositeEntry.readClass(classPath);
     }
 
