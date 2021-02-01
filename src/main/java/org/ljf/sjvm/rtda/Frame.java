@@ -1,6 +1,8 @@
 package org.ljf.sjvm.rtda;
 
 
+import org.ljf.sjvm.rtda.heap.Object;
+
 /**
  * @author: ljf
  * @date: 2021/1/27 11:44

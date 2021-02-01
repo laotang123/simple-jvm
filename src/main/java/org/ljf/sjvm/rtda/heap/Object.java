@@ -1,4 +1,4 @@
-package org.ljf.sjvm.rtda;
+package org.ljf.sjvm.rtda.heap;
 
 /**
  * @author: ljf

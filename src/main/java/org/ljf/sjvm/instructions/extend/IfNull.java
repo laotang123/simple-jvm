@@ -3,7 +3,7 @@ package org.ljf.sjvm.instructions.extend;
 import org.ljf.sjvm.instructions.base.BranchInstruction;
 import org.ljf.sjvm.instructions.base.BranchLogic;
 import org.ljf.sjvm.rtda.Frame;
-import org.ljf.sjvm.rtda.Object;
+import org.ljf.sjvm.rtda.heap.Object;
 
 /**
  * @author: ljf

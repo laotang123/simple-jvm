@@ -1,6 +1,6 @@
 package org.ljf.sjvm.rtda;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
+import org.ljf.sjvm.rtda.heap.Object;
 
 /**
  * @author: ljf

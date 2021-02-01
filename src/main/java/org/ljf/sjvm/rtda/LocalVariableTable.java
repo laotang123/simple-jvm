@@ -1,5 +1,7 @@
 package org.ljf.sjvm.rtda;
 
+import org.ljf.sjvm.rtda.heap.Object;
+
 import java.util.Arrays;
 
 /**

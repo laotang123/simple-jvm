@@ -1,7 +1,6 @@
 package org.ljf.sjvm.instructions.stores;
 
 import org.ljf.sjvm.rtda.Frame;
-import org.ljf.sjvm.rtda.Object;
 
 /**
  * @author: ljf
