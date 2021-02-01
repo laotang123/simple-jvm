@@ -25,8 +25,8 @@ import org.slf4j.LoggerFactory;
  * @modified By:
  * @version: $ 1.0
  */
-public abstract class MemberRefInfo implements ConstantInfo {
-    private static final Logger logger = LoggerFactory.getLogger(MemberRefInfo.class);
+public abstract class ConstantMemberRefInfo implements ConstantInfo {
+    private static final Logger logger = LoggerFactory.getLogger(ConstantMemberRefInfo.class);
 
     protected int classIndex;
     protected int nameAndTypeIndex;
@@ -36,11 +36,11 @@ public abstract class MemberRefInfo implements ConstantInfo {
         return this.constantPool.getClassName(classIndex);
     }
 
-    public String NameAndDescriptor() {
+    public String[] NameAndDescriptor() {
         return this.constantPool.getNameAndType(nameAndTypeIndex);
     }
 
-    public static class ConstantMethodRefInfo extends MemberRefInfo {
+    public static class ConstantMethodRefInfo extends ConstantMemberRefInfo {
 
         public ConstantMethodRefInfo(ConstantPool constantPool) {
             this.constantPool = constantPool;
@@ -64,7 +64,7 @@ public abstract class MemberRefInfo implements ConstantInfo {
         }
     }
 
-    static class ConstantFieldRefInfo extends MemberRefInfo {
+    public static class ConstantFieldRefInfo extends ConstantMemberRefInfo {
 
         public ConstantFieldRefInfo(ConstantPool constantPool) {
             this.constantPool = constantPool;
@@ -79,7 +79,7 @@ public abstract class MemberRefInfo implements ConstantInfo {
         }
     }
 
-    static class ConstantInterfaceMethodRefInfo extends MemberRefInfo {
+    public static class ConstantInterfaceMethodRefInfo extends ConstantMemberRefInfo {
 
         public ConstantInterfaceMethodRefInfo(ConstantPool constantPool) {
             this.constantPool = constantPool;
