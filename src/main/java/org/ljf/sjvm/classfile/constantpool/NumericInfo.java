@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 public abstract class NumericInfo implements ConstantInfo {
     private static final Logger logger = LoggerFactory.getLogger(MemberRefInfo.class);
 
-    static class ConstantIntegerInfo extends NumericInfo {
+    public static class ConstantIntegerInfo extends NumericInfo {
         private int value;
 
         @Override
@@ -46,7 +46,7 @@ public abstract class NumericInfo implements ConstantInfo {
         }
     }
 
-    static class ConstantLongInfo extends NumericInfo {
+    public static class ConstantLongInfo extends NumericInfo {
         private long value;
 
         @Override
@@ -60,7 +60,7 @@ public abstract class NumericInfo implements ConstantInfo {
         }
     }
 
-    static class ConstantFloatInfo extends NumericInfo {
+    public static class ConstantFloatInfo extends NumericInfo {
         private float value;
 
         @Override
@@ -75,7 +75,7 @@ public abstract class NumericInfo implements ConstantInfo {
         }
     }
 
-    static class ConstantDoubleInfo extends NumericInfo {
+    public static class ConstantDoubleInfo extends NumericInfo {
         private double value;
 
         @Override
