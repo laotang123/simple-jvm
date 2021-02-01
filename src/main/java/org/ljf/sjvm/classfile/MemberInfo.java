@@ -2,6 +2,7 @@ package org.ljf.sjvm.classfile;
 
 import org.ljf.sjvm.classfile.attributes.AttributeInfo;
 import org.ljf.sjvm.classfile.attributes.CodeAttribute;
+import org.ljf.sjvm.classfile.attributes.ConstantValueAttribute;
 import org.ljf.sjvm.classfile.constantpool.ConstantPool;
 
 /**
@@ -68,6 +69,19 @@ public final class MemberInfo {
      */
     public String getName() {
         return constantPool.getUtf8(this.nameIndex);
+    }
+
+    /**
+     * 返回属性表中的常量值属性
+     * @return ：如果不存在返回null
+     */
+    public ConstantValueAttribute getConstantValueAttribute() {
+        for (AttributeInfo attribute : this.attributes) {
+            if (attribute instanceof ConstantValueAttribute) {
+                return (ConstantValueAttribute) attribute;
+            }
+        }
+        return null;
     }
 
     /**
