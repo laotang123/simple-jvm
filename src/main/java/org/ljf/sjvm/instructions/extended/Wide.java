@@ -1,4 +1,4 @@
-package org.ljf.sjvm.instructions.extend;
+package org.ljf.sjvm.instructions.extended;
 
 import org.ljf.sjvm.instructions.base.ByteCodeReader;
 import org.ljf.sjvm.instructions.base.Instruction;
