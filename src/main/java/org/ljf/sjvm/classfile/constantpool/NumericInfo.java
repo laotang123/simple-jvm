@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * @version: $ 1.0
  */
 public abstract class NumericInfo implements ConstantInfo {
-    private static final Logger logger = LoggerFactory.getLogger(MemberRefInfo.class);
+    private static final Logger logger = LoggerFactory.getLogger(NumericInfo.class);
 
     public static class ConstantIntegerInfo extends NumericInfo {
         private int value;

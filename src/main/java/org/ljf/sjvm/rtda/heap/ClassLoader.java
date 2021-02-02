@@ -55,21 +55,78 @@ public class ClassLoader {
     }
 
     private void allocAndInitStaticVars(Class clazz) {
-        long slotId = 0;
+        clazz.setStaticVars(new Slots((int) clazz.getStaticSlotCount()));//FIXME: 强转存在风险
+        for (Field field : clazz.getFields()) {
+            if (field.isStatic() && field.isFinal()) {//静态变量，又有final修饰符。属于编译期已知。该值存储在class文件常量池。
+                initStaticFinalVar(clazz, field);
+            }
+        }
+    }
+
+    private void initStaticFinalVar(Class clazz, Field field) {
+        Slots staticVars = clazz.getStaticVars();
+        ConstantPool cp = clazz.getConstantPool();
+        int cpIndex = field.getConstValueIndex();
+        int slotId = field.getSlotId();
+        if (cpIndex > 0) {
+            switch (field.getDescriptor()) {
+                case "Z":
+                case "B":
+                case "C":
+                case "S":
+                case "I":
+                    Constant intConst = cp.getConstant(cpIndex);
+                    int intValue = ((Literal.IntegerLiteral) intConst).getValue();
+                    staticVars.setInt(slotId, intValue);
+                    break;
+                case "J":
+                    Constant longConst = cp.getConstant(cpIndex);
+                    long longValue = ((Literal.LongLiteral) longConst).getValue();
+                    staticVars.setLong(slotId, longValue);
+                case "F":
+                    Constant floatConst = cp.getConstant(cpIndex);
+                    float floatValue = ((Literal.FloatLiteral) floatConst).getValue();
+                    staticVars.setFloat(cpIndex, floatValue);
+                case "D":
+                    Constant doubleConst = cp.getConstant(cpIndex);
+                    double doubleValue = ((Literal.DoubleLiteral) doubleConst).getValue();
+                    staticVars.setDouble(cpIndex, doubleValue);
+                case "Ljava/lang/String":
+                    throw new IllegalArgumentException("TODO ");
+            }
+        }
+
+    }
+
+    private void calcStaticFieldSlotIds(Class clazz) {
+        int slotId = 0;
+
+        for (Field field : clazz.getFields()) {
+            if (field.isStatic()) {
+                field.setSlotId(slotId);
+                slotId++;
+                if (field.isLongOrDouble()) {
+                    slotId++;
+                }
+            }
+        }
+    }
+
+    private void calcInstanceFieldSlotIds(Class clazz) {
+        int slotId = 0;
         if (clazz.getSuperClass() != null) {
             slotId = clazz.getSuperClass().getInstanceSlotCount();
         }
 
-        Field[] fields = clazz.getFields();
-        for (Field field : fields) {
-//            if (!field.isLongOrDouble())
+        for (Field field : clazz.getFields()) {
+            if (!field.isStatic()) {
+                field.setSlotId(slotId);
+                slotId++;
+                if (field.isLongOrDouble()) {
+                    slotId++;
+                }
+            }
         }
-    }
-
-    private void calcStaticFieldSlotIds(Class clazz) {
-    }
-
-    private void calcInstanceFieldSlotIds(Class clazz) {
 
     }
 

@@ -11,8 +11,8 @@ import org.ljf.sjvm.classfile.attributes.ConstantValueAttribute;
  * @version: $ 1.0
  */
 public class Field extends ClassMember {
-    private long constValueIndex;
-    private long slotId;//uint
+    private int constValueIndex;
+    private int slotId;//uint,数组索引最大只能用int表示
 
     public static Field[] newFields(Class clazz, MemberInfo[] cfFields) {
         Field[] fields = new Field[cfFields.length];
@@ -22,6 +22,11 @@ public class Field extends ClassMember {
             fields[i].copyMemberInfo(cfFields[i]);
         }
         return fields;
+    }
+
+
+    public void setSlotId(int slotId) {
+        this.slotId = slotId;
     }
 
     public void copyAttributes(MemberInfo cfField) {
@@ -44,11 +49,11 @@ public class Field extends ClassMember {
         return 0 != (this.accessFlags & AccessFlags.ACC_ENUM);
     }
 
-    public long getConstValueIndex() {
+    public int getConstValueIndex() {
         return constValueIndex;
     }
 
-    public long getSlotId() {
+    public int getSlotId() {
         return slotId;
     }
 

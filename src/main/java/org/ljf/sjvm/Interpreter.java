@@ -2,7 +2,6 @@ package org.ljf.sjvm;
 
 import org.ljf.sjvm.classfile.MemberInfo;
 import org.ljf.sjvm.classfile.attributes.CodeAttribute;
-import org.ljf.sjvm.classfile.constantpool.MemberRefInfo;
 import org.ljf.sjvm.exceptions.UnsupportedException;
 import org.ljf.sjvm.instructions.InstructionFactory;
 import org.ljf.sjvm.instructions.base.ByteCodeReader;
