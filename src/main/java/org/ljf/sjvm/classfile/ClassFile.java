@@ -82,7 +82,6 @@ public final class ClassFile {
     }
 
     private boolean rightVersion(int majorVersion, int minorVersion) {
-        //TODO:魔数修改为有意义常量
         if (majorVersion == Constants.JDK1_OR_JDK1_1) {
             return true;
         } else {

@@ -1,9 +1,7 @@
 package org.ljf.sjvm.rtda.heap;
 
 import com.sun.org.apache.bcel.internal.classfile.ConstantInteger;
-import org.ljf.sjvm.classfile.constantpool.ConstantInfo;
-import org.ljf.sjvm.classfile.constantpool.ConstantStringInfo;
-import org.ljf.sjvm.classfile.constantpool.NumericInfo;
+import org.ljf.sjvm.classfile.constantpool.*;
 
 /**
  * @author: ljf
@@ -22,6 +20,7 @@ public class ConstantPool {
     public ConstantPool(Class clazz, org.ljf.sjvm.classfile.constantpool.ConstantPool cfConstantPool) {
         int cpCount = cfConstantPool.getConstantPoolCount();
         consts = new Constant[cpCount];
+        ConstantPool rtConstantPool = new ConstantPool(clazz, cfConstantPool);
 
         ConstantInfo[] cfConstantInfos = cfConstantPool.getConstantInfos();
         ConstantInfo cpInfo;
@@ -30,14 +29,27 @@ public class ConstantPool {
             cpInfo = cfConstantInfos[i];
             if (cpInfo instanceof NumericInfo.ConstantIntegerInfo) {
                 consts[i] = new Literal.IntegerLiteral(((NumericInfo.ConstantIntegerInfo) cpInfo).getValue());
-            }else if (cpInfo instanceof NumericInfo.ConstantLongInfo){
+            } else if (cpInfo instanceof NumericInfo.ConstantLongInfo) {
                 consts[i] = new Literal.LongLiteral(((NumericInfo.ConstantLongInfo) cpInfo).getValue());
-            }else if (cpInfo instanceof NumericInfo.ConstantFloatInfo){
+                i++;
+            } else if (cpInfo instanceof NumericInfo.ConstantFloatInfo) {
                 consts[i] = new Literal.FloatLiteral(((NumericInfo.ConstantFloatInfo) cpInfo).getValue());
-            }else if (cpInfo instanceof NumericInfo.ConstantDoubleInfo){
+            } else if (cpInfo instanceof NumericInfo.ConstantDoubleInfo) {
                 consts[i] = new Literal.DoubleLiteral(((NumericInfo.ConstantDoubleInfo) cpInfo).getValue());
-            } else if (cpInfo instanceof ConstantStringInfo){
+                i++;
+            } else if (cpInfo instanceof ConstantStringInfo) {
                 consts[i] = new Literal.StringLiteral(((ConstantStringInfo) cpInfo).getValue());
+            } else if (cpInfo instanceof ConstantClassInfo) {
+                consts[i] = new ClassRef(rtConstantPool, (ConstantClassInfo) cpInfo);
+            } else if (cpInfo instanceof ConstantMemberRefInfo.ConstantFieldRefInfo) {
+                consts[i] = new FieldRef(rtConstantPool, (ConstantMemberRefInfo.ConstantFieldRefInfo) cpInfo);
+            }else if (cpInfo instanceof ConstantMemberRefInfo.ConstantMethodRefInfo) {
+                consts[i] = new MethodRef(rtConstantPool, (ConstantMemberRefInfo.ConstantMethodRefInfo) cpInfo);
+            }else if (cpInfo instanceof ConstantMemberRefInfo.ConstantInterfaceMethodRefInfo) {
+                consts[i] = new InterfaceMethodRef(rtConstantPool,
+                        (ConstantMemberRefInfo.ConstantInterfaceMethodRefInfo) cpInfo);
+            }else{
+                //todo
             }
         }
     }

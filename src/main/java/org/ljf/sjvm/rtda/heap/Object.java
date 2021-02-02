@@ -8,4 +8,7 @@ package org.ljf.sjvm.rtda.heap;
  * @version: $ 1.0
  */
 public class Object {
+    private Class clazz;
+    private Slots fields;
+
 }

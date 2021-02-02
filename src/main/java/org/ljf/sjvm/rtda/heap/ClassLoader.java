@@ -1,5 +1,6 @@
 package org.ljf.sjvm.rtda.heap;
 
+import org.ljf.sjvm.classfile.ClassFile;
 import org.ljf.sjvm.classpath.ClassPath;
 
 import java.util.HashMap;
@@ -38,12 +39,84 @@ public class ClassLoader {
     }
 
     private void link(Class clazz) {
+        verify(clazz);
+        prepare(clazz);
+    }
 
+    /**
+     * 给类变量分配空间并给与初始值
+     *
+     * @param clazz：类变量
+     */
+    private void prepare(Class clazz) {
+        calcInstanceFieldSlotIds(clazz);
+        calcStaticFieldSlotIds(clazz);
+        allocAndInitStaticVars(clazz);
+    }
+
+    private void allocAndInitStaticVars(Class clazz) {
+        long slotId = 0;
+        if (clazz.getSuperClass() != null) {
+            slotId = clazz.getSuperClass().getInstanceSlotCount();
+        }
+
+        Field[] fields = clazz.getFields();
+        for (Field field : fields) {
+//            if (!field.isLongOrDouble())
+        }
+    }
+
+    private void calcStaticFieldSlotIds(Class clazz) {
+    }
+
+    private void calcInstanceFieldSlotIds(Class clazz) {
+
+    }
+
+    private void verify(Class clazz) {
+        //todo ，参考jvm8s的4.10节
     }
 
     //生成虚拟机可以使用的类数据，并放入到方法区
     private Class defineClass(byte[] data) {
-        return null;
+        Class clazz = parseClass(data);
+        clazz.setLoader(this);
+        resolveSuperClass(clazz);
+        resolveInterfaces(clazz);
+        this.classMap.put(clazz.getName(), clazz);
+        return clazz;
+    }
+
+    private void resolveInterfaces(Class clazz) {
+        String[] interfaceNames = clazz.getInterfaceNames();
+        int interfaceCount = interfaceNames.length;
+        if (interfaceCount > 0) {
+            Class[] interfaces = new Class[interfaceCount];
+            //递归加载父接口
+            for (int i = 0; i < interfaceCount; i++) {
+                interfaces[i] = clazz.getLoader().loadClass(interfaceNames[i]);
+            }
+            clazz.setInterfaces(interfaces);
+        }
+    }
+
+    //所有的对象都有唯一的父类，除了java.lang.object；递归加载父类
+    private void resolveSuperClass(Class clazz) {
+        if (!clazz.getName().equals("java/lang/Object")) {
+            clazz.setSuperClass(clazz.getLoader().loadClass(clazz.getSuperClassName()));
+        }
+    }
+
+    /**
+     * 将字节数组解析为运行时方法区的Class结构
+     *
+     * @param data：字节数组
+     * @return ：Class实例
+     */
+    private Class parseClass(byte[] data) {
+        ClassFile classFile = ClassFile.parse(data);
+        //throw new java.lang.ClassFormatError
+        return new Class(classFile);
     }
 
     //读取class文件数据到内存中

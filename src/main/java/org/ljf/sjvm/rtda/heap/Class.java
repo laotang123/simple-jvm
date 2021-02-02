@@ -20,8 +20,8 @@ public class Class {
     private ClassLoader loader;
     private Class superClass;
     private Class[] interfaces;
-    private int instanceSlotCount;//实例变量空间大小
-    private int staticSlotCount;//类变量空间大小
+    private long instanceSlotCount;//实例变量空间大小 uint
+    private long staticSlotCount;//类变量空间大小
     private Slots staticVars;//静态变量
 
 
@@ -87,4 +87,71 @@ public class Class {
         return this.isPublic() || this.getPackageName().equals(other.getPackageName());
     }
 
+    public void setLoader(ClassLoader loader) {
+        this.loader = loader;
+    }
+
+    public ClassLoader getLoader() {
+        return loader;
+    }
+
+    public Class getSuperClass() {
+        return superClass;
+    }
+
+    public Field[] getFields() {
+        return fields;
+    }
+
+    public void setFields(Field[] fields) {
+        this.fields = fields;
+    }
+
+    public Method[] getMethods() {
+        return methods;
+    }
+
+    public void setMethods(Method[] methods) {
+        this.methods = methods;
+    }
+
+    public void setSuperClass(Class superClass) {
+        this.superClass = superClass;
+    }
+
+    public Class[] getInterfaces() {
+        return interfaces;
+    }
+
+    public void setInterfaces(Class[] interfaces) {
+        this.interfaces = interfaces;
+    }
+
+    public String getSuperClassName() {
+        return superClassName;
+    }
+
+    public String[] getInterfaceNames() {
+        return interfaceNames;
+    }
+
+    public long getInstanceSlotCount() {
+        return instanceSlotCount;
+    }
+
+    public void setInstanceSlotCount(int instanceSlotCount) {
+        this.instanceSlotCount = instanceSlotCount;
+    }
+
+    public long getStaticSlotCount() {
+        return staticSlotCount;
+    }
+
+    public void setStaticSlotCount(int staticSlotCount) {
+        this.staticSlotCount = staticSlotCount;
+    }
+
+    public void setStaticVars(Slots staticVars) {
+        this.staticVars = staticVars;
+    }
 }

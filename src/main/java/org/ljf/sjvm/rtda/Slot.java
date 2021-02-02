@@ -10,8 +10,8 @@ import org.ljf.sjvm.rtda.heap.Object;
  * @version: $ 1.0
  */
 public class Slot {
-    int num;
-    Object ref;
+    public int num;
+    public Object ref;
 
     @Override
     public String toString() {

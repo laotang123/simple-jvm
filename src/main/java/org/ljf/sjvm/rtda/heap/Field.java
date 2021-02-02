@@ -12,7 +12,7 @@ import org.ljf.sjvm.classfile.attributes.ConstantValueAttribute;
  */
 public class Field extends ClassMember {
     private long constValueIndex;
-    private long slotId;
+    private long slotId;//uint
 
     public static Field[] newFields(Class clazz, MemberInfo[] cfFields) {
         Field[] fields = new Field[cfFields.length];
