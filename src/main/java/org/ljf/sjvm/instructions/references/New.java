@@ -21,7 +21,7 @@ public class New extends Index16Instruction {
     public void execute(Frame frame) {
         ConstantPool constantPool = frame.getMethod().getClazz().getConstantPool();
         ClassRef classRef = (ClassRef) constantPool.getConstant(this.index);
-        Class clazz = classRef.resolveClass();
+        Class clazz = classRef.resolvedClass();
         //todo: init class
 
         //抽象类和接口是不能初始化的

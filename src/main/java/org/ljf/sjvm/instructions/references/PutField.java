@@ -2,8 +2,10 @@ package org.ljf.sjvm.instructions.references;
 
 import org.ljf.sjvm.instructions.base.Index16Instruction;
 import org.ljf.sjvm.rtda.Frame;
+import org.ljf.sjvm.rtda.OperandStack;
 import org.ljf.sjvm.rtda.heap.*;
 import org.ljf.sjvm.rtda.heap.Class;
+import org.ljf.sjvm.rtda.heap.Object;
 
 /**
  * @author: ljf
@@ -30,6 +32,61 @@ public class PutField extends Index16Instruction {
             if (currentClazz != field.getClazz() || !currentClazz.getName().equals("<init>")) {
                 throw new IllegalAccessError();
             }
+        }
+
+        String descriptor = field.getDescriptor();
+        int slotId = field.getSlotId();
+        OperandStack stack = frame.getOperandStack();
+
+        switch (descriptor.charAt(0)) {
+            case 'Z':
+            case 'B':
+            case 'C':
+            case 'S':
+            case 'I':
+                int intValue = stack.popInt();
+                Object intRef = stack.popRef();
+                if (intRef == null) {
+                    throw new NullPointerException();
+                }
+                intRef.setInt(slotId, intValue);
+                break;
+            case 'J':
+                long longValue = stack.popLong();
+                Object longRef = stack.popRef();
+                if (longRef == null) {
+                    throw new NullPointerException();
+                }
+                longRef.setLong(slotId, longValue);
+                break;
+            case 'F':
+                float floatValue = stack.popFloat();
+                Object floatRef = stack.popRef();
+                if (floatRef == null) {
+                    throw new NullPointerException();
+                }
+                floatRef.setFloat(slotId, floatValue);
+                break;
+            case 'D':
+                double doubleValue = stack.popDouble();
+                Object doubleRef = stack.popRef();
+                if (doubleRef == null) {
+                    throw new NullPointerException();
+                }
+                doubleRef.setDouble(slotId, doubleValue);
+                break;
+            case 'L':
+            case '[':
+                Object value = stack.popRef();
+                Object ref = stack.popRef();
+
+                if (ref == null){
+                    throw new NullPointerException();
+                }
+
+                ref.setRef(slotId,value);
+            default:
+                //todo
         }
     }
 }

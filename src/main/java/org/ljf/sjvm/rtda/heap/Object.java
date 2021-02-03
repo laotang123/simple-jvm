@@ -24,4 +24,29 @@ public class Object {
     public Slots getFields() {
         return fields;
     }
+
+    public void setInt(int slotId, int value) {
+        this.fields.setInt(slotId, value);
+    }
+
+    public void setLong(int slotId, long value) {
+        this.fields.setLong(slotId, value);
+    }
+
+
+    public void setFloat(int slotId, float value) {
+        this.fields.setFloat(slotId, value);
+    }
+
+    public void setDouble(int slotId, double value) {
+        this.fields.setDouble(slotId, value);
+    }
+
+    public void setRef(int slotId, Object value) {
+        this.fields.setRef(slotId, value);
+    }
+
+    public boolean isInstanceof(Class clazz) {
+        return clazz.isAssignableFrom(this.clazz);
+    }
 }

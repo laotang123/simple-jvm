@@ -160,6 +160,64 @@ public class Class {
     }
 
     public Object newObject() {
-        return new Object(this,new Slots(this.instanceSlotCount));
+        return new Object(this, new Slots(this.instanceSlotCount));
     }
+
+
+    // jvms8 6.5.instanceof
+    // jvms8 6.5.checkcast
+    // 参考java的 java.lang.Class.isAssignableFrom(java.lang.Class)
+    public boolean isAssignableFrom(Class other) {
+        Class s = other;
+        Class t = this;
+
+        if (s == t) {
+            return true;
+        }
+
+        if (!t.isInterface()) {
+            return s.isSubClassOf(t);
+        } else {
+            return s.isImplements(t);
+        }
+    }
+
+    // self extends c
+    private boolean isSubClassOf(Class other) {
+        Class c = this.superClass; //所有类的父类至少有一个Object
+        do {
+            if (c == other) {
+                return true;
+            }
+            c = c.superClass;
+        } while (c != null);
+
+        return false;
+    }
+
+    // self implements interface
+    private boolean isImplements(Class iFace) {
+        Class c = this;
+
+        do {
+            for (Class anInterface : c.interfaces) {
+                if (anInterface == iFace || anInterface.isSubInterfaceOf(iFace)) {
+                    return true;
+                }
+            }
+            c = c.superClass;
+        } while (c != null);
+        return false;
+    }
+
+    // self extends iFace
+    private boolean isSubInterfaceOf(Class iFace) {
+        for (Class superInterface : this.interfaces) {
+            if (superInterface == iFace || superInterface.isSubInterfaceOf(iFace)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

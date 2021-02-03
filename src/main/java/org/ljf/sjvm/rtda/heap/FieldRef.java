@@ -32,7 +32,7 @@ public class FieldRef extends MemberRef {
 
     public void resolveFieldRef() {
         Class clazzD = this.constantPool.getClazz();
-        Class clazzC = this.resolveClass();
+        Class clazzC = this.resolvedClass();
         Field field = lookupField(clazzC, this.name, this.descriptor);
         if (field == null) {
             throw new NoSuchMethodError();
