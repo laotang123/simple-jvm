@@ -9,11 +9,22 @@ import org.ljf.sjvm.classfile.constantpool.ConstantMemberRefInfo;
  * @modified By：
  * @version: $ 1.0
  */
-public class MethodRef extends MemberRef{
+public class MethodRef extends MemberRef {
     private Method method;
 
-    public MethodRef(ConstantPool constantPool, ConstantMemberRefInfo.ConstantMethodRefInfo refInfo){
+    public MethodRef(ConstantPool constantPool, ConstantMemberRefInfo.ConstantMethodRefInfo refInfo) {
         this.constantPool = constantPool;
         this.copyMemberRefInfo(refInfo);
+    }
+
+    public Method resolvedMethod() {
+        if (this.method == null) {
+            this.resolvedMethodRef();
+        }
+        return this.method;
+    }
+
+    private void resolvedMethodRef() {
+        //todo
     }
 }
