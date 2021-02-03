@@ -14,6 +14,7 @@ import org.ljf.sjvm.instructions.extended.IfNull;
 import org.ljf.sjvm.instructions.extended.Wide;
 import org.ljf.sjvm.instructions.loads.*;
 import org.ljf.sjvm.instructions.math.*;
+import org.ljf.sjvm.instructions.references.*;
 import org.ljf.sjvm.instructions.stack.*;
 import org.ljf.sjvm.instructions.stores.*;
 
@@ -223,12 +224,12 @@ public class InstructionFactory {
                 return new BIPush();
             case 0x11:
                 return new SIPush();
-//            case 0x12:
-//                return new LDC();
-//            case 0x13:
-//                return new LDCW();
-//            case 0x14:
-//                return new LDC2W();
+            case 0x12:
+                return new Ldc();
+            case 0x13:
+                return new LdcW();
+            case 0x14:
+                return new Ldc2W();
             case 0x15:
                 return new ILoad();
             case 0x16:
@@ -541,14 +542,14 @@ public class InstructionFactory {
             // 	return areturn
             // case 0xb1:
             // 	return _return
-            //	case 0xb2:
-            //		return &GET_STATIC{}
-            // case 0xb3:
-            // 	return &PUT_STATIC{}
-            // case 0xb4:
-            // 	return &GET_FIELD{}
-            // case 0xb5:
-            // 	return &PUT_FIELD{}
+            case 0xb2:
+                return new GetStatic();
+            case 0xb3:
+                return new PutStatic();
+            case 0xb4:
+                return new GetField();
+            case 0xb5:
+                return new PutField();
             //	case 0xb6:
             //		return &INVOKE_VIRTUAL{}
             // case 0xb7:
@@ -559,8 +560,8 @@ public class InstructionFactory {
             // 	return &INVOKE_INTERFACE{}
             // case 0xba:
             // 	return &INVOKE_DYNAMIC{}
-            // case 0xbb:
-            // 	return &NEW{}
+             case 0xbb:
+             	return new New();
             // case 0xbc:
             // 	return &NEW_ARRAY{}
             // case 0xbd:
@@ -569,10 +570,10 @@ public class InstructionFactory {
             // 	return arraylength
             // case 0xbf:
             // 	return athrow
-            // case 0xc0:
-            // 	return &CHECK_CAST{}
-            // case 0xc1:
-            // 	return &INSTANCE_OF{}
+             case 0xc0:
+             	return new CheckCast();
+             case 0xc1:
+             	return new Instanceof();
             // case 0xc2:
             // 	return monitorenter
             // case 0xc3:
