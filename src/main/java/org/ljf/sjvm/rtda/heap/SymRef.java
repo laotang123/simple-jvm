@@ -19,9 +19,19 @@ public abstract class SymRef implements Constant {
         return this.clazz;
     }
 
-    //jvms8 5.4.3.1
+    /**
+     * 类符号引用的解析过程，参考jvms8 5.4.3.1
+     * 通俗地讲，如果类D通过符号引用N引用类C的话，要解析N， 先用D的类加载器加载C，然后检查D是否有权限访问C，如果没
+     * 有，则抛出IllegalAccessError异常
+     */
     public void resolveClassRef() {
-//        Class clazz = this.constantPool.getClazz();
-//        clazz
+        Class clazzD = this.constantPool.getClazz();
+        Class clazzC = clazzD.getLoader().loadClass(this.className);
+
+        if (!clazzC.isAccessibleTo(clazzD)) {
+            throw new IllegalAccessError();
+        }
+        this.clazz = clazzC;
     }
+
 }

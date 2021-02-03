@@ -10,8 +10,8 @@ import org.ljf.sjvm.classfile.constantpool.ConstantMemberRefInfo;
  * @version: $ 1.0
  */
 public class MemberRef extends SymRef {
-    private String name;
-    private String descriptor;
+    protected String name;
+    protected String descriptor;
 
     public void copyMemberRefInfo(ConstantMemberRefInfo refInfo) {
         this.className = refInfo.className();

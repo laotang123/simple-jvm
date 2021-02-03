@@ -20,6 +20,7 @@ public class Field extends ClassMember {
             fields[i] = new Field();
             fields[i].clazz = clazz;
             fields[i].copyMemberInfo(cfFields[i]);
+            fields[i].copyAttributes(cfFields[i]);
         }
         return fields;
     }

@@ -14,13 +14,14 @@ import org.ljf.sjvm.classfile.constantpool.*;
  * @version: $ 1.0
  */
 public class ConstantPool {
-    private Class clazz;
-    private Constant[] consts;
+    private final Class clazz;
+    private final Constant[] consts;
 
     public ConstantPool(Class clazz, org.ljf.sjvm.classfile.constantpool.ConstantPool cfConstantPool) {
         int cpCount = cfConstantPool.getConstantPoolCount();
-        consts = new Constant[cpCount];
-        ConstantPool rtConstantPool = new ConstantPool(clazz, cfConstantPool);
+        this.consts = new Constant[cpCount];
+//        ConstantPool rtConstantPool = new ConstantPool(clazz, cfConstantPool);
+        this.clazz = clazz;
 
         ConstantInfo[] cfConstantInfos = cfConstantPool.getConstantInfos();
         ConstantInfo cpInfo;
@@ -40,13 +41,13 @@ public class ConstantPool {
             } else if (cpInfo instanceof ConstantStringInfo) {
                 consts[i] = new Literal.StringLiteral(((ConstantStringInfo) cpInfo).getValue());
             } else if (cpInfo instanceof ConstantClassInfo) {
-                consts[i] = new ClassRef(rtConstantPool, (ConstantClassInfo) cpInfo);
+                consts[i] = new ClassRef(this, (ConstantClassInfo) cpInfo);
             } else if (cpInfo instanceof ConstantMemberRefInfo.ConstantFieldRefInfo) {
-                consts[i] = new FieldRef(rtConstantPool, (ConstantMemberRefInfo.ConstantFieldRefInfo) cpInfo);
+                consts[i] = new FieldRef(this, (ConstantMemberRefInfo.ConstantFieldRefInfo) cpInfo);
             }else if (cpInfo instanceof ConstantMemberRefInfo.ConstantMethodRefInfo) {
-                consts[i] = new MethodRef(rtConstantPool, (ConstantMemberRefInfo.ConstantMethodRefInfo) cpInfo);
+                consts[i] = new MethodRef(this, (ConstantMemberRefInfo.ConstantMethodRefInfo) cpInfo);
             }else if (cpInfo instanceof ConstantMemberRefInfo.ConstantInterfaceMethodRefInfo) {
-                consts[i] = new InterfaceMethodRef(rtConstantPool,
+                consts[i] = new InterfaceMethodRef(this,
                         (ConstantMemberRefInfo.ConstantInterfaceMethodRefInfo) cpInfo);
             }else{
                 //todo
