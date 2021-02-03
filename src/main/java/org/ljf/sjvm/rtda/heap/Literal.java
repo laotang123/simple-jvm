@@ -9,7 +9,7 @@ package org.ljf.sjvm.rtda.heap;
  */
 public abstract class Literal implements Constant {
 
-    static class IntegerLiteral extends Literal {
+    public static class IntegerLiteral extends Literal {
         private final int value;
 
         public IntegerLiteral(int value) {
@@ -22,7 +22,7 @@ public abstract class Literal implements Constant {
 
     }
 
-    static class LongLiteral extends Literal {
+    public static class LongLiteral extends Literal {
         private final long value;
 
         public LongLiteral(long value) {
@@ -35,7 +35,7 @@ public abstract class Literal implements Constant {
 
     }
 
-    static class FloatLiteral extends Literal {
+    public static class FloatLiteral extends Literal {
         private final float value;
 
         public FloatLiteral(float value) {
@@ -48,7 +48,7 @@ public abstract class Literal implements Constant {
 
     }
 
-    static class DoubleLiteral extends Literal {
+    public  static class DoubleLiteral extends Literal {
         private final double value;
 
         public DoubleLiteral(double value) {
@@ -62,7 +62,7 @@ public abstract class Literal implements Constant {
     }
 
 
-    static class StringLiteral extends Literal {
+    public static class StringLiteral extends Literal {
         private final String value;
 
         public StringLiteral(String value) {
