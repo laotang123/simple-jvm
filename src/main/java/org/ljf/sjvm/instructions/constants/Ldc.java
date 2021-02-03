@@ -19,22 +19,6 @@ import org.ljf.sjvm.rtda.heap.Literal;
 public class Ldc extends Index8Instruction {
     @Override
     public void execute(Frame frame) {
-        OperandStack stack = frame.getOperandStack();
-        ConstantPool constantPool = frame.getMethod().getClazz().getConstantPool();
-        Constant constant = constantPool.getConstant(this.index);
-
-        if (constant instanceof Literal.IntegerLiteral) {
-            Literal.IntegerLiteral intLiteral = (Literal.IntegerLiteral) constant;
-            stack.pushInt(intLiteral.getValue());
-        } else if (constant instanceof Literal.FloatLiteral) {
-            Literal.FloatLiteral floatLiteral = (Literal.FloatLiteral) constant;
-            stack.pushFloat(floatLiteral.getValue());
-        }
-//        else if(Literal.StringLiteral)
-//        else if(ClassRef)
-//        else if(MethodType,MethodHandle)
-        else {
-            throw new IllegalArgumentException("todo: ldc!");
-        }
+        LdcW._ldc(frame, this.index);
     }
 }

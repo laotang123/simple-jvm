@@ -68,6 +68,7 @@ public class Interpreter {
                 //指令执行
                 System.out.printf("pc: %2d inst: %s \n", pc, inst);
                 inst.execute(frame);
+                System.out.printf("%2d, localVariableTable: %s \n", pc, frame.getLocalVariableTable());
             } catch (UnsupportedException e) {
                 System.out.printf("%2d, localVariableTable: %s \n", pc, frame.getLocalVariableTable());
                 e.printStackTrace();
