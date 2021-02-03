@@ -1,6 +1,7 @@
 package org.ljf.sjvm.rtda;
 
 
+import org.ljf.sjvm.rtda.heap.Method;
 import org.ljf.sjvm.rtda.heap.Object;
 
 /**
@@ -18,6 +19,7 @@ public class Frame {
     LocalVariableTable localVariableTable;
     OperandStack operandStack;
     Thread thread;
+    Method method;
     int nextPc;//指向下一条指令
 
     public Thread getThread() {
@@ -32,9 +34,17 @@ public class Frame {
         this.nextPc = nextPc;
     }
 
+    @Deprecated
     public Frame(Thread thread, int maxLocals, int maxStack) {
         this.localVariableTable = new LocalVariableTable(maxLocals);
         this.operandStack = new OperandStack(maxStack);
+        this.thread = thread;
+    }
+
+    public Frame(Thread thread,Method method){
+        this.localVariableTable = new LocalVariableTable(method.getMaxLocals());
+        this.operandStack = new OperandStack(method.getMaxStack());
+        this.method = method;
         this.thread = thread;
     }
 
@@ -131,4 +141,8 @@ public class Frame {
         return this.localVariableTable.getDouble(index);
     }
 
+
+    public Method getMethod() {
+        return method;
+    }
 }

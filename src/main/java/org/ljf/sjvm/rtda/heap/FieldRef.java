@@ -47,7 +47,7 @@ public class FieldRef extends MemberRef {
 
     private Field lookupField(Class clazz, String name, String descriptor) {
         for (Field field : clazz.getFields()) {
-            if (field.name.equals(this.name) && field.descriptor.equals(this.descriptor)) {
+            if (field.name.equals(name) && field.descriptor.equals(descriptor)) {
                 return field;
             }
 

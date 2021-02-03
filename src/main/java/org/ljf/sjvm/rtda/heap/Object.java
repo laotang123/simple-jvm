@@ -11,4 +11,17 @@ public class Object {
     private Class clazz;
     private Slots fields;
 
+
+    public Object(Class clazz, Slots fields) {
+        this.clazz = clazz;
+        this.fields = fields;
+    }
+
+    public Class getClazz() {
+        return clazz;
+    }
+
+    public Slots getFields() {
+        return fields;
+    }
 }

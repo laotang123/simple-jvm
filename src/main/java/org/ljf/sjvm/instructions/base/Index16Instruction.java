@@ -10,15 +10,11 @@ import org.ljf.sjvm.rtda.Frame;
  * @modified By：
  * @version: $ 1.0
  */
-public class Index16Instruction implements Instruction{
-    private int index;
+public abstract class Index16Instruction implements Instruction{
+    protected int index;
     @Override
     public void fetchOperands(ByteCodeReader reader) {
         this.index = reader.readUint16();
     }
 
-    @Override
-    public void execute(Frame frame) {
-
-    }
 }

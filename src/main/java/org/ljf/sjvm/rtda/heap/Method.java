@@ -11,8 +11,8 @@ import org.ljf.sjvm.classfile.attributes.CodeAttribute;
  * @version: $ 1.0
  */
 public class Method extends ClassMember {
-    private long maxStack;
-    private long maxLocals;
+    private int maxStack;
+    private int maxLocals;
     private byte[] code;
 
     public static Method[] newMethods(Class clazz, MemberInfo[] cfMethods) {
@@ -59,11 +59,11 @@ public class Method extends ClassMember {
         return 0 != (this.accessFlags& AccessFlags.ACC_STRICT);
     }
 
-    public long getMaxStack() {
+    public int getMaxStack() {
         return maxStack;
     }
 
-    public long getMaxLocals() {
+    public int getMaxLocals() {
         return maxLocals;
     }
 

@@ -158,4 +158,8 @@ public class Class {
     public void setStaticVars(Slots staticVars) {
         this.staticVars = staticVars;
     }
+
+    public Object newObject() {
+        return new Object(this,new Slots(this.instanceSlotCount));
+    }
 }
