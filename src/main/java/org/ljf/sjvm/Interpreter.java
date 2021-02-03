@@ -8,6 +8,7 @@ import org.ljf.sjvm.instructions.base.ByteCodeReader;
 import org.ljf.sjvm.instructions.base.Instruction;
 import org.ljf.sjvm.rtda.Frame;
 import org.ljf.sjvm.rtda.Thread;
+import org.ljf.sjvm.rtda.heap.Method;
 
 /**
  * @author: ljf
@@ -37,6 +38,13 @@ public class Interpreter {
 
         loop(thread, byteCode);
 
+    }
+
+    public static void interpret(Method method) {
+        Thread thread = new Thread();
+        Frame frame = thread.newFrame(method);
+        thread.pushFrame(frame);
+        loop(thread, method.getCode());
     }
 
     /**

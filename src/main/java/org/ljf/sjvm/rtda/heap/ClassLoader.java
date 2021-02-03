@@ -11,6 +11,7 @@ import java.util.Map;
  * @date: 2021/2/1 7:27
  * @description: 类加载器
  * 方法区是一个抽象的概念，classMap字段可以当做方法区的具体实现
+ * 方法区抽象为一个map结构
  * @modified By:
  * @version: $ 1.0
  */

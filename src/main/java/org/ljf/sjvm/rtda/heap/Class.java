@@ -220,4 +220,22 @@ public class Class {
         return false;
     }
 
+
+    public Method getMainMethod() {
+        try {
+            return this.getStaticMethod("main", "([Ljava/lang/String;)V");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private Method getStaticMethod(String name, String descriptor) throws NoSuchMethodException {
+        for (Method method : this.methods) {
+            if (method.name.equals("main") && method.descriptor.equals(descriptor)) {
+                return method;
+            }
+        }
+        throw new NoSuchMethodException(name);
+    }
 }

@@ -1,5 +1,7 @@
 package org.ljf.sjvm.rtda;
 
+import org.ljf.sjvm.rtda.heap.Method;
+
 /**
  * @author: ljf
  * @date: 2021/1/27 11:40
@@ -42,5 +44,9 @@ public class Thread {
 
     public Frame newFrame(int maxLocals, int maxStack) {
         return new Frame(this, maxLocals, maxStack);
+    }
+
+    public Frame newFrame(Method method) {
+        return new Frame(this, method);
     }
 }

@@ -4,6 +4,9 @@ import org.ljf.sjvm.classfile.ClassFile;
 import org.ljf.sjvm.classfile.MemberInfo;
 import org.ljf.sjvm.classfile.attributes.AttributeInfo;
 import org.ljf.sjvm.classpath.ClassPath;
+import org.ljf.sjvm.rtda.heap.Class;
+import org.ljf.sjvm.rtda.heap.ClassLoader;
+import org.ljf.sjvm.rtda.heap.Method;
 import org.ljf.sjvm.util.IOUtil;
 
 import java.util.Arrays;
@@ -38,15 +41,14 @@ public class Main {
         System.out.println("classpath:" + container + " class:" + cmd.getClassName() + " args:" + Arrays.toString(cmd.getArgs()));
         String classPath = IOUtil.getClassPath(cmd.getClassName());
 
-        try {
-            if (container != null) {//JAVA 类库没有装载进来，parse会构建失败返回null
-                ClassFile classFile = loadClass(classPath, container);
-                MemberInfo mainMethod = getMainMethod(classFile);
+
+        if (container != null) {//JAVA 类库没有装载进来，parse会构建失败返回null
+            ClassLoader classLoader = new ClassLoader(container);
+            Class mainClass = classLoader.loadClass(classPath);
+            Method mainMethod = mainClass.getMainMethod();
+            if (mainMethod != null) {
                 Interpreter.interpret(mainMethod);
-                printClassInfo(classFile);
             }
-        } catch (ClassNotFoundException | NoSuchMethodException e) {
-            e.printStackTrace();
         }
 
 

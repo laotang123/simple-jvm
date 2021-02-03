@@ -19,4 +19,12 @@ public class MemberRef extends SymRef {
         this.name = nameAndDescriptor[0];
         this.descriptor = nameAndDescriptor[1];
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescriptor() {
+        return descriptor;
+    }
 }
