@@ -14,6 +14,6 @@ import org.ljf.sjvm.rtda.Frame;
 public class InvokeSpecial extends Index16Instruction {
     @Override
     public void execute(Frame frame) {
-        frame.getOperandStack().popRef();
+        frame.popRef();
     }
 }

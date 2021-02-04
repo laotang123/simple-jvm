@@ -11,7 +11,7 @@ import java.util.Arrays;
  * @modified By:
  * @version: $ 1.0
  */
-public class Slots {
+public class Slots implements Cloneable {
     private final Slot[] slots;
 
     public Slots(int slotCount) {

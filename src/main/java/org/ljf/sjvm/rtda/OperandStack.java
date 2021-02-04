@@ -2,6 +2,8 @@ package org.ljf.sjvm.rtda;
 
 import org.ljf.sjvm.rtda.heap.Object;
 
+import java.util.Arrays;
+
 /**
  * @author: ljf
  * @date: 2021/1/27 13:05
@@ -33,6 +35,14 @@ public class OperandStack {
         return this.slots[size];
     }
 
+    public Slot peek() {
+        if (size > 0) {
+            return this.slots[size - 1];
+        }
+        return null;
+    }
+
+    //FIXME 这里栈顶的对象，都是重用状态
     public void pushInt(int value) {
         this.slots[size].num = value;
         this.size++;
@@ -87,5 +97,23 @@ public class OperandStack {
         Object ref = this.slots[size].ref;
         this.slots[size].ref = null;//帮助垃圾回收器回收，立刻重用？
         return ref;
+    }
+
+
+    public int getSize() {
+        return size;
+    }
+
+    public Slot[] getSlots() {
+        return slots;
+    }
+
+
+    @Override
+    public String toString() {
+        return "OperandStack{" +
+                "size=" + size +
+                ", slots=" + Arrays.toString(slots) +
+                '}';
     }
 }

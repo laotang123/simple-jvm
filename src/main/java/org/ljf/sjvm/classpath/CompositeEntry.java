@@ -38,10 +38,10 @@ public class CompositeEntry implements Entry {
         for (Entry entry : entries) {
             result = entry.readClass(classPath);
             if (result != null) {
+//                logger.info("loaded " + classPath + " from " + this);
                 break;
             }
         }
-        logger.info("loaded " + classPath + " from " + this);
         return result;
     }
 

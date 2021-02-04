@@ -29,6 +29,7 @@ public class Object {
         this.fields.setInt(slotId, value);
     }
 
+
     public void setLong(int slotId, long value) {
         this.fields.setLong(slotId, value);
     }

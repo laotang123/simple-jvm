@@ -16,8 +16,8 @@ import java.util.Map;
  * @version: $ 1.0
  */
 public class ClassLoader {
-    private ClassPath classPath;//类的完全限定名
-    private Map<String, Class> classMap;
+    private final ClassPath classPath;//类的完全限定名
+    private final Map<String, Class> classMap;
 
     public ClassLoader(ClassPath classPath) {
         this.classPath = classPath;
@@ -111,6 +111,7 @@ public class ClassLoader {
                 }
             }
         }
+        clazz.setStaticSlotCount(slotId);//静态属性数量赋值
     }
 
     private void calcInstanceFieldSlotIds(Class clazz) {
@@ -128,7 +129,7 @@ public class ClassLoader {
                 }
             }
         }
-
+        clazz.setInstanceSlotCount(slotId);//实例属性数量赋值
     }
 
     private void verify(Class clazz) {

@@ -24,6 +24,7 @@ public class DupX1 extends NoOperandInstruction {
         Slot slot2 = frame.popSLot();
         frame.pushSlot(slot1);
         frame.pushSlot(slot2);
-        frame.pushSlot(slot1);
+//        frame.pushSlot(slot1);
+        frame.pushSlot(new Slot(slot1.num, slot1.ref));
     }
 }

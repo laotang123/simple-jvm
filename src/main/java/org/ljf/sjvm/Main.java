@@ -38,13 +38,12 @@ public class Main {
 
     private static void startJVM(Cmd cmd) {
         ClassPath container = ClassPath.parse(cmd.getXjreOption(), cmd.getCpOptions());
+        String className = cmd.getClassName();
         System.out.println("classpath:" + container + " class:" + cmd.getClassName() + " args:" + Arrays.toString(cmd.getArgs()));
-        String classPath = IOUtil.getClassPath(cmd.getClassName());
-
 
         if (container != null) {//JAVA 类库没有装载进来，parse会构建失败返回null
             ClassLoader classLoader = new ClassLoader(container);
-            Class mainClass = classLoader.loadClass(classPath);
+            Class mainClass = classLoader.loadClass(className);
             Method mainMethod = mainClass.getMainMethod();
             if (mainMethod != null) {
                 Interpreter.interpret(mainMethod);

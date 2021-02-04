@@ -13,7 +13,7 @@ public abstract class SymRef implements Constant {
     protected Class clazz;
 
     public Class resolvedClass() {
-        if (this.clazz != null) {
+        if (this.clazz == null) {
             this.resolveClassRef();
         }
         return this.clazz;

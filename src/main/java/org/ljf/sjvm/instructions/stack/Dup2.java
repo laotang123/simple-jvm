@@ -10,9 +10,9 @@ import org.ljf.sjvm.rtda.Slot;
  * @description: 复制栈顶的两个元素
  * bottom -> top
  * [...][c][b][a]____
- *           \____   |
- *                |  |
- *                V  V
+ * \____   |
+ * |  |
+ * V  V
  * [...][c][b][a][b][a]
  * @modified By：
  * @version: $ 1.0
@@ -24,7 +24,9 @@ public class Dup2 extends NoOperandInstruction {
         Slot slot2 = frame.popSLot();
         frame.pushSlot(slot2);
         frame.pushSlot(slot1);
-        frame.pushSlot(slot2);
-        frame.pushSlot(slot1);
+//        frame.pushSlot(slot2);
+        frame.pushSlot(new Slot(slot2.num, slot2.ref));
+//        frame.pushSlot(slot1);
+        frame.pushSlot(new Slot(slot1.num, slot1.ref));
     }
 }

@@ -1,6 +1,7 @@
 package org.ljf.sjvm.classpath;
 
 import org.apache.commons.lang3.StringUtils;
+import org.ljf.sjvm.util.IOUtil;
 import org.ljf.sjvm.util.PathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,20 +100,26 @@ public class ClassPath {
      */
     public byte[] readClass(String className) throws ClassNotFoundException {
         byte[] result;
-        if ((result = bootClassPath.readClass(className)) != null) {
+        String classPath = IOUtil.getClassPath(className);
+        if ((result = bootClassPath.readClass(classPath)) != null) {
             return result;
-        } else if ((result = extClassPath.readClass(className)) != null) {
+        } else if ((result = extClassPath.readClass(classPath)) != null) {
             return result;
-        } else if ((result = userClassPath.readClass(className)) != null) {
+        } else if ((result = userClassPath.readClass(classPath)) != null) {
             return result;
         } else {
-            throw new ClassNotFoundException(className);
+            throw new ClassNotFoundException(classPath);
         }
 
 
     }
 
+    @Override
     public String toString() {
-        return userClassPath.toString();
+        return "ClassPath{" +
+                "bootClassPath=" + bootClassPath +
+                ", extClassPath=" + extClassPath +
+                ", userClassPath=" + userClassPath +
+                '}';
     }
 }

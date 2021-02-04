@@ -48,6 +48,7 @@ public class ClassZipEntry implements Entry {
                     System.out.println(zipEntry);
                     inputStream = zf.getInputStream(zipEntry);
                     result = IOUtil.readFromInputStream(inputStream);
+                    logger.info("loaded " + classPath + " from " + this);
                     break;
                 }
             }
@@ -57,8 +58,6 @@ public class ClassZipEntry implements Entry {
             IOUtil.close(inputStream);
             IOUtil.close(zf);
         }
-        logger.info("loaded " + classPath + " from " + this);
-
         return result;
     }
 

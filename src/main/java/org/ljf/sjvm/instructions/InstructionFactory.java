@@ -550,18 +550,18 @@ public class InstructionFactory {
                 return new GetField();
             case 0xb5:
                 return new PutField();
-            //	case 0xb6:
-            //		return &INVOKE_VIRTUAL{}
-            // case 0xb7:
-            // 	return &INVOKE_SPECIAL{}
+            case 0xb6:
+                return new InvokeVirtual();
+            case 0xb7:
+                return new InvokeSpecial();
             // case 0xb8:
             // 	return &INVOKE_STATIC{}
             // case 0xb9:
             // 	return &INVOKE_INTERFACE{}
             // case 0xba:
             // 	return &INVOKE_DYNAMIC{}
-             case 0xbb:
-             	return new New();
+            case 0xbb:
+                return new New();
             // case 0xbc:
             // 	return &NEW_ARRAY{}
             // case 0xbd:
@@ -570,10 +570,10 @@ public class InstructionFactory {
             // 	return arraylength
             // case 0xbf:
             // 	return athrow
-             case 0xc0:
-             	return new CheckCast();
-             case 0xc1:
-             	return new Instanceof();
+            case 0xc0:
+                return new CheckCast();
+            case 0xc1:
+                return new Instanceof();
             // case 0xc2:
             // 	return monitorenter
             // case 0xc3:

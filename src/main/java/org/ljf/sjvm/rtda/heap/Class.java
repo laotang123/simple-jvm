@@ -9,7 +9,7 @@ import org.ljf.sjvm.classfile.ClassFile;
  * @modified By:
  * @version: $ 1.0
  */
-public class Class {
+public class Class implements Cloneable {
     private int accessFlags;
     private String name;
     private String superClassName;
@@ -36,7 +36,7 @@ public class Class {
     }
 
     public boolean isPublic() {
-        return 0 != (this.accessFlags & AccessFlags.ACC_ABSTRACT);
+        return 0 != (this.accessFlags & AccessFlags.ACC_PUBLIC);
     }
 
     public boolean isFinal() {
