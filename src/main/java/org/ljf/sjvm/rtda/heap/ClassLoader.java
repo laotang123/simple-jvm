@@ -32,6 +32,14 @@ public class ClassLoader {
         return this.loadNoArrayClass(name);
     }
 
+    /**
+     * 1.读取.class文件到内存字节数组中
+     * 2.生成虚拟机中类对象，byte[]->classFile->Class
+     * 3.验证
+     * 4.准备：分配内存和初始化常量值
+     * @param name
+     * @return
+     */
     private Class loadNoArrayClass(String name) {
         byte[] data = this.readClass(name);
         Class clazz = this.defineClass(data);
@@ -46,7 +54,7 @@ public class ClassLoader {
 
     /**
      * 给类变量分配空间并给与初始值
-     *
+     * 给静态变量和实例变量编号。
      * @param clazz：类变量
      */
     private void prepare(Class clazz) {
@@ -56,7 +64,7 @@ public class ClassLoader {
     }
 
     private void allocAndInitStaticVars(Class clazz) {
-        clazz.setStaticVars(new Slots((int) clazz.getStaticSlotCount()));//FIXME: 强转存在风险
+        clazz.setStaticVars(new Slots(clazz.getStaticSlotCount()));
         for (Field field : clazz.getFields()) {
             if (field.isStatic() && field.isFinal()) {//静态变量，又有final修饰符。属于编译期已知。该值存储在class文件常量池。
                 initStaticFinalVar(clazz, field);

@@ -147,7 +147,7 @@ public class Class implements Cloneable {
         this.instanceSlotCount = instanceSlotCount;
     }
 
-    public long getStaticSlotCount() {
+    public int getStaticSlotCount() {
         return staticSlotCount;
     }
 
@@ -232,7 +232,7 @@ public class Class implements Cloneable {
 
     private Method getStaticMethod(String name, String descriptor) throws NoSuchMethodException {
         for (Method method : this.methods) {
-            if (method.name.equals("main") && method.descriptor.equals(descriptor)) {
+            if (method.name.equals(name) && method.descriptor.equals(descriptor)) {
                 return method;
             }
         }

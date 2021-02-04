@@ -3,6 +3,8 @@ package org.ljf.sjvm.rtda.heap;
 import org.ljf.sjvm.classfile.MemberInfo;
 import org.ljf.sjvm.classfile.attributes.ConstantValueAttribute;
 
+import java.io.File;
+
 /**
  * @author: ljf
  * @date: 2021/2/1 7:25
@@ -16,11 +18,13 @@ public class Field extends ClassMember {
 
     public static Field[] newFields(Class clazz, MemberInfo[] cfFields) {
         Field[] fields = new Field[cfFields.length];
+        Field field;
         for (int i = 0; i < cfFields.length; i++) {
-            fields[i] = new Field();
-            fields[i].clazz = clazz;
-            fields[i].copyMemberInfo(cfFields[i]);
-            fields[i].copyAttributes(cfFields[i]);
+            field = new Field();
+            field.clazz = clazz;
+            field.copyMemberInfo(cfFields[i]);
+            field.copyAttributes(cfFields[i]);
+            fields[i] = field;
         }
         return fields;
     }

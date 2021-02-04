@@ -65,7 +65,7 @@ public class Interpreter {
         while (true) {
             int pc = frame.getNextPc();
             thread.setPc(pc);
-            //指令解码
+            //指令解码, 只有reader才会用到pc。字节的索引。其他如Thread，frame记录
             reader.reset(pc);
             short opCode = reader.readUint8();
             Instruction inst;
@@ -76,7 +76,7 @@ public class Interpreter {
                 //指令执行
                 System.out.printf("pc: %2d inst: %s \n", pc, inst);
                 inst.execute(frame);
-                System.out.printf("%2d, operandStack: %s, localVariableTable: %s \n", pc, frame.getOperandStack(), frame.getLocalVariableTable());
+                System.out.printf("operandStack: %s, localVariableTable: %s \n",frame.getOperandStack(), frame.getLocalVariableTable());
             } catch (UnsupportedException e) {
                 System.out.printf("%2d, localVariableTable: %s \n", pc, frame.getLocalVariableTable());
                 e.printStackTrace();

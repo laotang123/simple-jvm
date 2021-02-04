@@ -17,11 +17,13 @@ public class Method extends ClassMember {
 
     public static Method[] newMethods(Class clazz, MemberInfo[] cfMethods) {
         Method[] methods = new Method[cfMethods.length];
+        Method method;
         for (int i = 0; i < cfMethods.length; i++) {
-            methods[i] = new Method();
-            methods[i].clazz = clazz;
-            methods[i].copyMemberInfo(cfMethods[i]);
-            methods[i].copyAttributes(cfMethods[i]);
+            method = new Method();
+            method.clazz = clazz;
+            method.copyMemberInfo(cfMethods[i]);
+            method.copyAttributes(cfMethods[i]);
+            methods[i] = method;
         }
         return methods;
     }
