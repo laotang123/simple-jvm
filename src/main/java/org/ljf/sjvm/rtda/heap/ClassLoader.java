@@ -19,6 +19,11 @@ public class ClassLoader {
     private final ClassPath classPath;//类的完全限定名
     private final Map<String, Class> classMap;
 
+
+    public Map<String, Class> getClassMap() {
+        return classMap;
+    }
+
     public ClassLoader(ClassPath classPath) {
         this.classPath = classPath;
         this.classMap = new HashMap<>();
