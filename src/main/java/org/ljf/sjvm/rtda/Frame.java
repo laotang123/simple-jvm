@@ -41,7 +41,7 @@ public class Frame {
         this.thread = thread;
     }
 
-    public Frame(Thread thread,Method method){
+    public Frame(Thread thread, Method method) {
         this.localVariableTable = new LocalVariableTable(method.getMaxLocals());
         this.operandStack = new OperandStack(method.getMaxStack());
         this.method = method;
@@ -144,5 +144,9 @@ public class Frame {
 
     public Method getMethod() {
         return method;
+    }
+
+    public void setSlot(int index, Slot slot) {
+        this.localVariableTable.setSlot(index, slot);
     }
 }

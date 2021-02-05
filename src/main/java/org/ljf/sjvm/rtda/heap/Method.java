@@ -14,6 +14,7 @@ public class Method extends ClassMember {
     private int maxStack;
     private int maxLocals;
     private byte[] code;
+    private int argSlotCount;//方法的参数数量
 
     public static Method[] newMethods(Class clazz, MemberInfo[] cfMethods) {
         Method[] methods = new Method[cfMethods.length];
@@ -23,9 +24,31 @@ public class Method extends ClassMember {
             method.clazz = clazz;
             method.copyMemberInfo(cfMethods[i]);
             method.copyAttributes(cfMethods[i]);
+            method.calcArgSlotCount();
             methods[i] = method;
         }
         return methods;
+    }
+
+    public int getArgSlotCount() {
+        return argSlotCount;
+    }
+
+    private void calcArgSlotCount() {
+        MethodDescriptorParser parser = new MethodDescriptorParser();
+        MethodDescriptor parsedDescriptor = parser.parseMethodDescriptor(this.descriptor);
+
+        for (String parameterType : parsedDescriptor.getParameterTypes()) {
+            this.argSlotCount++;
+            if (parameterType.equals("J") || parameterType.equals("D")) {
+                this.argSlotCount++;
+            }
+        }
+
+        if (!this.isStatic()){
+            this.argSlotCount++;//this reference
+        }
+
     }
 
     private void copyAttributes(MemberInfo cfMethod) {
@@ -39,26 +62,27 @@ public class Method extends ClassMember {
 
 
     public boolean IsSynchronized() {
-        return 0 != (this.accessFlags& AccessFlags.ACC_SYNCHRONIZED);
+        return 0 != (this.accessFlags & AccessFlags.ACC_SYNCHRONIZED);
     }
 
     public boolean IsBridge() {
-        return 0 != (this.accessFlags& AccessFlags.ACC_BRIDGE);
+        return 0 != (this.accessFlags & AccessFlags.ACC_BRIDGE);
     }
 
     public boolean IsVarargs() {
-        return 0 != (this.accessFlags& AccessFlags.ACC_VARARGS);
+        return 0 != (this.accessFlags & AccessFlags.ACC_VARARGS);
     }
 
     public boolean IsNative() {
-        return 0 != (this.accessFlags& AccessFlags.ACC_NATIVE);
+        return 0 != (this.accessFlags & AccessFlags.ACC_NATIVE);
     }
+
     public boolean IsAbstract() {
-        return 0 != (this.accessFlags& AccessFlags.ACC_ABSTRACT);
+        return 0 != (this.accessFlags & AccessFlags.ACC_ABSTRACT);
     }
 
     public boolean IsStrict() {
-        return 0 != (this.accessFlags& AccessFlags.ACC_STRICT);
+        return 0 != (this.accessFlags & AccessFlags.ACC_STRICT);
     }
 
     public int getMaxStack() {

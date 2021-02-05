@@ -25,6 +25,10 @@ public class LocalVariableTable {
         }
     }
 
+    public void setSlot(int index, Slot slot) {
+        this.slots[index] = slot;
+    }
+
     public void setInt(int index, int value) {
         slots[index].num = value;
     }
