@@ -22,4 +22,12 @@ public class MethodDescriptor {
         String[] buffer = new String[parameterTypes.size()];
         return parameterTypes.toArray(buffer);
     }
+
+    public String getReturnType() {
+        return returnType;
+    }
+
+    public void setReturnType(String returnType) {
+        this.returnType = returnType;
+    }
 }
