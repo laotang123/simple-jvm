@@ -28,7 +28,7 @@ public class MethodLookup {
         return null;
     }
 
-    static Method lookupMethodInClass(Class clazzC, MethodRef methodRef) {
+   public static Method lookupMethodInClass(Class clazzC, MemberRef methodRef) {
         do {
             for (Method method : clazzC.getMethods()) {
                 if (equalMethod(method, methodRef)) {

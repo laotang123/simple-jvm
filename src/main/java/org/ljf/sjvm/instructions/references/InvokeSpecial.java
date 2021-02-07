@@ -1,11 +1,10 @@
 package org.ljf.sjvm.instructions.references;
 
 import org.ljf.sjvm.instructions.base.Index16Instruction;
+import org.ljf.sjvm.instructions.base.MethodInvokeLogic;
 import org.ljf.sjvm.rtda.Frame;
+import org.ljf.sjvm.rtda.heap.*;
 import org.ljf.sjvm.rtda.heap.Class;
-import org.ljf.sjvm.rtda.heap.ConstantPool;
-import org.ljf.sjvm.rtda.heap.Method;
-import org.ljf.sjvm.rtda.heap.MethodRef;
 import org.ljf.sjvm.rtda.heap.Object;
 
 /**
@@ -49,5 +48,18 @@ public class InvokeSpecial extends Index16Instruction {
                 && !ref.getClazz().isSuperClassOf(currentClass)) {
             throw new IllegalAccessError();
         }
+
+        Method methodToBoInvoked = resolvedMethod;
+        if (currentClass.isSuper()
+                && resolvedClass.isSuperClassOf(currentClass)
+                && !resolvedMethod.getName().equals("<init>")) {
+            //去父类查找的过程
+            methodToBoInvoked = MethodLookup.lookupMethodInClass(currentClass.getSuperClass(), methodRef);
+        }
+
+        if (methodToBoInvoked == null || methodToBoInvoked.isAbstract()) {
+            throw new AbstractMethodError();
+        }
+        MethodInvokeLogic.invokeMethod(frame, methodToBoInvoked);
     }
 }

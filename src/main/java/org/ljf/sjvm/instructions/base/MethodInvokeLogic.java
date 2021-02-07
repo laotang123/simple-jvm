@@ -29,7 +29,7 @@ public class MethodInvokeLogic {
         }
 
         //hack!?
-        if (method.IsNative()) {
+        if (method.isNative()) {
             if (method.getName().equals("registerNatives")) {
                 thread.popFrame();
             } else {

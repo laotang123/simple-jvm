@@ -61,27 +61,27 @@ public class Method extends ClassMember {
     }
 
 
-    public boolean IsSynchronized() {
+    public boolean isSynchronized() {
         return 0 != (this.accessFlags & AccessFlags.ACC_SYNCHRONIZED);
     }
 
-    public boolean IsBridge() {
+    public boolean isBridge() {
         return 0 != (this.accessFlags & AccessFlags.ACC_BRIDGE);
     }
 
-    public boolean IsVarargs() {
+    public boolean isVarargs() {
         return 0 != (this.accessFlags & AccessFlags.ACC_VARARGS);
     }
 
-    public boolean IsNative() {
+    public boolean isNative() {
         return 0 != (this.accessFlags & AccessFlags.ACC_NATIVE);
     }
 
-    public boolean IsAbstract() {
+    public boolean isAbstract() {
         return 0 != (this.accessFlags & AccessFlags.ACC_ABSTRACT);
     }
 
-    public boolean IsStrict() {
+    public boolean isStrict() {
         return 0 != (this.accessFlags & AccessFlags.ACC_STRICT);
     }
 

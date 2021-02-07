@@ -554,10 +554,10 @@ public class InstructionFactory {
                 return new InvokeVirtual();
             case 0xb7:
                 return new InvokeSpecial();
-            // case 0xb8:
-            // 	return &INVOKE_STATIC{}
-            // case 0xb9:
-            // 	return &INVOKE_INTERFACE{}
+            case 0xb8:
+                return new InvokeStatic();
+            case 0xb9:
+                return new InvokeInterface();
             // case 0xba:
             // 	return &INVOKE_DYNAMIC{}
             case 0xbb:

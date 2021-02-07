@@ -183,7 +183,7 @@ public class Class implements Cloneable {
     }
 
     // self extends c
-    private boolean isSubClassOf(Class other) {
+    public boolean isSubClassOf(Class other) {
         Class c = this.superClass; //所有类的父类至少有一个Object
         do {
             if (c == other) {
@@ -196,7 +196,7 @@ public class Class implements Cloneable {
     }
 
     // self implements interface
-    private boolean isImplements(Class iFace) {
+    public boolean isImplements(Class iFace) {
         Class c = this;
 
         do {
