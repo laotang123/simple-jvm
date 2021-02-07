@@ -64,6 +64,10 @@ public class Frame {
         return operandStack.popRef();
     }
 
+    public Object getRefFromTop(int n){
+        return this.operandStack.getRefFromTop(n);
+    }
+
     public void pushDouble(double value) {
         this.operandStack.pushDouble(value);
     }

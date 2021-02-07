@@ -210,6 +210,10 @@ public class Class implements Cloneable {
         return false;
     }
 
+    //c extends self
+    public boolean isSuperClassOf(Class other){
+        return other.isSubClassOf(this);
+    }
     // self extends iFace
     private boolean isSubInterfaceOf(Class iFace) {
         for (Class superInterface : this.interfaces) {

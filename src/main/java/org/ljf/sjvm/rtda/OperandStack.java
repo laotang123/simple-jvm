@@ -116,4 +116,8 @@ public class OperandStack {
                 ", slots=" + Arrays.toString(slots) +
                 '}';
     }
+
+    public Object getRefFromTop(int n) {
+        return this.slots[this.size - 1 - n].ref;
+    }
 }
