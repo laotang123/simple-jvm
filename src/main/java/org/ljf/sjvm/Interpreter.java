@@ -76,7 +76,41 @@ public class Interpreter {
                 //指令执行
                 System.out.printf("pc: %2d inst: %s \n", pc, inst);
                 inst.execute(frame);
-                System.out.printf("operandStack: %s, localVariableTable: %s \n",frame.getOperandStack(), frame.getLocalVariableTable());
+                System.out.printf("operandStack: %s, localVariableTable: %s \n", frame.getOperandStack(), frame.getLocalVariableTable());
+            } catch (UnsupportedException e) {
+                System.out.printf("%2d, localVariableTable: %s \n", pc, frame.getLocalVariableTable());
+                e.printStackTrace();
+                break;
+            }
+
+        }
+
+    }
+
+    private static void loop(Thread thread) {
+        ByteCodeReader reader = new ByteCodeReader();
+
+        while (true) {
+            Frame frame = thread.currentFrame();
+            int pc = frame.getNextPc();
+            thread.setPc(pc);
+
+            //指令解码, 只有reader才会用到pc。字节的索引。其他如Thread，frame记录
+            reader.reset(frame.getMethod().getCode(), pc);
+            short opCode = reader.readUint8();
+            Instruction inst;
+            try {
+                inst = InstructionFactory.newInstruction(opCode);
+                inst.fetchOperands(reader);
+                frame.setNextPc(reader.getPc());
+                //指令执行
+                System.out.printf("pc: %2d inst: %s \n", pc, inst);
+                inst.execute(frame);
+
+                if (thread.isStackEmpty()){
+                    break;
+                }
+                System.out.printf("operandStack: %s, localVariableTable: %s \n", frame.getOperandStack(), frame.getLocalVariableTable());
             } catch (UnsupportedException e) {
                 System.out.printf("%2d, localVariableTable: %s \n", pc, frame.getLocalVariableTable());
                 e.printStackTrace();

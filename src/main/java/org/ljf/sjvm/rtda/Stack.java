@@ -46,4 +46,8 @@ public class Stack {
         }
         return this.peekFrame;
     }
+
+    public boolean isEmpty() {
+        return this.peekFrame == null;
+    }
 }

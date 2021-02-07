@@ -13,7 +13,7 @@ import org.ljf.sjvm.rtda.heap.Object;
  * @description: 在创建类实例时，编译器会在new指令的后面加入invoke_special指令来调用构造函数初始化对象
  * 空的实现
  * invoke_special指令用来调 用无须动态绑定的实例方法，包括构造函数、私有方法和通过super
- * 关键字调用的超类方法。剩下的情况则属于动态绑定。如
+ * 关键字调用的超类方法。(编译时就能确定的方法)剩下的情况则属于动态绑定。
  * @modified By:
  * @version: $ 1.0
  */
