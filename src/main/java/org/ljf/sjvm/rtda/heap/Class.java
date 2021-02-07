@@ -23,7 +23,16 @@ public class Class implements Cloneable {
     private int instanceSlotCount;//实例变量空间大小 uint
     private int staticSlotCount;//类变量空间大小
     private Slots staticVars;//静态变量
+    private boolean initStarted;
 
+
+    public boolean getInitStarted() {
+        return this.initStarted;
+    }
+
+    private void startInit() {
+        this.initStarted = true;
+    }
 
     public Class(ClassFile classFile) {
         this.accessFlags = classFile.getAccessFlags();
@@ -211,9 +220,10 @@ public class Class implements Cloneable {
     }
 
     //c extends self
-    public boolean isSuperClassOf(Class other){
+    public boolean isSuperClassOf(Class other) {
         return other.isSubClassOf(this);
     }
+
     // self extends iFace
     private boolean isSubInterfaceOf(Class iFace) {
         for (Class superInterface : this.interfaces) {
