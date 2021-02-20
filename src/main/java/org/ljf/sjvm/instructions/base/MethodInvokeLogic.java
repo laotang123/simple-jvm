@@ -20,6 +20,7 @@ public class MethodInvokeLogic {
 
         int argSlotCount = method.getArgSlotCount();
 
+        //调用方法向执行方法传递参数
         if (argSlotCount > 0) {
             Slot slot;
             for (int i = argSlotCount - 1; i >= 0; i--) {

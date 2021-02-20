@@ -9,7 +9,7 @@ package org.ljf.sjvm.examples.ch07;
  */
 public class FibonacciTest {
     public static void main(String[] args) {
-        long x = fibonacci(8);
+        long x = fibonacci(30);
         System.out.println(x);
     }
     private static long fibonacci(long n) {
