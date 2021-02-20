@@ -27,4 +27,8 @@ public class InvokeDemo implements Runnable {
     public void run() {
 
     }
+
+    public static void main(String[] args) {
+        new InvokeDemo().test();
+    }
 }

@@ -243,10 +243,17 @@ public class Class implements Cloneable {
         }
         return null;
     }
-
+    public Method getClinitMethod(){
+        try {
+            return this.getStaticMethod("<clinit>", "()V");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     private Method getStaticMethod(String name, String descriptor) throws NoSuchMethodException {
         for (Method method : this.methods) {
-            if (method.name.equals(name) && method.descriptor.equals(descriptor)) {
+            if (method.isStatic() && method.name.equals(name) && method.descriptor.equals(descriptor)) {
                 return method;
             }
         }

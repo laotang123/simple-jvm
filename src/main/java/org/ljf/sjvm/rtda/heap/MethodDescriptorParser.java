@@ -35,14 +35,16 @@ public class MethodDescriptorParser {
 
     private void parseReturnType() {
         if (this.readUint8() == 'V') {
+            System.out.println("return type:  V");
             this.parsed.setReturnType("V");
             return;
         }
 
         this.unreadUit8();
-        String objectType = this.parseObjectType();
-        if (!objectType.equals("")) {
-            this.parsed.setReturnType(objectType);
+        String fieldType = this.parseFieldType();
+        if (!fieldType.equals("")) {
+            System.out.println("return type: " + fieldType);
+            this.parsed.setReturnType(fieldType);
             return;
         }
 
@@ -56,8 +58,10 @@ public class MethodDescriptorParser {
     }
 
     private void parseParamTypes() {
-        String fieldType = this.parseFieldType();
-        while (!fieldType.equals("")) {
+        String fieldType;
+        while (!(fieldType = this.parseFieldType()).equals("")) {
+            System.out.println("raw field: " + this.raw);
+            System.out.println("parsed field type: " + fieldType);
             this.parsed.addParameterType(fieldType);
         }
     }
@@ -93,20 +97,19 @@ public class MethodDescriptorParser {
 
     private String parseArrayType() {
         int arrStart = this.offset - 1;
+//        this.readUint8();//数组参数包含  [
         this.parseFieldType();
         int arrEnd = this.offset;
-        return this.raw.substring(arrStart, arrEnd);
+        return this.raw.substring(arrStart, arrEnd - 1);
     }
 
     private String parseObjectType() {
-        String unread = this.raw.substring(this.offset);
-        int semicolonIndex = unread.indexOf(';');
-        if (semicolonIndex == -1) {
+        int objStart = this.offset - 1;
+        int objEnd = this.raw.indexOf(';', this.offset);
+        if (objEnd == -1) {
             throw new IllegalArgumentException();
         } else {
-            int objStart = this.offset - 1;
-            int objEnd = this.offset + semicolonIndex + 1;
-            this.offset = objEnd;
+            this.offset = objEnd + 1;
             return this.raw.substring(objStart, objEnd);
         }
     }

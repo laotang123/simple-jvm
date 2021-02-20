@@ -1,5 +1,8 @@
 package org.ljf.sjvm.rtda.heap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 
 /**
@@ -10,11 +13,13 @@ import java.util.ArrayList;
  * @version: $ 1.0
  */
 public class MethodDescriptor {
+    private static final Logger logger = LoggerFactory.getLogger(MethodDescriptor.class);
 
     private final ArrayList<String> parameterTypes = new ArrayList<>();
     private String returnType;
 
     public void addParameterType(String parameterType) {
+        System.out.println("add parameter type: " + parameterType);
         parameterTypes.add(parameterType);
     }
 

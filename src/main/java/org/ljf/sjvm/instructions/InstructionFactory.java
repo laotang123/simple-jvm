@@ -4,9 +4,7 @@ import org.ljf.sjvm.exceptions.UnsupportedException;
 import org.ljf.sjvm.instructions.base.Instruction;
 import org.ljf.sjvm.instructions.comparisons.*;
 import org.ljf.sjvm.instructions.constants.*;
-import org.ljf.sjvm.instructions.control.Goto;
-import org.ljf.sjvm.instructions.control.LookupSwitch;
-import org.ljf.sjvm.instructions.control.TableSwitch;
+import org.ljf.sjvm.instructions.control.*;
 import org.ljf.sjvm.instructions.conversions.*;
 import org.ljf.sjvm.instructions.extended.GotoW;
 import org.ljf.sjvm.instructions.extended.IfNonNull;
@@ -31,7 +29,7 @@ import java.util.Map;
 public class InstructionFactory {
     private static final Map<String, Instruction> instructionMap = new HashMap<>();
 
-    static {
+    static {//TODO: 改为final属性
         instructionMap.put("nop", new NOP());
         instructionMap.put("aConstNull", new AConstNull());
         instructionMap.put("iConstM1", new IConstM1());
@@ -165,17 +163,23 @@ public class InstructionFactory {
         instructionMap.put("fCmpG", new FCmpG());
         instructionMap.put("dCmpL", new DCmpL());
         instructionMap.put("dCmpG", new DCmpG());
+        instructionMap.put("_return", new Return());
+        instructionMap.put("iReturn", new IReturn());
+        instructionMap.put("lReturn", new LReturn());
+        instructionMap.put("fReturn", new FReturn());
+        instructionMap.put("dReturn", new DReturn());
+        instructionMap.put("aReturn", new AReturn());
+//        IReturn ireturn = new IReturn();
+//        LReturn lreturn = new LReturn();
+//        FReturn freturn = new FReturn();
+//        DReturn dreturn = new DReturn();
+//        AReturn areturn = new AReturn();
 
 //        ineg = &INEG { }
 //        lneg = &LNEG { }
 //        fneg = &FNEG { }
 //        dneg = &DNEG { }
-        // ireturn = &IRETURN{}
-        // lreturn = &LRETURN{}
-        // freturn = &FRETURN{}
-        // dreturn = &DRETURN{}
-        // areturn = &ARETURN{}
-        // _return = &RETURN{}
+
         // arraylength   = &ARRAY_LENGTH{}
         // athrow        = &ATHROW{}
         // monitorenter  = &MONITOR_ENTER{}
@@ -530,18 +534,18 @@ public class InstructionFactory {
                 return new TableSwitch();
             case 0xab:
                 return new LookupSwitch();
-            // case 0xac:
-            // 	return ireturn
-            // case 0xad:
-            // 	return lreturn
-            // case 0xae:
-            // 	return freturn
-            // case 0xaf:
-            // 	return dreturn
-            // case 0xb0:
-            // 	return areturn
-            // case 0xb1:
-            // 	return _return
+             case 0xac:
+             	return instructionMap.get("iReturn");
+             case 0xad:
+                 return instructionMap.get("lReturn");
+             case 0xae:
+             	return instructionMap.get("fReturn");
+             case 0xaf:
+             	return instructionMap.get("dReturn");
+             case 0xb0:
+             	return instructionMap.get("aReturn");
+             case 0xb1:
+             	return instructionMap.get("_return");
             case 0xb2:
                 return new GetStatic();
             case 0xb3:
