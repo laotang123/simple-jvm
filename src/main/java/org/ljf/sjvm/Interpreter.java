@@ -44,7 +44,8 @@ public class Interpreter {
         Thread thread = new Thread();
         Frame frame = thread.newFrame(method);
         thread.pushFrame(frame);
-        loop(thread, method.getCode());
+//        loop(thread, method.getCode());
+        loop(thread);
     }
 
     /**
@@ -91,6 +92,7 @@ public class Interpreter {
         ByteCodeReader reader = new ByteCodeReader();
 
         while (true) {
+            //方法和frame是一对一关系，frame中保存着方法执行的code和pc
             Frame frame = thread.currentFrame();
             int pc = frame.getNextPc();
             thread.setPc(pc);
