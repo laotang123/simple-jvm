@@ -264,4 +264,9 @@ public class Class implements Cloneable {
         }
         throw new NoSuchMethodException(name);
     }
+
+    public Class arrayClass() {
+        String arrayClassName = ClassNameHelper.getArrayClassName(this.name);
+        return this.loader.loadClass(arrayClassName);
+    }
 }
