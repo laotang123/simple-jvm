@@ -48,6 +48,9 @@ public class Frame {
         this.thread = thread;
     }
 
+    public void revertNextPc(){
+        this.nextPc = this.thread.getPc();
+    }
     public LocalVariableTable getLocalVariableTable() {
         return localVariableTable;
     }

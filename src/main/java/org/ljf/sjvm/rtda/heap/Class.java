@@ -26,11 +26,11 @@ public class Class implements Cloneable {
     private boolean initStarted;
 
 
-    public boolean getInitStarted() {
+    public boolean initStarted() {
         return this.initStarted;
     }
 
-    private void startInit() {
+    public void startInit() {
         this.initStarted = true;
     }
 

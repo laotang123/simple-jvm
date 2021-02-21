@@ -3,6 +3,7 @@ package org.ljf.sjvm.instructions.base;
 import org.ljf.sjvm.rtda.Frame;
 import org.ljf.sjvm.rtda.Slot;
 import org.ljf.sjvm.rtda.Thread;
+import org.ljf.sjvm.rtda.heap.Class;
 import org.ljf.sjvm.rtda.heap.Method;
 
 /**
@@ -35,6 +36,31 @@ public class MethodInvokeLogic {
                 thread.popFrame();
             } else {
                 throw new NoSuchMethodError("native method: " + method.getClazz().getName() + method.getName() + method.getDescriptor());
+            }
+        }
+    }
+
+    public static void initClass(Thread thread, Class clazz) {
+        clazz.startInit();
+        scheduleClinit(thread, clazz);
+        initSuperClass(thread, clazz);
+    }
+
+    private static void scheduleClinit(Thread thread, Class clazz) {
+        Method clinitMethod = clazz.getClinitMethod();
+        if (clinitMethod != null) {
+            //exec <clinit>
+            Frame newFrame = thread.newFrame(clinitMethod);
+            thread.pushFrame(newFrame);
+        }
+    }
+
+    //递归初始化父类 初始化方法
+    private static void initSuperClass(Thread thread, Class clazz) {
+        if (!clazz.isInterface()) {
+            Class superClass = clazz.getSuperClass();
+            if (superClass != null && !superClass.initStarted()) {
+                initClass(thread, superClass);
             }
         }
     }

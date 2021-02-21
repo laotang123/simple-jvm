@@ -3,6 +3,7 @@ package org.ljf.sjvm.instructions.references;
 import org.ljf.sjvm.instructions.base.Index16Instruction;
 import org.ljf.sjvm.instructions.base.MethodInvokeLogic;
 import org.ljf.sjvm.rtda.Frame;
+import org.ljf.sjvm.rtda.heap.Class;
 import org.ljf.sjvm.rtda.heap.ConstantPool;
 import org.ljf.sjvm.rtda.heap.Method;
 import org.ljf.sjvm.rtda.heap.MethodRef;
@@ -27,6 +28,13 @@ public class InvokeStatic extends Index16Instruction {
 
         if (!method.isStatic()){
             throw new IncompatibleClassChangeError();
+        }
+
+        Class clazz = method.getClazz();
+        if (!clazz.initStarted()){
+            frame.revertNextPc();
+            MethodInvokeLogic.initClass(frame.getThread(),clazz);
+            return;
         }
         MethodInvokeLogic.invokeMethod(frame,method);
     }

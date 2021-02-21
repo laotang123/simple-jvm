@@ -1,6 +1,7 @@
 package org.ljf.sjvm.instructions.references;
 
 import org.ljf.sjvm.instructions.base.Index16Instruction;
+import org.ljf.sjvm.instructions.base.MethodInvokeLogic;
 import org.ljf.sjvm.rtda.Frame;
 import org.ljf.sjvm.rtda.OperandStack;
 import org.ljf.sjvm.rtda.heap.*;
@@ -25,7 +26,12 @@ public class PutStatic extends Index16Instruction {
         FieldRef fieldRef = (FieldRef) constantPool.getConstant(this.index);
         Field field = fieldRef.resolvedField();
         Class clazz = field.getClazz();
-        //todo: init class
+
+        if (!clazz.initStarted()){
+            frame.revertNextPc();
+            MethodInvokeLogic.initClass(frame.getThread(),clazz);
+            return;
+        }
 
 
         /**
