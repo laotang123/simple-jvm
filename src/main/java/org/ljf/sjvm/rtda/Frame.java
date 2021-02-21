@@ -2,7 +2,7 @@ package org.ljf.sjvm.rtda;
 
 
 import org.ljf.sjvm.rtda.heap.Method;
-import org.ljf.sjvm.rtda.heap.Object;
+import org.ljf.sjvm.rtda.heap.SObject;
 
 /**
  * @author: ljf
@@ -59,15 +59,15 @@ public class Frame {
         return operandStack;
     }
 
-    public void pushRef(Object ref) {
+    public void pushRef(SObject ref) {
         this.operandStack.pushRef(ref);
     }
 
-    public Object popRef() {
+    public SObject popRef() {
         return operandStack.popRef();
     }
 
-    public Object getRefFromTop(int n){
+    public SObject getRefFromTop(int n){
         return this.operandStack.getRefFromTop(n);
     }
 
@@ -103,7 +103,7 @@ public class Frame {
         return operandStack.popLong();
     }
 
-    public void setRef(int index, Object ref) {
+    public void setRef(int index, SObject ref) {
         this.localVariableTable.setRef(index, ref);
     }
 

@@ -4,7 +4,7 @@ import org.ljf.sjvm.instructions.base.Index16Instruction;
 import org.ljf.sjvm.rtda.Frame;
 import org.ljf.sjvm.rtda.OperandStack;
 import org.ljf.sjvm.rtda.heap.*;
-import org.ljf.sjvm.rtda.heap.Object;
+import org.ljf.sjvm.rtda.heap.SObject;
 
 /**
  * @author: ljf
@@ -26,7 +26,7 @@ public class GetField extends Index16Instruction {
         }
 
         OperandStack stack = frame.getOperandStack();
-        Object ref = stack.popRef();
+        SObject ref = stack.popRef();
         if (ref == null) {
             throw new NullPointerException();
         }

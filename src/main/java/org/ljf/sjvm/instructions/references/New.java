@@ -6,7 +6,7 @@ import org.ljf.sjvm.rtda.Frame;
 import org.ljf.sjvm.rtda.heap.Class;
 import org.ljf.sjvm.rtda.heap.ClassRef;
 import org.ljf.sjvm.rtda.heap.ConstantPool;
-import org.ljf.sjvm.rtda.heap.Object;
+import org.ljf.sjvm.rtda.heap.SObject;
 
 /**
  * @author: ljf
@@ -38,7 +38,7 @@ public class New extends Index16Instruction {
             throw new InstantiationError(clazz.getName());
         }
 
-        Object ref = clazz.newObject();//实例对象的引用
+        SObject ref = clazz.newObject();//实例对象的引用
 
         //将引用推到当前frame的操作数栈
         frame.getOperandStack().pushRef(ref);

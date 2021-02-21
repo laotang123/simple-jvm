@@ -10,20 +10,20 @@ import org.ljf.sjvm.classfile.ClassFile;
  * @version: $ 1.0
  */
 public class Class implements Cloneable {
-    private int accessFlags;
-    private String name;
-    private String superClassName;
-    private String[] interfaceNames;
-    private ConstantPool constantPool;
-    private Field[] fields;
-    private Method[] methods;
-    private ClassLoader loader;
-    private Class superClass;
-    private Class[] interfaces;
-    private int instanceSlotCount;//实例变量空间大小 uint
-    private int staticSlotCount;//类变量空间大小
-    private Slots staticVars;//静态变量
-    private boolean initStarted;
+    protected int accessFlags;
+    protected String name;
+    protected String superClassName;
+    protected String[] interfaceNames;
+    protected ConstantPool constantPool;
+    protected Field[] fields;
+    protected Method[] methods;
+    protected ClassLoader loader;
+    protected Class superClass;
+    protected Class[] interfaces;
+    protected int instanceSlotCount;//实例变量空间大小 uint
+    protected int staticSlotCount;//类变量空间大小
+    protected Slots staticVars;//静态变量
+    protected boolean initStarted;
 
 
     public boolean initStarted() {
@@ -42,6 +42,9 @@ public class Class implements Cloneable {
         this.constantPool = new ConstantPool(this, classFile.getConstantPool());
         this.fields = Field.newFields(this, classFile.getFields());
         this.methods = Method.newMethods(this, classFile.getMethods());
+    }
+
+    public Class() {
     }
 
     public boolean isPublic() {
@@ -168,8 +171,8 @@ public class Class implements Cloneable {
         this.staticVars = staticVars;
     }
 
-    public Object newObject() {
-        return new Object(this, new Slots(this.instanceSlotCount));
+    public SObject newObject() {
+        return new SObject(this);
     }
 
 
@@ -243,7 +246,8 @@ public class Class implements Cloneable {
         }
         return null;
     }
-    public Method getClinitMethod(){
+
+    public Method getClinitMethod() {
         try {
             return this.getStaticMethod("<clinit>", "()V");
         } catch (NoSuchMethodException e) {
@@ -251,6 +255,7 @@ public class Class implements Cloneable {
         }
         return null;
     }
+
     private Method getStaticMethod(String name, String descriptor) throws NoSuchMethodException {
         for (Method method : this.methods) {
             if (method.isStatic() && method.name.equals(name) && method.descriptor.equals(descriptor)) {

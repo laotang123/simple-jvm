@@ -5,7 +5,7 @@ import org.ljf.sjvm.instructions.base.Instruction;
 import org.ljf.sjvm.instructions.base.MethodInvokeLogic;
 import org.ljf.sjvm.rtda.Frame;
 import org.ljf.sjvm.rtda.heap.*;
-import org.ljf.sjvm.rtda.heap.Object;
+import org.ljf.sjvm.rtda.heap.SObject;
 
 /**
  * @author: ljf
@@ -35,7 +35,7 @@ public class InvokeInterface implements Instruction {
         if (resolvedMethod.isStatic() || resolvedMethod.isPrivate()) {
             throw new IncompatibleClassChangeError();
         }
-        Object ref = frame.getOperandStack().getRefFromTop(resolvedMethod.getArgSlotCount() - 1);
+        SObject ref = frame.getOperandStack().getRefFromTop(resolvedMethod.getArgSlotCount() - 1);
         if (ref == null) {
             throw new NullPointerException();
         }

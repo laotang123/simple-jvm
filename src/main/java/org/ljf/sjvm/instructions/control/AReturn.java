@@ -2,7 +2,7 @@ package org.ljf.sjvm.instructions.control;
 
 import org.ljf.sjvm.instructions.base.NoOperandInstruction;
 import org.ljf.sjvm.rtda.Frame;
-import org.ljf.sjvm.rtda.heap.Object;
+import org.ljf.sjvm.rtda.heap.SObject;
 
 /**
  * @author: ljf
@@ -17,7 +17,7 @@ public class AReturn extends NoOperandInstruction {
         Frame currentFrame = frame.getThread().popFrame();
         Frame invokeFrame = frame.getThread().peekFrame();
 
-        Object returnValue = currentFrame.popRef();
+        SObject returnValue = currentFrame.popRef();
         invokeFrame.pushRef(returnValue);
     }
 }

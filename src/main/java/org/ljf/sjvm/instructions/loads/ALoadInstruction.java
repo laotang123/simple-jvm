@@ -1,7 +1,7 @@
 package org.ljf.sjvm.instructions.loads;
 
 import org.ljf.sjvm.rtda.Frame;
-import org.ljf.sjvm.rtda.heap.Object;
+import org.ljf.sjvm.rtda.heap.SObject;
 
 /**
  * @author: ljf
@@ -13,7 +13,7 @@ import org.ljf.sjvm.rtda.heap.Object;
 public interface ALoadInstruction {
 
     default void aLoad(Frame frame, int index) {
-        Object ref = frame.getLocalVariableTable().getRef(index);
+        SObject ref = frame.getLocalVariableTable().getRef(index);
         frame.pushRef(ref);
     }
 }

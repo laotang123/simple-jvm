@@ -6,7 +6,7 @@ import org.ljf.sjvm.rtda.OperandStack;
 import org.ljf.sjvm.rtda.heap.Class;
 import org.ljf.sjvm.rtda.heap.ClassRef;
 import org.ljf.sjvm.rtda.heap.ConstantPool;
-import org.ljf.sjvm.rtda.heap.Object;
+import org.ljf.sjvm.rtda.heap.SObject;
 
 /**
  * @author: ljf
@@ -20,7 +20,7 @@ public class CheckCast extends Index16Instruction {
     @Override
     public void execute(Frame frame) {
         OperandStack stack = frame.getOperandStack();
-        Object ref = stack.popRef();
+        SObject ref = stack.popRef();
         stack.pushRef(ref);
 
         //null类型可以转换成任何类型

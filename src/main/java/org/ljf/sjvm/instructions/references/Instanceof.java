@@ -6,7 +6,7 @@ import org.ljf.sjvm.rtda.OperandStack;
 import org.ljf.sjvm.rtda.heap.Class;
 import org.ljf.sjvm.rtda.heap.ClassRef;
 import org.ljf.sjvm.rtda.heap.ConstantPool;
-import org.ljf.sjvm.rtda.heap.Object;
+import org.ljf.sjvm.rtda.heap.SObject;
 
 /**
  * @author: ljf
@@ -22,7 +22,7 @@ public class Instanceof extends Index16Instruction {
         // 通过这个索引可以从当前类的运行时常量 池中找到一个类符号引用。
         // 第二个操作数是对象引用，从操作数栈中弹出
         OperandStack stack = frame.getOperandStack();
-        Object ref = stack.popRef();
+        SObject ref = stack.popRef();
 
         if (ref == null) {
             stack.pushInt(0);

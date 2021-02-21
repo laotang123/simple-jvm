@@ -62,11 +62,11 @@ public class Slots implements Cloneable {
         return Double.longBitsToDouble(getLong(index));
     }
 
-    public void setRef(int index, Object ref) {
+    public void setRef(int index, SObject ref) {
         slots[index].ref = ref;
     }
 
-    public Object getRef(int index) {
+    public SObject getRef(int index) {
         return slots[index].ref;
     }
 

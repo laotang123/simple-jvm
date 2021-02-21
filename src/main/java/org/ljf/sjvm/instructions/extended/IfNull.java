@@ -3,7 +3,7 @@ package org.ljf.sjvm.instructions.extended;
 import org.ljf.sjvm.instructions.base.BranchInstruction;
 import org.ljf.sjvm.instructions.base.BranchLogic;
 import org.ljf.sjvm.rtda.Frame;
-import org.ljf.sjvm.rtda.heap.Object;
+import org.ljf.sjvm.rtda.heap.SObject;
 
 /**
  * @author: ljf
@@ -15,7 +15,7 @@ import org.ljf.sjvm.rtda.heap.Object;
 public class IfNull extends BranchInstruction {
     @Override
     public void execute(Frame frame) {
-        Object ref = frame.popRef();
+        SObject ref = frame.popRef();
         if (ref == null){
             BranchLogic.branch(frame,this.offset);
         }

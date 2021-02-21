@@ -34,7 +34,18 @@ public class ClassLoader {
         if (clazz != null) {
             return clazz;
         }
+
+        if (name.charAt(0) == '[') {
+            return this.loadArrayClass(name);
+        }
         return this.loadNoArrayClass(name);
+    }
+
+    private Class loadArrayClass(String name) {
+
+        Class classArray = new ClassArray(this,name);
+        this.classMap.put(name, classArray);
+        return classArray;
     }
 
     /**
@@ -42,6 +53,7 @@ public class ClassLoader {
      * 2.生成虚拟机中类对象，byte[]->classFile->Class
      * 3.验证
      * 4.准备：分配内存和初始化常量值
+     *
      * @param name
      * @return
      */
@@ -60,6 +72,7 @@ public class ClassLoader {
     /**
      * 给类变量分配空间并给与初始值
      * 给静态变量和实例变量编号。
+     *
      * @param clazz：类变量
      */
     private void prepare(Class clazz) {

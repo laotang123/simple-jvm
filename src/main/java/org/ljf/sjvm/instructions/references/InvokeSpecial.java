@@ -5,7 +5,7 @@ import org.ljf.sjvm.instructions.base.MethodInvokeLogic;
 import org.ljf.sjvm.rtda.Frame;
 import org.ljf.sjvm.rtda.heap.*;
 import org.ljf.sjvm.rtda.heap.Class;
-import org.ljf.sjvm.rtda.heap.Object;
+import org.ljf.sjvm.rtda.heap.SObject;
 
 /**
  * @author: ljf
@@ -35,7 +35,7 @@ public class InvokeSpecial extends Index16Instruction {
         }
 
         //this reference
-        Object ref = frame.getRefFromTop(resolvedMethod.getArgSlotCount() - 1);
+        SObject ref = frame.getRefFromTop(resolvedMethod.getArgSlotCount() - 1);
         if (ref == null) {
             throw new NullPointerException();
         }

@@ -1,7 +1,7 @@
 package org.ljf.sjvm.instructions.stores;
 
 import org.ljf.sjvm.rtda.Frame;
-import org.ljf.sjvm.rtda.heap.Object;
+import org.ljf.sjvm.rtda.heap.SObject;
 
 /**
  * @author: ljf
@@ -14,7 +14,7 @@ public interface AStoreInstruction {
 
     default void aStore(Frame frame, int index) {
 
-        Object ref = frame.popRef();
+        SObject ref = frame.popRef();
         frame.setRef(index, ref);
     }
 }

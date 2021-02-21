@@ -5,7 +5,7 @@ import org.ljf.sjvm.rtda.Frame;
 import org.ljf.sjvm.rtda.OperandStack;
 import org.ljf.sjvm.rtda.heap.*;
 import org.ljf.sjvm.rtda.heap.Class;
-import org.ljf.sjvm.rtda.heap.Object;
+import org.ljf.sjvm.rtda.heap.SObject;
 
 /**
  * @author: ljf
@@ -45,7 +45,7 @@ public class PutField extends Index16Instruction {
             case 'S':
             case 'I':
                 int intValue = stack.popInt();
-                Object intRef = stack.popRef();
+                SObject intRef = stack.popRef();
                 if (intRef == null) {
                     throw new NullPointerException();
                 }
@@ -53,7 +53,7 @@ public class PutField extends Index16Instruction {
                 break;
             case 'J':
                 long longValue = stack.popLong();
-                Object longRef = stack.popRef();
+                SObject longRef = stack.popRef();
                 if (longRef == null) {
                     throw new NullPointerException();
                 }
@@ -61,7 +61,7 @@ public class PutField extends Index16Instruction {
                 break;
             case 'F':
                 float floatValue = stack.popFloat();
-                Object floatRef = stack.popRef();
+                SObject floatRef = stack.popRef();
                 if (floatRef == null) {
                     throw new NullPointerException();
                 }
@@ -69,7 +69,7 @@ public class PutField extends Index16Instruction {
                 break;
             case 'D':
                 double doubleValue = stack.popDouble();
-                Object doubleRef = stack.popRef();
+                SObject doubleRef = stack.popRef();
                 if (doubleRef == null) {
                     throw new NullPointerException();
                 }
@@ -77,8 +77,8 @@ public class PutField extends Index16Instruction {
                 break;
             case 'L':
             case '[':
-                Object value = stack.popRef();
-                Object ref = stack.popRef();
+                SObject value = stack.popRef();
+                SObject ref = stack.popRef();
 
                 if (ref == null){
                     throw new NullPointerException();

@@ -1,6 +1,6 @@
 package org.ljf.sjvm.rtda;
 
-import org.ljf.sjvm.rtda.heap.Object;
+import org.ljf.sjvm.rtda.heap.SObject;
 
 /**
  * @author: ljf
@@ -11,7 +11,7 @@ import org.ljf.sjvm.rtda.heap.Object;
  */
 public class Slot {
     public int num;
-    public Object ref;
+    public SObject ref;
 
 
     public Slot() {
@@ -21,11 +21,11 @@ public class Slot {
         this.num = num;
     }
 
-    public Slot(Object ref) {
+    public Slot(SObject ref) {
         this.ref = ref;
     }
 
-    public Slot(int num, Object ref) {
+    public Slot(int num, SObject ref) {
         this.num = num;
         this.ref = ref;
     }

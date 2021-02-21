@@ -1,6 +1,6 @@
 package org.ljf.sjvm.rtda;
 
-import org.ljf.sjvm.rtda.heap.Object;
+import org.ljf.sjvm.rtda.heap.SObject;
 
 import java.util.Arrays;
 
@@ -87,14 +87,14 @@ public class OperandStack {
         return Double.longBitsToDouble(bits);
     }
 
-    public void pushRef(Object ref) {
+    public void pushRef(SObject ref) {
         this.slots[size].ref = ref;
         this.size++;
     }
 
-    public Object popRef() {
+    public SObject popRef() {
         this.size--;
-        Object ref = this.slots[size].ref;
+        SObject ref = this.slots[size].ref;
         this.slots[size].ref = null;//帮助垃圾回收器回收，立刻重用？
         return ref;
     }
@@ -117,7 +117,7 @@ public class OperandStack {
                 '}';
     }
 
-    public Object getRefFromTop(int n) {
+    public SObject getRefFromTop(int n) {
         return this.slots[this.size - 1 - n].ref;
     }
 }
