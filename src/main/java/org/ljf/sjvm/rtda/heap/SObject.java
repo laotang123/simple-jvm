@@ -19,7 +19,7 @@ public class SObject {
 //        this.clazz = clazz;
 //        this.fields = fields;
 //    }
-
+    //TODO: 将SObjectArray统一为SObject。数组对象的属性值是对象，对象的属性值是基本类型和对象(也可以统一成对象)。
     public SObject(Class clazz) {
         this.clazz = clazz;
         this.data = new Slots(clazz.getInstanceSlotCount());
