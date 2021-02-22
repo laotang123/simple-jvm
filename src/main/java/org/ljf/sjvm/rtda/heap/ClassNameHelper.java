@@ -49,4 +49,37 @@ public class ClassNameHelper {
         //object
         return "L" + className + ";";
     }
+
+    /**
+     * [[XXX -> [XXX
+     * [LXXX; -> XXX
+     * [I -> int
+     */
+    public static String getComponentClassName(String className) {
+        if (className.charAt(0) == '[') {
+            String componentTypeDescriptor = className.substring(1);
+            return toClassName(componentTypeDescriptor);
+        }
+        throw new IllegalArgumentException("not array: " + className);
+    }
+
+    private static String toClassName(String descriptor) {
+        if (descriptor.charAt(0) == '[') {
+            //array
+            return descriptor;
+        }
+
+        if (descriptor.charAt(0) == 'L') {
+            //object
+            return descriptor.substring(1, descriptor.length() - 1);
+        }
+
+        for (Map.Entry<String, String> entry : primitiveTypes.entrySet()) {
+            if (descriptor.equals(entry.getValue())) {
+                //primitive
+                return entry.getKey();
+            }
+        }
+        throw new IllegalArgumentException("Invalid descriptor: " + descriptor);
+    }
 }

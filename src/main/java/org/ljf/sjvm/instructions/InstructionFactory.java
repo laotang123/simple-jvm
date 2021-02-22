@@ -1,5 +1,6 @@
 package org.ljf.sjvm.instructions;
 
+import com.sun.org.apache.bcel.internal.generic.GOTO_W;
 import org.ljf.sjvm.exceptions.UnsupportedException;
 import org.ljf.sjvm.instructions.base.Instruction;
 import org.ljf.sjvm.instructions.comparisons.*;
@@ -66,14 +67,14 @@ public class InstructionFactory {
         instructionMap.put("aLoad1", new ALoad1());
         instructionMap.put("aLoad2", new ALoad2());
         instructionMap.put("aLoad3", new ALoad3());
-        // iaload      = &IALOAD{}
-        // laload      = &LALOAD{}
-        // faload      = &FALOAD{}
-        // daload      = &DALOAD{}
-        // aaload      = &AALOAD{}
-        // baload      = &BALOAD{}
-        // caload      = &CALOAD{}
-        // saload      = &SALOAD{}
+        instructionMap.put("iALoad", new XALoad.IALoad());
+        instructionMap.put("lALoad", new XALoad.LALoad());
+        instructionMap.put("fALoad", new XALoad.FALoad());
+        instructionMap.put("dALoad", new XALoad.DALoad());
+        instructionMap.put("aALoad", new XALoad.AALoad());
+        instructionMap.put("bALoad", new XALoad.BALoad());
+        instructionMap.put("cALoad", new XALoad.CALoad());
+        instructionMap.put("sALoad", new XALoad.SALoad());
         instructionMap.put("iStore0", new IStore0());
         instructionMap.put("iStore1", new IStore1());
         instructionMap.put("iStore2", new IStore2());
@@ -94,14 +95,14 @@ public class InstructionFactory {
         instructionMap.put("aStore1", new AStore1());
         instructionMap.put("aStore2", new AStore2());
         instructionMap.put("aStore3", new AStore3());
-        // iastore  = &IASTORE{}
-        // lastore  = &LASTORE{}
-        // fastore  = &FASTORE{}
-        // dastore  = &DASTORE{}
-        // aastore  = &AASTORE{}
-        // bastore  = &BASTORE{}
-        // castore  = &CASTORE{}
-        // sastore  = &SASTORE{}
+        instructionMap.put("iAStore", new XAStore.IAStore());
+        instructionMap.put("lAStore", new XAStore.LAStore());
+        instructionMap.put("fAStore", new XAStore.FAStore());
+        instructionMap.put("dAStore", new XAStore.DAStore());
+        instructionMap.put("aAStore", new XAStore.AAStore());
+        instructionMap.put("bAStore", new XAStore.BAStore());
+        instructionMap.put("cAStore", new XAStore.CAStore());
+        instructionMap.put("sAStore", new XAStore.SAStore());
         instructionMap.put("pop", new Pop());
         instructionMap.put("pop2", new Pop2());
         instructionMap.put("dup", new Dup());
@@ -169,11 +170,6 @@ public class InstructionFactory {
         instructionMap.put("fReturn", new FReturn());
         instructionMap.put("dReturn", new DReturn());
         instructionMap.put("aReturn", new AReturn());
-//        IReturn ireturn = new IReturn();
-//        LReturn lreturn = new LReturn();
-//        FReturn freturn = new FReturn();
-//        DReturn dreturn = new DReturn();
-//        AReturn areturn = new AReturn();
 
 //        ineg = &INEG { }
 //        lneg = &LNEG { }
@@ -534,18 +530,18 @@ public class InstructionFactory {
                 return new TableSwitch();
             case 0xab:
                 return new LookupSwitch();
-             case 0xac:
-             	return instructionMap.get("iReturn");
-             case 0xad:
-                 return instructionMap.get("lReturn");
-             case 0xae:
-             	return instructionMap.get("fReturn");
-             case 0xaf:
-             	return instructionMap.get("dReturn");
-             case 0xb0:
-             	return instructionMap.get("aReturn");
-             case 0xb1:
-             	return instructionMap.get("_return");
+            case 0xac:
+                return instructionMap.get("iReturn");
+            case 0xad:
+                return instructionMap.get("lReturn");
+            case 0xae:
+                return instructionMap.get("fReturn");
+            case 0xaf:
+                return instructionMap.get("dReturn");
+            case 0xb0:
+                return instructionMap.get("aReturn");
+            case 0xb1:
+                return instructionMap.get("_return");
             case 0xb2:
                 return new GetStatic();
             case 0xb3:
@@ -584,8 +580,8 @@ public class InstructionFactory {
             // 	return monitorexit
             case 0xc4:
                 return new Wide();
-            // case 0xc5:
-            // 	return &MULTI_ANEW_ARRAY{}
+            case 0xc5:
+                return new MultiANewArray();
             case 0xc6:
                 return new IfNull();
             case 0xc7:

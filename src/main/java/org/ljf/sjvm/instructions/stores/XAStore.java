@@ -1,4 +1,4 @@
-package org.ljf.sjvm.instructions.loads;
+package org.ljf.sjvm.instructions.stores;
 
 import org.ljf.sjvm.instructions.XInst;
 import org.ljf.sjvm.rtda.Frame;
@@ -9,114 +9,120 @@ import org.ljf.sjvm.rtda.heap.SObjectArray;
 /**
  * @author: ljf
  * @date: 2021/2/22 7:22
- * @description: 数组对象load指令
+ * @description: 数组对象store指令
  * @modified By:
  * @version: $ 1.0
  */
-public abstract class XALoad extends XInst {
-    public static class AALoad extends XALoad {
+public abstract class XAStore extends XInst {
+    public static class AAStore extends XAStore {
         @Override
         public void execute(Frame frame) {
             OperandStack operandStack = frame.getOperandStack();
+            SObject ref = operandStack.popRef();
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
             Object[] refs = arrRef.refs();
             checkIndex(refs.length, index);
-            operandStack.pushRef((SObject) refs[index]);
+            refs[index] = ref;
         }
-
-
     }
 
-    public static class BALoad extends XALoad {
+    public static class BAStore extends XAStore {
         @Override
         public void execute(Frame frame) {
             OperandStack operandStack = frame.getOperandStack();
+            int value = operandStack.popInt();
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
             byte[] bytes = arrRef.bytes();
             checkIndex(bytes.length, index);
-            operandStack.pushInt(bytes[index] & 0xff); //uint8
+            bytes[index] = (byte) value;
         }
     }
 
-    public static class CALoad extends XALoad {
+    public static class CAStore extends XAStore {
         @Override
         public void execute(Frame frame) {
             OperandStack operandStack = frame.getOperandStack();
+            int value = operandStack.popInt();
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
             char[] chars = arrRef.chars();
             checkIndex(chars.length, index);
-            operandStack.pushInt(chars[index] & 0xffff); //uint16 FIXME: 这样是否正确？
+            chars[index] = (char) value;
         }
     }
 
-    public static class DALoad extends XALoad {
+    public static class DAStore extends XAStore {
         @Override
         public void execute(Frame frame) {
             OperandStack operandStack = frame.getOperandStack();
+            double value = operandStack.popDouble();
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
             double[] doubles = arrRef.doubles();
             checkIndex(doubles.length, index);
-            operandStack.pushDouble(doubles[index]);
+            doubles[index] = value;
         }
     }
 
-    public static class FALoad extends XALoad {
+    public static class FAStore extends XAStore {
         @Override
         public void execute(Frame frame) {
             OperandStack operandStack = frame.getOperandStack();
+            float value = operandStack.popFloat();
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
             float[] floats = arrRef.floats();
             checkIndex(floats.length, index);
-            operandStack.pushFloat(floats[index]);
+            floats[index] = value;
         }
     }
 
-    public static class IALoad extends XALoad {
+    public static class IAStore extends XAStore {
         @Override
         public void execute(Frame frame) {
             OperandStack operandStack = frame.getOperandStack();
+            int value = operandStack.popInt();
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
             int[] ints = arrRef.ints();
             checkIndex(ints.length, index);
-            operandStack.pushInt(ints[index]);
+            ints[index] = value;
         }
     }
 
-    public static class LALoad extends XALoad {
+    public static class LAStore extends XAStore {
         @Override
         public void execute(Frame frame) {
             OperandStack operandStack = frame.getOperandStack();
+            long value = operandStack.popLong();
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
             long[] longs = arrRef.longs();
             checkIndex(longs.length, index);
-            operandStack.pushLong(longs[index]);
+            longs[index] = value;
         }
     }
 
-    public static class SALoad extends XALoad {
+    public static class SAStore extends XAStore {
         @Override
         public void execute(Frame frame) {
             OperandStack operandStack = frame.getOperandStack();
+            int value = operandStack.popInt();
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
             short[] shorts = arrRef.shorts();
             checkIndex(shorts.length, index);
-            operandStack.pushInt(shorts[index]);
+            shorts[index] = (short) value;
         }
     }
 }

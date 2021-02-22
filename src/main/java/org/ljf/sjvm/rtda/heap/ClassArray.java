@@ -28,10 +28,12 @@ public class ClassArray extends Class {
         };
     }
 
-    public boolean isArray() {
-        return this.name.charAt(0) == '[';
-    }
 
+
+    public Class componentClass(){
+        String componentClassName = ClassNameHelper.getComponentClassName(this.name);
+        return this.loader.loadClass(componentClassName);
+    }
     public SObject newArray(int count) {
         if (!this.isArray()) {
             throw new IllegalArgumentException("not array class: " + this.name);

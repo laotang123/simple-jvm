@@ -175,6 +175,22 @@ public class Class implements Cloneable {
         return new SObject(this);
     }
 
+    public boolean isArray() {
+        return this.name.charAt(0) == '[';
+    }
+
+    private boolean isJlObject() {
+        return this.name.equals("java/lang/Object");
+    }
+
+    private boolean isJlCloneable() {
+        return this.name.equals("java/lang/Cloneable");
+    }
+
+    private boolean isJioSerializable() {
+        return this.name.equals("java/lang/Serializable");
+    }
+
 
     // jvms8 6.5.instanceof
     // jvms8 6.5.checkcast
@@ -187,11 +203,50 @@ public class Class implements Cloneable {
             return true;
         }
 
-        if (!t.isInterface()) {
-            return s.isSubClassOf(t);
+//        if (!t.isInterface()) {
+//            return s.isSubClassOf(t);
+//        } else {
+//            return s.isImplements(t);
+//        }
+        if (!s.isArray()) {
+            if (!s.isInterface()) {
+                //s is class
+                if (!t.isInterface()) {
+                    //t is not interface
+                    return s.isSubInterfaceOf(t);
+                } else {
+                    //t is interface
+                    return s.isImplements(t);
+                }
+            } else {
+                //s is interface
+                if (!t.isInterface()) {
+                    //t is not interface
+                    return t.isJlObject();
+                } else {
+                    //t is interface
+                    return t.isSubInterfaceOf(s);
+                }
+            }
         } else {
-            return s.isImplements(t);
+            //s is array
+            if (!t.isArray()) {
+                if (!t.isInterface()) {
+                    //t is class
+                    return t.isJlObject();
+                } else {
+                    //t is interface
+                    return t.isJlCloneable() || t.isJioSerializable();
+                }
+            } else {
+                // t is array
+                Class sc = ((ClassArray) s).componentClass();
+                Class tc = ((ClassArray) t).componentClass();
+                return sc == tc || tc.isAssignableFrom(sc);
+            }
         }
+
+//        return false;
     }
 
     // self extends c
