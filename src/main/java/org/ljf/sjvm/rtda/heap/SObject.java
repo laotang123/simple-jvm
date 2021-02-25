@@ -15,7 +15,7 @@ public class SObject {
     protected final Object data; //slots for Object, []int32 for int[] ...
 
 
-//    public SObject(Class clazz, Slots fields) {
+    //    public SObject(Class clazz, Slots fields) {
 //        this.clazz = clazz;
 //        this.fields = fields;
 //    }
@@ -24,6 +24,11 @@ public class SObject {
         this.clazz = clazz;
         this.data = new Slots(clazz.getInstanceSlotCount());
 //        this.data = new Object[clazz.getInstanceSlotCount()];
+    }
+
+    public SObject(Class clazz, Object data) {
+        this.clazz = clazz;
+        this.data = data;
     }
 
     public Class getClazz() {
@@ -35,28 +40,40 @@ public class SObject {
     }
 
     public void setInt(int slotId, int value) {
-        ((Slots)(this.data)).setInt(slotId, value);
+        ((Slots) (this.data)).setInt(slotId, value);
     }
 
 
     public void setLong(int slotId, long value) {
-        ((Slots)(this.data)).setLong(slotId, value);
+        ((Slots) (this.data)).setLong(slotId, value);
     }
 
 
     public void setFloat(int slotId, float value) {
-        ((Slots)(this.data)).setFloat(slotId, value);
+        ((Slots) (this.data)).setFloat(slotId, value);
     }
 
     public void setDouble(int slotId, double value) {
-        ((Slots)(this.data)).setDouble(slotId, value);
+        ((Slots) (this.data)).setDouble(slotId, value);
     }
 
     public void setRef(int slotId, SObject value) {
-        ((Slots)(this.data)).setRef(slotId, value);
+        ((Slots) (this.data)).setRef(slotId, value);
     }
 
     public boolean isInstanceof(Class clazz) {
         return clazz.isAssignableFrom(this.clazz);
+    }
+
+    public SObject getRefVar(String name, String descriptor) {
+        Field field = this.clazz.getField(name, descriptor, false);
+        Slots slots = (Slots) this.data;
+        return slots.getRef(field.getSlotId());
+    }
+
+    public void setRefVar(String name, String descriptor, SObject ref) {
+        Field field = this.clazz.getField(name, descriptor, false);
+        Slots slots = (Slots) this.data;
+        slots.setRef(field.getSlotId(), ref);
     }
 }

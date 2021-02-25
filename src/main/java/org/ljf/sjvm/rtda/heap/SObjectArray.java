@@ -37,6 +37,9 @@ public class SObjectArray extends ArraySObject {
     public int[] ints() {
         int[] res = new int[this.len];
         for (int i = 0; i < this.len; i++) {
+            if (items[i] == null) {
+                break;
+            }
             res[i] = (int) items[i];
         }
         return res;
@@ -81,9 +84,12 @@ public class SObjectArray extends ArraySObject {
     }
 
 
-
     public int arrayLength() {
         return this.len;
+    }
+
+    public void setItem(int index, Object item) {
+        this.items[index] = item;
     }
 
     @Override

@@ -110,16 +110,21 @@ public class ClassLoader {
                     Constant longConst = cp.getConstant(cpIndex);
                     long longValue = ((Literal.LongLiteral) longConst).getValue();
                     staticVars.setLong(slotId, longValue);
+                    break;
                 case "F":
                     Constant floatConst = cp.getConstant(cpIndex);
                     float floatValue = ((Literal.FloatLiteral) floatConst).getValue();
                     staticVars.setFloat(cpIndex, floatValue);
+                    break;
                 case "D":
                     Constant doubleConst = cp.getConstant(cpIndex);
                     double doubleValue = ((Literal.DoubleLiteral) doubleConst).getValue();
                     staticVars.setDouble(cpIndex, doubleValue);
+                    break;
                 case "Ljava/lang/String":
-                    throw new IllegalArgumentException("TODO ");
+                    String str = ((Literal.StringLiteral)cp.getConstant(cpIndex)).getValue();
+                    StringPool.stringObject(clazz.getLoader(),str);
+
             }
         }
 

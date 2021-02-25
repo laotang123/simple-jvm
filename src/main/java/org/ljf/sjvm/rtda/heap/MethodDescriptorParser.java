@@ -35,7 +35,7 @@ public class MethodDescriptorParser {
 
     private void parseReturnType() {
         if (this.readUint8() == 'V') {
-            System.out.println("return type:  V");
+//            System.out.println("return type:  V");
             this.parsed.setReturnType("V");
             return;
         }
@@ -43,7 +43,7 @@ public class MethodDescriptorParser {
         this.unreadUit8();
         String fieldType = this.parseFieldType();
         if (!fieldType.equals("")) {
-            System.out.println("return type: " + fieldType);
+//            System.out.println("return type: " + fieldType);
             this.parsed.setReturnType(fieldType);
             return;
         }
@@ -60,8 +60,8 @@ public class MethodDescriptorParser {
     private void parseParamTypes() {
         String fieldType;
         while (!(fieldType = this.parseFieldType()).equals("")) {
-            System.out.println("raw field: " + this.raw);
-            System.out.println("parsed field type: " + fieldType);
+//            System.out.println("raw field: " + this.raw);
+//            System.out.println("parsed field type: " + fieldType);
             this.parsed.addParameterType(fieldType);
         }
     }

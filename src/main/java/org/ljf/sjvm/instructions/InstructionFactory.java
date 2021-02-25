@@ -176,7 +176,8 @@ public class InstructionFactory {
 //        fneg = &FNEG { }
 //        dneg = &DNEG { }
 
-        // arraylength   = &ARRAY_LENGTH{}
+        instructionMap.put("arrayLength", new ArrayLength());
+//        instructionMap.put("aThrow", new Athrow());
         // athrow        = &ATHROW{}
         // monitorenter  = &MONITOR_ENTER{}
         // monitorexit   = &MONITOR_EXIT{}
@@ -280,22 +281,22 @@ public class InstructionFactory {
                 return instructionMap.get("aLoad2");
             case 0x2d:
                 return instructionMap.get("aLoad3");
-            // case 0x2e:
-            // 	return iaload
-            // case 0x2f:
-            // 	return laload
-            // case 0x30:
-            // 	return faload
-            // case 0x31:
-            // 	return daload
-            // case 0x32:
-            // 	return aaload
-            // case 0x33:
-            // 	return baload
-            // case 0x34:
-            // 	return caload
-            // case 0x35:
-            // 	return saload
+             case 0x2e:
+             	return instructionMap.get("iALoad");
+             case 0x2f:
+             	return instructionMap.get("lALoad");
+             case 0x30:
+             	return instructionMap.get("fALoad");
+             case 0x31:
+             	return instructionMap.get("dALoad");
+             case 0x32:
+             	return instructionMap.get("aALoad");
+             case 0x33:
+             	return instructionMap.get("bALoad");
+             case 0x34:
+             	return instructionMap.get("cALoad");
+             case 0x35:
+             	return instructionMap.get("sALoad");
             case 0x36:
                 return new IStore();
             case 0x37:
@@ -346,22 +347,22 @@ public class InstructionFactory {
                 return instructionMap.get("aStore2");
             case 0x4e:
                 return instructionMap.get("aStore3");
-            // case 0x4f:
-            // 	return iastore
-            // case 0x50:
-            // 	return lastore
-            // case 0x51:
-            // 	return fastore
-            // case 0x52:
-            // 	return dastore
-            // case 0x53:
-            // 	return aastore
-            // case 0x54:
-            // 	return bastore
-            // case 0x55:
-            // 	return castore
-            // case 0x56:
-            // 	return sastore
+             case 0x4f:
+             	return instructionMap.get("iAStore");
+             case 0x50:
+             	return instructionMap.get("lAStore");
+             case 0x51:
+             	return instructionMap.get("fAStore");
+             case 0x52:
+             	return instructionMap.get("dAStore");
+             case 0x53:
+             	return instructionMap.get("aAStore");
+             case 0x54:
+             	return instructionMap.get("bAStore");
+             case 0x55:
+             	return instructionMap.get("cAStore");
+             case 0x56:
+             	return instructionMap.get("sAStore");
             case 0x57:
                 return instructionMap.get("pop");
             case 0x58:
@@ -562,12 +563,12 @@ public class InstructionFactory {
             // 	return &INVOKE_DYNAMIC{}
             case 0xbb:
                 return new New();
-            // case 0xbc:
-            // 	return &NEW_ARRAY{}
-            // case 0xbd:
-            // 	return &ANEW_ARRAY{}
-            // case 0xbe:
-            // 	return arraylength
+             case 0xbc:
+             	return new NewArray();
+             case 0xbd:
+             	return new ANewArray();
+             case 0xbe:
+             	return instructionMap.get("arrayLength");
             // case 0xbf:
             // 	return athrow
             case 0xc0:

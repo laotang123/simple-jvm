@@ -13,6 +13,6 @@ import org.ljf.sjvm.rtda.Frame;
 public class ALoad1 extends NoOperandInstruction implements ALoadInstruction {
     @Override
     public void execute(Frame frame) {
-        aLoad(frame, 0);
+        aLoad(frame, 1);
     }
 }

@@ -1,5 +1,6 @@
 package org.ljf.sjvm;
 
+import com.sun.javafx.binding.StringFormatter;
 import org.ljf.sjvm.classfile.MemberInfo;
 import org.ljf.sjvm.classfile.attributes.CodeAttribute;
 import org.ljf.sjvm.exceptions.UnsupportedException;
@@ -9,6 +10,10 @@ import org.ljf.sjvm.instructions.base.Instruction;
 import org.ljf.sjvm.rtda.Frame;
 import org.ljf.sjvm.rtda.Thread;
 import org.ljf.sjvm.rtda.heap.Method;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * @author: ljf
@@ -91,35 +96,46 @@ public class Interpreter {
     private static void loop(Thread thread) {
         ByteCodeReader reader = new ByteCodeReader();
 
-        while (true) {
-            //方法和frame是一对一关系，frame中保存着方法执行的code和pc
-            Frame frame = thread.currentFrame();
-            int pc = frame.getNextPc();
-            thread.setPc(pc);
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter("instr-log2.txt"));
+            while (true) {
+                //方法和frame是一对一关系，frame中保存着方法执行的code和pc
+                Frame frame = thread.currentFrame();
+                int pc = frame.getNextPc();
+                thread.setPc(pc);
 
-            //指令解码, 只有reader才会用到pc。字节的索引。其他如Thread，frame记录
-            reader.reset(frame.getMethod().getCode(), pc);
-            short opCode = reader.readUint8();
-            Instruction inst;
-            try {
-                inst = InstructionFactory.newInstruction(opCode);
-                inst.fetchOperands(reader);
-                frame.setNextPc(reader.getPc());
-                //指令执行
-//                System.out.printf("pc: %2d inst: %s \n", pc, inst);
-                inst.execute(frame);
+                //指令解码, 只有reader才会用到pc。字节的索引。其他如Thread，frame记录
+                reader.reset(frame.getMethod().getCode(), pc);
+                short opCode = reader.readUint8();
 
-                if (thread.isStackEmpty()){
+                Instruction inst;
+                try {
+                    inst = InstructionFactory.newInstruction(opCode);
+                    inst.fetchOperands(reader);
+                    frame.setNextPc(reader.getPc());
+                    //指令执行
+//                    out.write("pc: %2d inst: %s \n", pc, inst);
+                    out.write(String.format("pc: %2d inst: %s \n", pc, inst));
+                    inst.execute(frame);
+
+                    if (thread.isStackEmpty()) {
+                        break;
+                    }
+                    out.write(String.format("operandStack: %s, localVariableTable: %s \n", frame.getOperandStack(), frame.getLocalVariableTable()));
+                    out.flush();
+                } catch (UnsupportedException e) {
+                    System.out.printf("%2d, localVariableTable: %s \n", pc, frame.getLocalVariableTable());
+                    e.printStackTrace();
                     break;
                 }
-//                System.out.printf("operandStack: %s, localVariableTable: %s \n", frame.getOperandStack(), frame.getLocalVariableTable());
-            } catch (UnsupportedException e) {
-                System.out.printf("%2d, localVariableTable: %s \n", pc, frame.getLocalVariableTable());
-                e.printStackTrace();
-                break;
+
             }
 
+            out.close();
+        } catch (IOException e) {
         }
+
+
 
     }
 }

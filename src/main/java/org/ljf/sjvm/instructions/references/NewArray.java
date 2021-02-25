@@ -5,7 +5,9 @@ import org.ljf.sjvm.instructions.base.Instruction;
 import org.ljf.sjvm.rtda.Frame;
 import org.ljf.sjvm.rtda.OperandStack;
 import org.ljf.sjvm.rtda.heap.Class;
+import org.ljf.sjvm.rtda.heap.ClassArray;
 import org.ljf.sjvm.rtda.heap.ClassLoader;
+import org.ljf.sjvm.rtda.heap.SObject;
 
 /**
  * @author: ljf
@@ -41,6 +43,8 @@ public class NewArray implements Instruction {
 
         ClassLoader loader = frame.getMethod().getClazz().getLoader();
         Class arrClass = getPrimitiveArrayClass(loader);
+        SObject array = ((ClassArray) arrClass).newArray(count);
+        operandStack.pushRef(array);
     }
 
     private Class getPrimitiveArrayClass(ClassLoader loader) {

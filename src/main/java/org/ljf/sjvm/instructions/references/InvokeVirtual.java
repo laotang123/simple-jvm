@@ -80,8 +80,12 @@ public class InvokeVirtual extends Index16Instruction {
             case "(D)V":
                 System.out.println(stack.popDouble());
                 break;
+            case "(Ljava/lang/String;)V":
+                SObject ref = stack.popRef();
+                System.out.println(StringPool.jString(ref));
             default:
                 System.out.println("println: " + descriptor);
         }
+        stack.popRef();
     }
 }

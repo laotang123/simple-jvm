@@ -24,7 +24,7 @@ public class ClassArray extends Class {
         this.superClass = loader.loadClass("java/lang/Object");
         this.interfaces = new Class[]{
                 loader.loadClass("java/lang/Cloneable"),
-                loader.loadClass("java/lang/Serializable")
+                loader.loadClass("java/io/Serializable")
         };
     }
 

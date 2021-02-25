@@ -22,9 +22,8 @@ public abstract class XAStore extends XInst {
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
-            Object[] refs = arrRef.refs();
-            checkIndex(refs.length, index);
-            refs[index] = ref;
+            checkIndex(arrRef.arrayLength(), index);
+            arrRef.setItem(index, ref);
         }
     }
 
@@ -36,9 +35,8 @@ public abstract class XAStore extends XInst {
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
-            byte[] bytes = arrRef.bytes();
-            checkIndex(bytes.length, index);
-            bytes[index] = (byte) value;
+            checkIndex(arrRef.arrayLength(), index);
+            arrRef.setItem(index, value);
         }
     }
 
@@ -50,9 +48,8 @@ public abstract class XAStore extends XInst {
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
-            char[] chars = arrRef.chars();
-            checkIndex(chars.length, index);
-            chars[index] = (char) value;
+            checkIndex(arrRef.arrayLength(), index);
+            arrRef.setItem(index, value);
         }
     }
 
@@ -64,9 +61,8 @@ public abstract class XAStore extends XInst {
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
-            double[] doubles = arrRef.doubles();
-            checkIndex(doubles.length, index);
-            doubles[index] = value;
+            checkIndex(arrRef.arrayLength(), index);
+            arrRef.setItem(index, value);
         }
     }
 
@@ -78,9 +74,8 @@ public abstract class XAStore extends XInst {
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
-            float[] floats = arrRef.floats();
-            checkIndex(floats.length, index);
-            floats[index] = value;
+            checkIndex(arrRef.arrayLength(), index);
+            arrRef.setItem(index, value);
         }
     }
 
@@ -92,9 +87,8 @@ public abstract class XAStore extends XInst {
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
-            int[] ints = arrRef.ints();
-            checkIndex(ints.length, index);
-            ints[index] = value;
+            checkIndex(arrRef.arrayLength(), index);
+            arrRef.setItem(index, value);
         }
     }
 
@@ -106,9 +100,8 @@ public abstract class XAStore extends XInst {
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
-            long[] longs = arrRef.longs();
-            checkIndex(longs.length, index);
-            longs[index] = value;
+            checkIndex(arrRef.arrayLength(), index);
+            arrRef.setItem(index,value);
         }
     }
 
@@ -120,9 +113,8 @@ public abstract class XAStore extends XInst {
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
-            short[] shorts = arrRef.shorts();
-            checkIndex(shorts.length, index);
-            shorts[index] = (short) value;
+            checkIndex(arrRef.arrayLength(), index);
+            arrRef.setItem(index, value);
         }
     }
 }

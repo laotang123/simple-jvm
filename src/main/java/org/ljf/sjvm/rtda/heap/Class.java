@@ -179,6 +179,21 @@ public class Class implements Cloneable {
         return this.name.charAt(0) == '[';
     }
 
+    public Field getField(String name, String descriptor, boolean isStatic) {
+        Class clazz = this;
+        do {
+            for (Field field : clazz.fields) {
+                if (field.isStatic() == isStatic
+                        && field.getName().equals(name)
+                        && field.getDescriptor().equals(descriptor)) {
+                    return field;
+                }
+            }
+            clazz = clazz.superClass;
+        } while (clazz != null);
+        return null;
+    }
+
     private boolean isJlObject() {
         return this.name.equals("java/lang/Object");
     }

@@ -24,7 +24,7 @@ public class Method extends ClassMember {
             method.clazz = clazz;
             method.copyMemberInfo(cfMethods[i]);
             method.copyAttributes(cfMethods[i]);
-            System.out.println("classFile Method transfer to Class Method: " + method.getName());
+//            System.out.println("classFile Method transfer to Class Method: " + method.getName());
             method.calcArgSlotCount();
             methods[i] = method;
         }

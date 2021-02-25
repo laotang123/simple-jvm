@@ -19,7 +19,7 @@ public class MethodDescriptor {
     private String returnType;
 
     public void addParameterType(String parameterType) {
-        System.out.println("add parameter type: " + parameterType);
+//        System.out.println("add parameter type: " + parameterType);
         parameterTypes.add(parameterType);
     }
 
