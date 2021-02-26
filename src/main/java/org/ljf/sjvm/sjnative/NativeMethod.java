@@ -1,6 +1,7 @@
 package org.ljf.sjvm.sjnative;
 
 import org.ljf.sjvm.classfile.MemberInfo;
+import org.ljf.sjvm.rtda.Frame;
 import org.ljf.sjvm.rtda.heap.Method;
 
 /**
@@ -10,5 +11,6 @@ import org.ljf.sjvm.rtda.heap.Method;
  * @modified By:
  * @version: $ 1.0
  */
-public class NativeMethod extends Method {
+public abstract class NativeMethod extends Method {
+    public abstract void execute(Frame frame);
 }

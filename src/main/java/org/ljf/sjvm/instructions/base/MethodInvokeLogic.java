@@ -30,14 +30,14 @@ public class MethodInvokeLogic {
             }
         }
 
-        //hack!?
-        if (method.isNative()) {
-            if (method.getName().equals("registerNatives")) {
-                thread.popFrame();
-            } else {
-                throw new NoSuchMethodError("native method: " + method.getClazz().getName() + method.getName() + method.getDescriptor());
-            }
-        }
+//        //hack!?
+//        if (method.isNative()) {
+//            if (method.getName().equals("registerNatives")) {
+//                thread.popFrame();
+//            } else {
+//                throw new NoSuchMethodError("native method: " + method.getClazz().getName() + method.getName() + method.getDescriptor());
+//            }
+//        }
     }
 
     public static void initClass(Thread thread, Class clazz) {

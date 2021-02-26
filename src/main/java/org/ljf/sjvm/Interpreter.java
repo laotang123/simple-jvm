@@ -51,9 +51,8 @@ public class Interpreter {
         Thread thread = new Thread();
         Frame frame = thread.newFrame(method);
         thread.pushFrame(frame);
-//        loop(thread, method.getCode());
-        SObjectArray jArgs = createArgsArray(method.getClazz().getLoader(), args);
-        frame.setRef(0, jArgs);
+//        SObjectArray jArgs = createArgsArray(method.getClazz().getLoader(), args);
+//        frame.setRef(0, jArgs);
         loop(thread);
     }
 

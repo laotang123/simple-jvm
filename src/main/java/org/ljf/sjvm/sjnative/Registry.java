@@ -12,5 +12,21 @@ import java.util.Map;
  * @version: $ 1.0
  */
 public class Registry {
-    private Map<String, NativeMethod> registry;
+    private static Map<String, NativeMethod> registry;
+
+    /**
+     * 类名，方法名和方法描述符唯一确定一个本地方法
+     */
+    public void register(String className, String methodName, String methodDescriptor, NativeMethod method) {
+        String key = className + "~" + methodName + "~" + methodDescriptor;
+        registry.put(key, method);
+    }
+
+    public static NativeMethod findNativeMethod(String className, String methodName, String methodDescriptor) {
+        String key = className + "~" + methodName + "~" + methodDescriptor;
+        if (methodDescriptor.equals("()V") && methodName.equals("registerNatives")) {
+            return new EmptyNativeMethod();
+        }
+        return registry.getOrDefault(key, null);
+    }
 }
