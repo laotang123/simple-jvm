@@ -13,7 +13,7 @@ public class FibonacciTest {
         //for clinit method
     }
     public static void main(String[] args) {
-        long x = fibonacci(30);
+        long x = fibonacci(10);
         System.out.println(x);
     }
     private static long fibonacci(long n) {

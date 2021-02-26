@@ -1,5 +1,9 @@
 package org.ljf.sjvm.rtda.heap;
 
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,8 +23,8 @@ public class StringPool {
             return internedStr;
         }
 
-        char[] chars = string2Utf16(str);
-        SObject jChars = new SObject(loader.loadClass("[C"), chars);
+        Character[] characters = ArrayUtils.toObject(string2Utf16(str));
+        SObject jChars = new SObjectArray(loader.loadClass("[C"), characters);
         SObject jStr = loader.loadClass("java/lang/String").newObject();
         jStr.setRefVar("value", "[C", jChars);
         internedStrings.put(str, jStr);

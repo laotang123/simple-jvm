@@ -9,7 +9,9 @@ import org.ljf.sjvm.instructions.base.ByteCodeReader;
 import org.ljf.sjvm.instructions.base.Instruction;
 import org.ljf.sjvm.rtda.Frame;
 import org.ljf.sjvm.rtda.Thread;
-import org.ljf.sjvm.rtda.heap.Method;
+import org.ljf.sjvm.rtda.heap.*;
+import org.ljf.sjvm.rtda.heap.Class;
+import org.ljf.sjvm.rtda.heap.ClassLoader;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -45,12 +47,23 @@ public class Interpreter {
 
     }
 
-    public static void interpret(Method method) {
+    public static void interpret(Method method, String[] args) {
         Thread thread = new Thread();
         Frame frame = thread.newFrame(method);
         thread.pushFrame(frame);
 //        loop(thread, method.getCode());
+        SObjectArray jArgs = createArgsArray(method.getClazz().getLoader(), args);
+        frame.setRef(0, jArgs);
         loop(thread);
+    }
+
+    private static SObjectArray createArgsArray(ClassLoader loader, String[] args) {
+        Class stringClass = loader.loadClass("java/lang/String");
+        SObjectArray argsArr = (SObjectArray) ((ClassArray) stringClass.arrayClass()).newArray(args.length);
+        for (int i = 0; i < args.length; i++) {
+            argsArr.setItem(i, StringPool.stringObject(loader,args[i]));
+        }
+        return argsArr;
     }
 
     /**
@@ -114,7 +127,7 @@ public class Interpreter {
                     inst.fetchOperands(reader);
                     frame.setNextPc(reader.getPc());
                     //指令执行
-//                    out.write("pc: %2d inst: %s \n", pc, inst);
+//                    System.out.printf("pc: %2d inst: %s \n", pc, inst);
                     out.write(String.format("pc: %2d inst: %s \n", pc, inst));
                     inst.execute(frame);
 
@@ -133,8 +146,8 @@ public class Interpreter {
 
             out.close();
         } catch (IOException e) {
+            e.printStackTrace();
         }
-
 
 
     }

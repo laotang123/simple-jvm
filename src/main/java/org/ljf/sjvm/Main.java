@@ -46,7 +46,7 @@ public class Main {
             Class mainClass = classLoader.loadClass(className);
             Method mainMethod = mainClass.getMainMethod();
             if (mainMethod != null) {
-                Interpreter.interpret(mainMethod);
+                Interpreter.interpret(mainMethod, cmd.getArgs());
             }
         }
 
