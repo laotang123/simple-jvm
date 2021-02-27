@@ -13,7 +13,7 @@ public class SObject {
     protected final Class clazz;
     //    private final Slots fields;
     protected final Object data; //slots for Object, []int32 for int[] ...
-
+    protected Object extra;
 
     //    public SObject(Class clazz, Slots fields) {
 //        this.clazz = clazz;
@@ -76,4 +76,12 @@ public class SObject {
         Slots slots = (Slots) this.data;
         slots.setRef(field.getSlotId(), ref);
     }
+    public Object getExtra() {
+        return extra;
+    }
+
+    public void setExtra(Object extra) {
+        this.extra = extra;
+    }
+
 }

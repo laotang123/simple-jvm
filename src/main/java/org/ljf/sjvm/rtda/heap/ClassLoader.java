@@ -12,6 +12,12 @@ import java.util.Map;
  * @description: 类加载器
  * 方法区是一个抽象的概念，classMap字段可以当做方法区的具体实现
  * 方法区抽象为一个map结构
+ * <p>
+ * class names:
+ * - primitive types: boolean, byte, int ...
+ * - primitive arrays: [Z, [B, [I ...
+ * - non-array classes: java/lang/Object ...
+ * - array classes: [Ljava/lang/Object; ...
  * @modified By:
  * @version: $ 1.0
  */
@@ -27,6 +33,37 @@ public class ClassLoader {
     public ClassLoader(ClassPath classPath) {
         this.classPath = classPath;
         this.classMap = new HashMap<>();
+        this.loadBasicClasses();
+        this.loadPrimitiveClasses();
+    }
+
+    private void loadPrimitiveClasses() {
+        for (String primitiveType : ClassNameHelper.primitiveTypes.keySet()) {
+            this.loadPrimitiveClass(primitiveType);
+        }
+    }
+
+    private void loadBasicClasses() {
+        //每一个类匹配对应的类对象
+        Class jLClassClass = this.loadClass("java/lang/Class");
+        for (Class clazz : this.classMap.values()) {
+            if (clazz.getJClass() == null) {
+                clazz.setJClass(jLClassClass.newObject());
+                clazz.getJClass().setExtra(clazz);
+            }
+        }
+    }
+
+    private void loadPrimitiveClass(String className) {
+        Class clazz = new Class();
+        clazz.setAccessFlags(AccessFlags.ACC_PUBLIC);
+        clazz.setName(className);
+        clazz.setLoader(this);
+        clazz.startInit();
+
+        clazz.setJClass(this.classMap.get("java/lang/Class").newObject());
+        clazz.getJClass().setExtra(clazz);
+        this.classMap.put(className, clazz);
     }
 
     public Class loadClass(String name) {
@@ -36,14 +73,23 @@ public class ClassLoader {
         }
 
         if (name.charAt(0) == '[') {
-            return this.loadArrayClass(name);
+            clazz = this.loadArrayClass(name);
+        } else {
+            clazz = this.loadNoArrayClass(name);
         }
-        return this.loadNoArrayClass(name);
+
+        //所有加载到方法区的类都设置好了jClass字段，即java.lang.Class
+        Class jLClassClass = this.classMap.get("java/lang/Class");
+        if (jLClassClass != null) {
+            clazz.setJClass(jLClassClass.newObject());
+            clazz.getJClass().setExtra(clazz);
+        }
+        return clazz;
     }
 
     private Class loadArrayClass(String name) {
 
-        Class classArray = new ClassArray(this,name);
+        Class classArray = new ClassArray(this, name);
         this.classMap.put(name, classArray);
         return classArray;
     }
@@ -122,8 +168,8 @@ public class ClassLoader {
                     staticVars.setDouble(cpIndex, doubleValue);
                     break;
                 case "Ljava/lang/String":
-                    String str = ((Literal.StringLiteral)cp.getConstant(cpIndex)).getValue();
-                    StringPool.stringObject(clazz.getLoader(),str);
+                    String str = ((Literal.StringLiteral) cp.getConstant(cpIndex)).getValue();
+                    StringPool.stringObject(clazz.getLoader(), str);
 
             }
         }

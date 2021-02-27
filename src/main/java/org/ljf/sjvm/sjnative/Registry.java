@@ -1,7 +1,5 @@
 package org.ljf.sjvm.sjnative;
 
-import org.ljf.sjvm.rtda.Frame;
-
 import java.util.Map;
 
 /**
@@ -17,7 +15,7 @@ public class Registry {
     /**
      * 类名，方法名和方法描述符唯一确定一个本地方法
      */
-    public void register(String className, String methodName, String methodDescriptor, NativeMethod method) {
+    public static void register(String className, String methodName, String methodDescriptor, NativeMethod method) {
         String key = className + "~" + methodName + "~" + methodDescriptor;
         registry.put(key, method);
     }

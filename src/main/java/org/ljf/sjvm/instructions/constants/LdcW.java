@@ -35,8 +35,11 @@ public class LdcW extends Index16Instruction {
             Literal.StringLiteral stringLiteral = (Literal.StringLiteral) constant;
             SObject internedStr = StringPool.stringObject(clazz.getLoader(), stringLiteral.getValue());
             stack.pushRef(internedStr);
+        } else if (constant instanceof ClassRef) {
+            ClassRef classRef = (ClassRef) constant;
+            SObject classObj = classRef.resolvedClass().getJClass();
+            stack.pushRef(classObj);
         }
-//        else if(ClassRef)
 //        else if(MethodType,MethodHandle)
         else {
             throw new IllegalArgumentException("todo: ldc!");

@@ -120,4 +120,12 @@ public class OperandStack {
     public SObject getRefFromTop(int n) {
         return this.slots[this.size - 1 - n].ref;
     }
+
+    public void pushBoolean(boolean val) {
+        if (val) {
+            this.pushInt(1);
+        } else {
+            this.pushInt(0);
+        }
+    }
 }

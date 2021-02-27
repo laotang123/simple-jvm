@@ -48,9 +48,10 @@ public class Frame {
         this.thread = thread;
     }
 
-    public void revertNextPc(){
+    public void revertNextPc() {
         this.nextPc = this.thread.getPc();
     }
+
     public LocalVariableTable getLocalVariableTable() {
         return localVariableTable;
     }
@@ -67,8 +68,12 @@ public class Frame {
         return operandStack.popRef();
     }
 
-    public SObject getRefFromTop(int n){
+    public SObject getRefFromTop(int n) {
         return this.operandStack.getRefFromTop(n);
+    }
+
+    public void pushBoolean(boolean value) {
+        this.operandStack.pushBoolean(value);
     }
 
     public void pushDouble(double value) {

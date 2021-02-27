@@ -24,7 +24,15 @@ public class Class implements Cloneable {
     protected int staticSlotCount;//类变量空间大小
     protected Slots staticVars;//静态变量
     protected boolean initStarted;
+    protected SObject jClass; // 类对比  java.lang.Class实例
 
+    public SObject getJClass() {
+        return jClass;
+    }
+
+    public void setJClass(SObject jClass) {
+        this.jClass = jClass;
+    }
 
     public boolean initStarted() {
         return this.initStarted;
@@ -117,6 +125,14 @@ public class Class implements Cloneable {
 
     public Field[] getFields() {
         return fields;
+    }
+
+    public void setAccessFlags(int accessFlags) {
+        this.accessFlags = accessFlags;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setFields(Field[] fields) {
@@ -338,5 +354,9 @@ public class Class implements Cloneable {
     public Class arrayClass() {
         String arrayClassName = ClassNameHelper.getArrayClassName(this.name);
         return this.loader.loadClass(arrayClassName);
+    }
+
+    public String javaName() {
+        return this.name.replace('/', '.');
     }
 }

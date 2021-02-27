@@ -14,6 +14,7 @@ import org.ljf.sjvm.instructions.extended.Wide;
 import org.ljf.sjvm.instructions.loads.*;
 import org.ljf.sjvm.instructions.math.*;
 import org.ljf.sjvm.instructions.references.*;
+import org.ljf.sjvm.instructions.reserved.InvokeNative;
 import org.ljf.sjvm.instructions.stack.*;
 import org.ljf.sjvm.instructions.stores.*;
 
@@ -281,22 +282,22 @@ public class InstructionFactory {
                 return instructionMap.get("aLoad2");
             case 0x2d:
                 return instructionMap.get("aLoad3");
-             case 0x2e:
-             	return instructionMap.get("iALoad");
-             case 0x2f:
-             	return instructionMap.get("lALoad");
-             case 0x30:
-             	return instructionMap.get("fALoad");
-             case 0x31:
-             	return instructionMap.get("dALoad");
-             case 0x32:
-             	return instructionMap.get("aALoad");
-             case 0x33:
-             	return instructionMap.get("bALoad");
-             case 0x34:
-             	return instructionMap.get("cALoad");
-             case 0x35:
-             	return instructionMap.get("sALoad");
+            case 0x2e:
+                return instructionMap.get("iALoad");
+            case 0x2f:
+                return instructionMap.get("lALoad");
+            case 0x30:
+                return instructionMap.get("fALoad");
+            case 0x31:
+                return instructionMap.get("dALoad");
+            case 0x32:
+                return instructionMap.get("aALoad");
+            case 0x33:
+                return instructionMap.get("bALoad");
+            case 0x34:
+                return instructionMap.get("cALoad");
+            case 0x35:
+                return instructionMap.get("sALoad");
             case 0x36:
                 return new IStore();
             case 0x37:
@@ -347,22 +348,22 @@ public class InstructionFactory {
                 return instructionMap.get("aStore2");
             case 0x4e:
                 return instructionMap.get("aStore3");
-             case 0x4f:
-             	return instructionMap.get("iAStore");
-             case 0x50:
-             	return instructionMap.get("lAStore");
-             case 0x51:
-             	return instructionMap.get("fAStore");
-             case 0x52:
-             	return instructionMap.get("dAStore");
-             case 0x53:
-             	return instructionMap.get("aAStore");
-             case 0x54:
-             	return instructionMap.get("bAStore");
-             case 0x55:
-             	return instructionMap.get("cAStore");
-             case 0x56:
-             	return instructionMap.get("sAStore");
+            case 0x4f:
+                return instructionMap.get("iAStore");
+            case 0x50:
+                return instructionMap.get("lAStore");
+            case 0x51:
+                return instructionMap.get("fAStore");
+            case 0x52:
+                return instructionMap.get("dAStore");
+            case 0x53:
+                return instructionMap.get("aAStore");
+            case 0x54:
+                return instructionMap.get("bAStore");
+            case 0x55:
+                return instructionMap.get("cAStore");
+            case 0x56:
+                return instructionMap.get("sAStore");
             case 0x57:
                 return instructionMap.get("pop");
             case 0x58:
@@ -563,12 +564,12 @@ public class InstructionFactory {
             // 	return &INVOKE_DYNAMIC{}
             case 0xbb:
                 return new New();
-             case 0xbc:
-             	return new NewArray();
-             case 0xbd:
-             	return new ANewArray();
-             case 0xbe:
-             	return instructionMap.get("arrayLength");
+            case 0xbc:
+                return new NewArray();
+            case 0xbd:
+                return new ANewArray();
+            case 0xbe:
+                return instructionMap.get("arrayLength");
             // case 0xbf:
             // 	return athrow
             case 0xc0:
@@ -592,8 +593,9 @@ public class InstructionFactory {
             // case 0xc9:
             // 	return &JSR_W{}
             // case 0xca: breakpoint
-            // case 0xfe: impdep1
-            // case 0xff: impdep2
+            case 0xfe:
+                new InvokeNative();
+                // case 0xff: impdep2
 
             default:
                 throw new UnsupportedException("Unsupported opcode: 0x" + Integer.toHexString(opCode));

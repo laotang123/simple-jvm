@@ -11,7 +11,7 @@ import java.util.Map;
  * @version: $ 1.0
  */
 public class ClassNameHelper {
-    private static final Map<String, String> primitiveTypes = new HashMap<>();
+    public static final Map<String, String> primitiveTypes = new HashMap<>();
 
     static {
         primitiveTypes.put("void", "V");

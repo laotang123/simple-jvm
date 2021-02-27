@@ -81,4 +81,8 @@ public class LocalVariableTable {
                 "slots=" + Arrays.toString(slots) +
                 '}';
     }
+
+    public SObject getThis() {
+        return this.getRef(0);
+    }
 }
