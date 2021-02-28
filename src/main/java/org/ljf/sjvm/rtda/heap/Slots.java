@@ -24,6 +24,10 @@ public class Slots implements Cloneable {
         }
     }
 
+    public Slots(Slot[] slots) {
+        this.slots = slots;
+    }
+
     public void setInt(int index, int value) {
         slots[index].num = value;
     }
@@ -68,6 +72,17 @@ public class Slots implements Cloneable {
 
     public SObject getRef(int index) {
         return slots[index].ref;
+    }
+
+    @Override
+    protected Slots clone() {
+        Slot[] destSlots = new Slot[this.slots.length];
+        Slot slot;
+        for (int i = 0; i < this.slots.length; i++) {
+            slot = this.slots[i];
+            destSlots[i] = new Slot(slot.num, slot.ref);
+        }
+        return new Slots(destSlots);
     }
 
     @Override

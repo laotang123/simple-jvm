@@ -46,7 +46,7 @@ public class Object {
                 throw new IllegalArgumentException("CloneNotSupportedException");
             }
 
-            //TODO: cloneData待实现
+            frame.getOperandStack().pushRef(thisRef.cloneObject());
         }
     }
 

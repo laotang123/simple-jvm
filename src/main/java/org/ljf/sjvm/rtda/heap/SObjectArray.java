@@ -99,6 +99,12 @@ public class SObjectArray extends ArraySObject {
         this.items[index] = item;
     }
 
+    public SObjectArray cloneObject(){
+        Object[] copyItems = new Object[items.length];
+        System.arraycopy(this.items,0,copyItems,0,this.items.length);
+        return new SObjectArray(this.clazz,copyItems);
+    }
+
     @Override
     public String toString() {
         return "SObjectArray{" +

@@ -15,10 +15,11 @@ public class SObject {
     protected final Object data; //slots for Object, []int32 for int[] ...
     protected Object extra;
 
-    //    public SObject(Class clazz, Slots fields) {
-//        this.clazz = clazz;
-//        this.fields = fields;
-//    }
+    public SObject(Class clazz, Slots fields) {
+        this.clazz = clazz;
+        this.data = fields;
+    }
+
     //TODO: 将SObjectArray统一为SObject。数组对象的属性值是对象，对象的属性值是基本类型和对象(也可以统一成对象)。
     public SObject(Class clazz) {
         this.clazz = clazz;
@@ -76,6 +77,7 @@ public class SObject {
         Slots slots = (Slots) this.data;
         slots.setRef(field.getSlotId(), ref);
     }
+
     public Object getExtra() {
         return extra;
     }
@@ -84,4 +86,13 @@ public class SObject {
         this.extra = extra;
     }
 
+    public SObject cloneObject() {
+        if (this instanceof SObjectArray) {
+            SObjectArray array = (SObjectArray) this;
+            return array.cloneObject();
+        }
+
+        Slots cloneSlots = ((Slots) this.data).clone();
+        return new SObject(this.clazz, cloneSlots);
+    }
 }
