@@ -20,7 +20,7 @@ public class Class {
     private static final NativeMethod getName0 = new GetName0();
     private static final NativeMethod desiredAssertionStatus0 = new DesiredAssertionStatus0();
 
-    static class GetPrimitiveClass extends NativeMethod {
+    public static class GetPrimitiveClass extends NativeMethod {
 
         @Override
         public void execute(Frame frame) {
@@ -34,7 +34,7 @@ public class Class {
     }
 
 
-    static class GetName0 extends NativeMethod {
+    public static class GetName0 extends NativeMethod {
 
         @Override
         public void execute(Frame frame) {
@@ -47,7 +47,7 @@ public class Class {
         }
     }
 
-    static class DesiredAssertionStatus0 extends NativeMethod {
+    public static class DesiredAssertionStatus0 extends NativeMethod {
 
         @Override
         public void execute(Frame frame) {
