@@ -7,6 +7,8 @@ import org.ljf.sjvm.sjnative.java.lang.Double;
 import org.ljf.sjvm.sjnative.java.lang.Float;
 import org.ljf.sjvm.sjnative.java.lang.Object;
 import org.ljf.sjvm.sjnative.java.lang.System;
+import org.ljf.sjvm.sjnative.java.lang.Throwable;
+import org.ljf.sjvm.sjnative.sun.misc.VM;
 
 /**
  * @author: ljf
@@ -31,6 +33,8 @@ public class NativeUtil {
         Registry.register(jLClass, "getPrimitiveClass", "(Ljava/lang/String;)Ljava/lang/Class;",
                 new Class.GetPrimitiveClass());
         Registry.register(jLClass, "getName0", "()Ljava/lang/String;", new Class.GetName0());
+        Registry.register(jLClass, "desiredAssertionStatus0", "(Ljava/lang/Class;)Z",
+                new Class.DesiredAssertionStatus0());
         Registry.register(jLSystem, "arraycopy", "(Ljava/lang/Object;ILjava/lang/Object;II)V",
                 new System.ArrayCopy());
         Registry.register(jLFloat, "floatToRawIntBits", "(F)I", new Float.FloatToRawIntBits());
@@ -38,6 +42,8 @@ public class NativeUtil {
         Registry.register(jLDouble, "doubleToRawIntBits", "(D)I", new Double.DoubleToRawLongBits());
         Registry.register(jLDouble, "intBitsToFloat", "(I)F", new Double.LongBitsToDouble());
         Registry.register(jLString, "intern", "()Ljava/lang/String;", new SJString.Intern());
-
+        Registry.register("sun/misc/VM", "initialize", "()V", new VM.Initialize());
+        Registry.register("java/lang/Throwable", "fillInStackTrace", "(I)Ljava/lang/Throwable",
+                new Throwable.FillInStackTrace());
     }
 }

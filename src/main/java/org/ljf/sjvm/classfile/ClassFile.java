@@ -1,6 +1,7 @@
 package org.ljf.sjvm.classfile;
 
 import org.ljf.sjvm.classfile.attributes.AttributeInfo;
+import org.ljf.sjvm.classfile.attributes.SourceFileAttribute;
 import org.ljf.sjvm.classfile.constantpool.ConstantPool;
 import org.ljf.sjvm.util.Constants;
 import org.slf4j.Logger;
@@ -166,5 +167,14 @@ public final class ClassFile {
 
     public AttributeInfo[] getAttributes() {
         return attributes;
+    }
+
+    public SourceFileAttribute getSourceFileAttribute() {
+        for (AttributeInfo attribute : this.attributes) {
+            if (attribute instanceof SourceFileAttribute) {
+                return (SourceFileAttribute) attribute;
+            }
+        }
+        return null;
     }
 }

@@ -50,4 +50,23 @@ public class Stack {
     public boolean isEmpty() {
         return this.peekFrame == null;
     }
+
+    public void clear() {
+        while (!this.isEmpty()) {
+            this.pop();
+        }
+    }
+
+    public Frame[] getFrames() {
+        Frame[] frames = new Frame[(int) this.size];
+        Frame frame = this.peekFrame;
+        for (int i = 0; i < (int) this.size; i++) {
+            frames[i] = frame;
+            if (frame == null) {
+                break;
+            }
+            frame = frame.lower;
+        }
+        return frames;
+    }
 }

@@ -1,6 +1,7 @@
 package org.ljf.sjvm.rtda.heap;
 
 import org.ljf.sjvm.classfile.ClassFile;
+import org.ljf.sjvm.classfile.attributes.SourceFileAttribute;
 
 /**
  * @author: ljf
@@ -17,6 +18,7 @@ public class Class implements Cloneable {
     protected ConstantPool constantPool;
     protected Field[] fields;
     protected Method[] methods;
+    protected String sourceFile;
     protected ClassLoader loader;
     protected Class superClass;
     protected Class[] interfaces;
@@ -50,6 +52,7 @@ public class Class implements Cloneable {
         this.constantPool = new ConstantPool(this, classFile.getConstantPool());
         this.fields = Field.newFields(this, classFile.getFields());
         this.methods = Method.newMethods(this, classFile.getMethods());
+        this.sourceFile = findSourceFile(classFile);
     }
 
     public Class() {
@@ -362,5 +365,44 @@ public class Class implements Cloneable {
 
     public boolean isPrimitive() {
         return ClassNameHelper.primitiveTypes.containsKey(this.name);
+    }
+
+    public Method getMethod(String name, String descriptor, Boolean isStatic) {
+        Class clazz = this;
+        do {
+            for (Method method : clazz.methods) {
+                if (method.isStatic() == isStatic && method.name.equals(name) && method.descriptor.equals(descriptor)) {
+                    return method;
+                }
+            }
+            clazz = clazz.getSuperClass();
+        } while (clazz != null);
+        return null;
+    }
+
+    public Method getInstanceMethod(String name, String descriptor) {
+        return this.getMethod(name, descriptor, false);
+    }
+
+    public SObject getRefVar(String fieldName, String fieldDescriptor) {
+        Field field = this.getField(fieldName, fieldDescriptor, true);
+        return this.staticVars.getRef(field.getSlotId());
+    }
+
+    public void setRefVar(String fileName, String filedDescriptor, SObject ref) {
+        Field field = this.getField(fileName, filedDescriptor, true);
+        this.staticVars.setRef(field.getSlotId(), ref);
+    }
+
+    private String findSourceFile(ClassFile classFile) {
+        SourceFileAttribute sfAttr = classFile.getSourceFileAttribute();
+        if (sfAttr != null) {
+            return sfAttr.getSourceFileName();
+        }
+        return "Unknown";//todo
+    }
+
+    public String getSourceFile() {
+        return sourceFile;
     }
 }

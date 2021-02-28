@@ -178,8 +178,7 @@ public class InstructionFactory {
 //        dneg = &DNEG { }
 
         instructionMap.put("arrayLength", new ArrayLength());
-//        instructionMap.put("aThrow", new Athrow());
-        // athrow        = &ATHROW{}
+        instructionMap.put("aThrow", new AThrow());
         // monitorenter  = &MONITOR_ENTER{}
         // monitorexit   = &MONITOR_EXIT{}
         // invoke_native = &INVOKE_NATIVE{}
@@ -570,8 +569,8 @@ public class InstructionFactory {
                 return new ANewArray();
             case 0xbe:
                 return instructionMap.get("arrayLength");
-            // case 0xbf:
-            // 	return athrow
+             case 0xbf:
+             	return instructionMap.get("aThrow");
             case 0xc0:
                 return new CheckCast();
             case 0xc1:
@@ -595,7 +594,7 @@ public class InstructionFactory {
             // case 0xca: breakpoint
             case 0xfe:
                 return new InvokeNative();
-                // case 0xff: impdep2
+            // case 0xff: impdep2
 
             default:
                 throw new UnsupportedException("Unsupported opcode: 0x" + Integer.toHexString(opCode));

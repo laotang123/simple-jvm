@@ -64,7 +64,7 @@ public class CodeAttribute implements AttributeInfo {
         this.attributes = AttributeInfo.readAttributes(reader, constantPool);
     }
 
-    private static ExceptionTableEntry[] readExceptionTable(ClassReader reader) {
+    public static ExceptionTableEntry[] readExceptionTable(ClassReader reader) {
         int len = reader.readUint16();
         ExceptionTableEntry[] exceptionTable = new ExceptionTableEntry[len];
         for (int i = 0; i < len; i++) {
@@ -76,7 +76,7 @@ public class CodeAttribute implements AttributeInfo {
         return exceptionTable;
     }
 
-    private static class ExceptionTableEntry implements AttributeInfo {
+    public static class ExceptionTableEntry implements AttributeInfo {
         private int startPc;
         private int endPc;
         private int handlerPc;
@@ -109,5 +109,14 @@ public class CodeAttribute implements AttributeInfo {
             this.handlerPc = reader.readUint16();
             this.catchType = reader.readUint16();
         }
+    }
+
+    public LineNumberTableAttribute getLineNumberTableAttribute() {
+        for (AttributeInfo attribute : this.attributes) {
+            if (attribute instanceof LineNumberTableAttribute) {
+                return (LineNumberTableAttribute) attribute;
+            }
+        }
+        return null;
     }
 }

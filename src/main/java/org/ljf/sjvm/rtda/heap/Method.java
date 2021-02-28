@@ -2,6 +2,7 @@ package org.ljf.sjvm.rtda.heap;
 
 import org.ljf.sjvm.classfile.MemberInfo;
 import org.ljf.sjvm.classfile.attributes.CodeAttribute;
+import org.ljf.sjvm.classfile.attributes.LineNumberTableAttribute;
 
 /**
  * @author: ljf
@@ -14,6 +15,8 @@ public class Method extends ClassMember {
     private int maxStack;
     private int maxLocals;
     private byte[] code;
+    private ExceptionTable exceptionTable;
+    private LineNumberTableAttribute lineNumberTable;
     private int argSlotCount;//方法的参数数量
 
     public static Method[] newMethods(Class clazz, MemberInfo[] cfMethods) {
@@ -96,6 +99,8 @@ public class Method extends ClassMember {
             this.maxStack = attribute.getMaxStack();
             this.maxLocals = attribute.getMaxLocals();
             this.code = attribute.getCode();
+            this.lineNumberTable = attribute.getLineNumberTableAttribute();
+            this.exceptionTable = new ExceptionTable(attribute.getExceptionTable(), this.clazz.getConstantPool());
         }
     }
 
@@ -134,5 +139,25 @@ public class Method extends ClassMember {
 
     public byte[] getCode() {
         return code;
+    }
+
+    public int findExceptionHandler(Class exClass, int pc) {
+        ExceptionTable.ExceptionHandler handler = this.exceptionTable.findExceptionHandler(exClass, pc);
+        if (handler != null) {
+            return handler.handlerPc;
+        }
+        return -1;
+    }
+
+    public int getLineNumber(int pc) {
+        if (this.isNative()) {
+            return -2;
+        }
+
+        if (this.lineNumberTable == null) {
+            return -1;
+        }
+
+        return this.lineNumberTable.getLineNumber(pc);
     }
 }

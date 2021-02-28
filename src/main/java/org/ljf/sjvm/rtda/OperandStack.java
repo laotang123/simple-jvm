@@ -128,4 +128,11 @@ public class OperandStack {
             this.pushInt(0);
         }
     }
+
+    public void clear() {
+        this.size = 0;
+        for (Slot slot : this.slots) {
+            slot.ref = null;
+        }
+    }
 }

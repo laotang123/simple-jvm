@@ -1,5 +1,6 @@
 package org.ljf.sjvm.instructions.stores;
 
+import org.ljf.sjvm.Interpreter;
 import org.ljf.sjvm.instructions.XInst;
 import org.ljf.sjvm.rtda.Frame;
 import org.ljf.sjvm.rtda.OperandStack;
@@ -31,7 +32,7 @@ public abstract class XAStore extends XInst {
         @Override
         public void execute(Frame frame) {
             OperandStack operandStack = frame.getOperandStack();
-            int value = operandStack.popInt();
+            byte value = (byte)operandStack.popInt();
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
@@ -44,7 +45,7 @@ public abstract class XAStore extends XInst {
         @Override
         public void execute(Frame frame) {
             OperandStack operandStack = frame.getOperandStack();
-            int value = operandStack.popInt();
+            char value = (char)operandStack.popInt();
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
@@ -109,7 +110,7 @@ public abstract class XAStore extends XInst {
         @Override
         public void execute(Frame frame) {
             OperandStack operandStack = frame.getOperandStack();
-            int value = operandStack.popInt();
+            short value = (short)operandStack.popInt();
             int index = operandStack.popInt();
 
             SObjectArray arrRef = beforeExecute(operandStack);
