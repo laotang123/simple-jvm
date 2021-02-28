@@ -594,7 +594,7 @@ public class InstructionFactory {
             // 	return &JSR_W{}
             // case 0xca: breakpoint
             case 0xfe:
-                new InvokeNative();
+                return new InvokeNative();
                 // case 0xff: impdep2
 
             default:

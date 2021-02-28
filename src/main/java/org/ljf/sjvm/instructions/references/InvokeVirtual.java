@@ -47,6 +47,9 @@ public class InvokeVirtual extends Index16Instruction {
                 && ref.getClazz() != currentClass
                 && !ref.getClazz().isSubClassOf(currentClass)) {
 
+            if (!ref.getClazz().isArray() && resolvedMethod.getName().equals("clone")){
+                throw new IllegalAccessError();
+            }
             throw new IllegalAccessError();
         }
 

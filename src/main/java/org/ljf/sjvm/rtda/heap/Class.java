@@ -359,4 +359,8 @@ public class Class implements Cloneable {
     public String javaName() {
         return this.name.replace('/', '.');
     }
+
+    public boolean isPrimitive() {
+        return ClassNameHelper.primitiveTypes.containsKey(this.name);
+    }
 }

@@ -1,5 +1,6 @@
 package org.ljf.sjvm.sjnative;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Map;
  * @version: $ 1.0
  */
 public class Registry {
-    private static Map<String, NativeMethod> registry;
+    private static final Map<String, NativeMethod> registry = new HashMap<>();
 
     /**
      * 类名，方法名和方法描述符唯一确定一个本地方法

@@ -65,6 +65,7 @@ public class GetStatic extends Index16Instruction {
             case 'L':
             case '[':
                 stack.pushRef(slots.getRef(slotId));
+                break;
             default:
                 //todo
         }

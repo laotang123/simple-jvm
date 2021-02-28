@@ -126,13 +126,14 @@ public class Interpreter {
                     inst.fetchOperands(reader);
                     frame.setNextPc(reader.getPc());
                     //指令执行
-//                    System.out.printf("pc: %2d inst: %s \n", pc, inst);
+                    System.out.printf("pc: %2d inst: %s \n", pc, inst);
                     out.write(String.format("pc: %2d inst: %s \n", pc, inst));
                     inst.execute(frame);
 
                     if (thread.isStackEmpty()) {
                         break;
                     }
+                    System.out.printf("%2d, localVariableTable: %s \n", pc, frame.getLocalVariableTable());
                     out.write(String.format("operandStack: %s, localVariableTable: %s \n", frame.getOperandStack(), frame.getLocalVariableTable()));
                     out.flush();
                 } catch (UnsupportedException e) {

@@ -14,12 +14,8 @@ import org.ljf.sjvm.sjnative.Registry;
  * @version: $ 1.0
  */
 public class Object {
-    private static final String jLObject = "java/lang/Object";
-    private static final NativeMethod getClass = new GetClass();
-    private static final NativeMethod hashCode = new HashCode();
-    private static final NativeMethod clone = new Clone();
 
-    static class GetClass extends NativeMethod {
+    public static class GetClass extends NativeMethod {
 
         @Override
         public void execute(Frame frame) {
@@ -29,7 +25,7 @@ public class Object {
         }
     }
 
-    static class HashCode extends NativeMethod {
+    public static class HashCode extends NativeMethod {
 
         @Override
         public void execute(Frame frame) {
@@ -37,7 +33,7 @@ public class Object {
         }
     }
 
-    static class Clone extends NativeMethod {
+    public static class Clone extends NativeMethod {
 
         @Override
         public void execute(Frame frame) {
@@ -52,9 +48,4 @@ public class Object {
         }
     }
 
-    public Object() {
-        Registry.register(jLObject, "getClass", "()Ljava/lang/Class;", getClass);
-        Registry.register(jLObject, "hashCode", "()I;", hashCode);
-        Registry.register(jLObject, "clone", "()Ljava/lang/Object;", clone);
-    }
 }

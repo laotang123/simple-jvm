@@ -44,4 +44,15 @@ public class StringPool {
     public static String utf162String(char[] chars) {
         return new String(chars);
     }
+
+    public static SObject internString(SObject thisRef) {
+        String str = jString(thisRef);
+        SObject internedStr = internedStrings.getOrDefault(str, null);
+        if (internedStr == null) {
+            internedStrings.put(str, thisRef);
+            return thisRef;
+        }
+
+        return internedStr;
+    }
 }

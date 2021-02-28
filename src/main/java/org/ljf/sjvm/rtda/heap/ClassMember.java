@@ -70,11 +70,11 @@ public class ClassMember {
         Class clazz = this.clazz;
         if (this.isProtected()) {
             //other.getClass().isAssignableFrom(Class.class): 对应go语言的other.subClassOf(clazz)
-            return clazz == other || other.getClass().isAssignableFrom(Class.class) ||
+            return clazz == other || other.getClass().isAssignableFrom(clazz.getClass()) ||
                     clazz.getPackageName().equals(other.getPackageName());
         }
 
-        if (this.isPrivate()) {
+        if (!this.isPrivate()) {
             return clazz.getPackageName().equals(other.getPackageName());
         }
 

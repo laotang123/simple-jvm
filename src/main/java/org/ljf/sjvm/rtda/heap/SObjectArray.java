@@ -17,6 +17,13 @@ public class SObjectArray extends ArraySObject {
         this.items = items;
     }
 
+    public static void arrayCopy(SObject src, SObject dest, int srcPos, int destPos, int length) {
+        SObjectArray srcArray = (SObjectArray) src;
+        SObjectArray destArray = (SObjectArray) dest;
+
+        System.arraycopy(srcArray.items, srcPos, destArray.items, destPos, length);
+    }
+
     //将items转为指定类型的数据
     public byte[] bytes() {
         byte[] res = new byte[this.len];
