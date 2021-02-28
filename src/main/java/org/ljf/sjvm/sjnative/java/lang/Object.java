@@ -29,7 +29,9 @@ public class Object {
 
         @Override
         public void execute(Frame frame) {
-
+            SObject thisRef = frame.getLocalVariableTable().getThis();
+            int hash = java.lang.System.identityHashCode(thisRef);
+            frame.getOperandStack().pushInt(hash);
         }
     }
 

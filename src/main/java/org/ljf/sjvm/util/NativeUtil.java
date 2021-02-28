@@ -26,7 +26,7 @@ public class NativeUtil {
 
     public static void registerNatives() {
         Registry.register(jLObject, "getClass", "()Ljava/lang/Class;", new Object.GetClass());
-        Registry.register(jLObject, "hashCode", "()I;", new Object.HashCode());
+        Registry.register(jLObject, "hashCode", "()I", new Object.HashCode());
         Registry.register(jLObject, "clone", "()Ljava/lang/Object;", new Object.Clone());
         Registry.register(jLClass, "getPrimitiveClass", "(Ljava/lang/String;)Ljava/lang/Class;",
                 new Class.GetPrimitiveClass());
