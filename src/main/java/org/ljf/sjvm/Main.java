@@ -33,6 +33,7 @@ public class Main {
             Cmd.printUsage();
         } else {
             startJVM(cmd);
+//            new JVM(cmd).start();
         }
 
     }

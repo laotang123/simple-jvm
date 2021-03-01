@@ -37,6 +37,9 @@ public class NativeUtil {
                 new Class.DesiredAssertionStatus0());
         Registry.register(jLSystem, "arraycopy", "(Ljava/lang/Object;ILjava/lang/Object;II)V",
                 new System.ArrayCopy());
+        Registry.register(jLSystem, "setIn0", "(Ljava/io/InputStream;)V", new System.SetInt0());
+        Registry.register(jLSystem, "setOut0", "(Ljava/io/PrintStream;)V", new System.SetOut0());
+        Registry.register(jLSystem, "setErr0", "(Ljava/io/PrintStream;)V", new System.SetErr0());
         Registry.register(jLFloat, "floatToRawIntBits", "(F)I", new Float.FloatToRawIntBits());
         Registry.register(jLFloat, "intBitsToFloat", "(I)F", new Float.IntBitsToFloat());
         Registry.register(jLDouble, "doubleToRawIntBits", "(D)I", new Double.DoubleToRawLongBits());

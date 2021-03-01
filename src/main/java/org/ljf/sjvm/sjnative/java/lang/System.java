@@ -60,4 +60,41 @@ public class System {
             return true;
         }
     }
+
+    // private static native void setIn0(InputStream in);
+    // (Ljava/io/InputStream;)V
+    public static class SetInt0 extends NativeMethod {
+        @Override
+        public void execute(Frame frame) {
+            LocalVariableTable vars = frame.getLocalVariableTable();
+            SObject in = vars.getRef(0);
+
+            Class sysClass = frame.getMethod().getClazz();
+            sysClass.setRefVar("in","Ljava/io/InputStream;", in);
+        }
+    }
+
+    public static class SetErr0 extends NativeMethod {
+        @Override
+        public void execute(Frame frame) {
+            LocalVariableTable vars = frame.getLocalVariableTable();
+            SObject err = vars.getRef(0);
+
+            Class sysClass = frame.getMethod().getClazz();
+            sysClass.setRefVar("err","Ljava/io/InputStream;", err);
+        }
+    }
+
+    public static class SetOut0 extends NativeMethod {
+        @Override
+        public void execute(Frame frame) {
+            LocalVariableTable vars = frame.getLocalVariableTable();
+            SObject out = vars.getRef(0);
+
+            Class sysClass = frame.getMethod().getClazz();
+            sysClass.setRefVar("out","Ljava/io/InputStream;", out);
+        }
+    }
+
+
 }

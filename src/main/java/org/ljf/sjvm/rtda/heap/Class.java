@@ -328,30 +328,15 @@ public class Class implements Cloneable {
 
 
     public Method getMainMethod() {
-        try {
-            return this.getStaticMethod("main", "([Ljava/lang/String;)V");
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return this.getStaticMethod("main", "([Ljava/lang/String;)V");
     }
 
     public Method getClinitMethod() {
-        try {
-            return this.getStaticMethod("<clinit>", "()V");
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return this.getStaticMethod("<clinit>", "()V");
     }
 
-    private Method getStaticMethod(String name, String descriptor) throws NoSuchMethodException {
-        for (Method method : this.methods) {
-            if (method.isStatic() && method.name.equals(name) && method.descriptor.equals(descriptor)) {
-                return method;
-            }
-        }
-        throw new NoSuchMethodException(name);
+    public Method getStaticMethod(String name, String descriptor) {
+        return this.getMethod(name, descriptor, true);
     }
 
     public Class arrayClass() {
@@ -405,4 +390,5 @@ public class Class implements Cloneable {
     public String getSourceFile() {
         return sourceFile;
     }
+
 }
